@@ -14,6 +14,9 @@ from parsl.providers import LocalProvider
 from academy.exchange import LocalExchangeFactory  
 from academy.manager import Manager
 from academy.executor import EventLoopExecutor
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 

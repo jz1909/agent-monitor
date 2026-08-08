@@ -116,8 +116,8 @@ class XTBSimulationAgent(Agent):
         self,
         xtb_config: XTBConfig,
         start_molecule: str,
-        reasoning_model: str = 'openai/gpt-oss-120b',
-        generation_model: str = 'meta-llama/Llama-4-Scout-17B-16E-Instruct',
+        reasoning_model: str = 'gpt-4o',
+        generation_model: str = 'gpt-4o-mini',
     ):
         self.config = xtb_config
         self.reasoning_model = reasoning_model

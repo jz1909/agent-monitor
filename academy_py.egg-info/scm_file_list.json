@@ -1,0 +1,16 @@
+{
+  "files": [
+    ".gitignore",
+    "07-mol-design/README.md",
+    "07-mol-design/environment.yml",
+    "07-mol-design/mol_design_agents.egg-info/PKG-INFO",
+    "07-mol-design/mol_design_agents.egg-info/SOURCES.txt",
+    "07-mol-design/mol_design_agents.egg-info/dependency_links.txt",
+    "07-mol-design/mol_design_agents.egg-info/requires.txt",
+    "07-mol-design/mol_design_agents.egg-info/top_level.txt",
+    "07-mol-design/mol_design_agents.py",
+    "07-mol-design/pyproject.toml",
+    "07-mol-design/run-07.py",
+    "pyproject.toml"
+  ]
+}
