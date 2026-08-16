@@ -1,8 +1,0 @@
-README.md
-mol_design_agents.py
-pyproject.toml
-mol_design_agents.egg-info/PKG-INFO
-mol_design_agents.egg-info/SOURCES.txt
-mol_design_agents.egg-info/dependency_links.txt
-mol_design_agents.egg-info/requires.txt
-mol_design_agents.egg-info/top_level.txt
