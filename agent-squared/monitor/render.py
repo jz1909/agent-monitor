@@ -13,6 +13,7 @@ class renderState():
         self.analysis_log: list[str] = []
         self.phase_counter: int = 0
         self.summary_log: list[str] = []
+        self.tool_history = []
         
     def to_dict(self):
 
@@ -21,8 +22,8 @@ class renderState():
             "final_phase": self.phase.name if self.phase else None,
             "phase_history": [s.name for s in self.phase_history],
             "analysis_log": self.analysis_log,
-            "final_summary": self.curr_sum,
             "summary_log": self.summary_log,
+            "tool_call": self.tool_history
         }
 
     def update_state(self, new_phase: status, new_summary_text: str, new_curr_sum: str, new_curr_analysis: str):
@@ -35,5 +36,8 @@ class renderState():
         self.analysis_log.append(new_curr_analysis)
         self.summary_log.append(new_curr_sum)
         self.phase_counter += 1
+
+    def update_tool_call(self, tool_hist):
+        self.tool_history = tool_hist
 
         

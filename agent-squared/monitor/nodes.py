@@ -54,14 +54,14 @@ async def classify_node(state: MonitorState):
 
     prompt = f"""You are the final classification step in a reasoning-monitor pipeline. Based on the analysis below, classify the current state of the AI agent's reasoning process into exactly one of these three categories:
 
-    - Stuck: reasoning is repeating itself, contradicting earlier steps, or showing no meaningful forward movement over the recent activity.
-    - Progressing: reasoning is actively advancing — trying new angles, narrowing possibilities, building on prior steps — even if it hasn't reached an answer yet.
-    - Completed: the reasoning has reached a clear conclusion or final answer.
+        - Stuck: reasoning is not measurably closer to the goal than in the prior step. This covers repetition, contradiction, cycling between approaches, revisiting the same obstacle from a new angle without addressing it, exploring options that don't rule anything in or out, or generating plans and restatements without producing evidence that constrains the answer. Effort, novelty, and thoroughness are not progress on their own.
+        - Progressing: reasoning has demonstrably reduced the distance to the answer since the prior step — a hypothesis ruled in or out, evidence gathered that narrows the answer space, a subproblem resolved, an ambiguity settled, a confirmed step built upon. The movement must be toward the answer itself, not toward more exploration.
+        - Completed: the reasoning has reached a clear conclusion or final answer.
 
-    ANALYSIS:
-    {state['curr_analysis']}
+        ANALYSIS:
+        {state['curr_analysis']}
 
-    Respond with exactly one word: STUCK, PROGRESSING, or COMPLETED. No punctuation, no explanation, no additional text — the word alone, spelled and capitalized exactly as shown above."""
+        Respond with exactly one word: STUCK, PROGRESSING, or COMPLETED. No punctuation, no explanation, no additional text — the word alone, spelled and capitalized exactly as shown above."""
 
     msg = await monitor_model.ainvoke(prompt)
     type_enum = status[msg.content]

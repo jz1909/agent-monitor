@@ -57,41 +57,47 @@ async def main():
 
             prev_id = None
             total_calls = 0
+            call_hist = []
+            final_text = []
+            summary_text = []
 
-            for _ in range(1, 10):
+            for _ in range(1, 5):
 
                 calls = []
-                final_text = []
-                kwarg = dict(model=MODEL, input=input, tools=tool_specs, reasoning={"effort":"low", "summary":"auto"})
+                
+                kwarg = dict(model=MODEL, input=input, tools=tool_specs, reasoning={"effort":"high", "summary":"detailed"}, stream = True)
                 if prev_id:
                     kwarg["previous_response_id"] = prev_id
                 else:
                     kwarg["tool_choice"]="required"
 
-                response = await client.responses.create(**kwarg)
+                stream_response = await client.responses.create(**kwarg)
 
-                prev_id = response.id
+                prev_id = None
 
-                for item in response.output:
-                    if item.type=="function_call":
-                        calls.append(item)
-                    elif item.type == "message":
-                        temp_text = []
-                        for c in item.content:
-                            if getattr(c, "type", "") == "output_text":
-                                temp_text.append(c.text)
-                        final_text = "".join(temp_text)
-                        print(final_text)
+                async for item in stream_response:
+                    if item.type == "response.created":
+                        prev_id = item.response.id
+                    elif item.type == "response.output_item.done":
+                        if item.item.type=="function_call":
+                            calls.append(item.item)
+                    elif item.type == "response.output_text.delta":
+                        final_text.append(item.delta)
+                    elif item.type == "response.reasoning_summary_text.delta":
+                        summary_text.append(item.delta)
 
                 if not calls:
                     print(f"Stopped due to no tool calls, total of {total_calls} tool calls")
                     print(f"final answer: {final_text}")
+                    print(summary_text)
+                    print(call_hist)
                     return
 
                 input = []
 
                 for call in calls:
                     total_calls+=1
+                    call_hist.append(call.name)
                     args = json.loads(call.arguments)
                     r = await session.call_tool(call.name, args)
                     output = mcp_result(r)
@@ -102,6 +108,9 @@ async def main():
                     })
 
             print(f"exceeded max calls, returning..")
+            print(f"final answer: {final_text}")
+            print(summary_text)
+            print(call_hist)
                     
 
 if __name__ == '__main__':
