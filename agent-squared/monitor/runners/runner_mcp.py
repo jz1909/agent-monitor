@@ -7,6 +7,8 @@ from buffer import stream_buffer
 from nodes import compact_node
 from render import renderState
 from config import AGENT_EFFORT, AGENT_MODEL
+from heartbeat import HeartbeatWriter, HEARTBEAT_TOOL_SPEC
+from hb_config import HEARTBEAT_TOOL_NAME, wrap_prompt
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
@@ -32,7 +34,7 @@ class McpTaskRunner:
             self.input = []
             self.prev_id = None
             self.answer_parts: list[str] = []
-            
+            self.hb: HeartbeatWriter = HeartbeatWriter()
             
 
 
@@ -58,7 +60,9 @@ class McpTaskRunner:
 
                     self.tool_specs.append(spec)
 
-                self.input = [{"role":"user", "content":self.task["prompt"]}]
+                self.tool_specs.append(HEARTBEAT_TOOL_SPEC)
+
+                self.input = [{"role":"user", "content":wrap_prompt(self.task["prompt"])}]
 
                 for _ in range(self.loop_iterations):
                     stream = await self._open_stream()
@@ -96,9 +100,14 @@ class McpTaskRunner:
         for tool_call in tool_calls:
             self.tool_call_count += 1
             self.tool_call_hist.append(tool_call.name)
-            args = json.loads(tool_call.arguments)
-            r = await session.call_tool(tool_call.name, args)
-            output = self._mcp_result(r)
+
+            if tool_call.name == HEARTBEAT_TOOL_NAME:
+                output = self._beat()
+            else:
+                args = json.loads(tool_call.arguments)
+                r = await session.call_tool(tool_call.name, args)
+                output = self._mcp_result(r)
+
             input.append({
                         "type":"function_call_output",
                         "call_id":tool_call.call_id,
@@ -106,6 +115,10 @@ class McpTaskRunner:
                     })
         return input
         
+
+    def _beat(self) -> str:
+        self.hb.beat()
+
 
     def _mcp_result(self, r):
         parts = []
@@ -204,6 +217,8 @@ class McpTaskRunner:
             "question_id": self.task.get("question_id"),
             "question_title": self.task.get("question_title"),
             "agent_answer":"".join(self.answer_parts),
+            "frame_id": self.hb.frame_id,
+            "beat_count": self.hb.beat_count,
             **self.renderer.to_dict()
         }
     
