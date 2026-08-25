@@ -1,0 +1,12 @@
+{"checked_at_utc": "2026-08-25T20:38:49.533499+00:00", "status": "OK", "age_seconds": 8.153325, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": true}
+{"checked_at_utc": "2026-08-25T20:38:59.534710+00:00", "status": "OK", "age_seconds": 0.187202, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:39:09.536923+00:00", "status": "OK", "age_seconds": 10.189412, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:39:19.538212+00:00", "status": "DEAD", "age_seconds": 20.190698, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:39:29.539655+00:00", "status": "DEAD", "age_seconds": 30.192146, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:39:39.541621+00:00", "status": "DEAD", "age_seconds": 40.194107, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:39:49.543058+00:00", "status": "DEAD", "age_seconds": 50.195541, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:39:59.544376+00:00", "status": "DEAD", "age_seconds": 60.196865, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:40:09.545570+00:00", "status": "DEAD", "age_seconds": 70.19806, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:40:19.546587+00:00", "status": "DEAD", "age_seconds": 80.199094, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:40:29.547642+00:00", "status": "DEAD", "age_seconds": 90.200146, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}
+{"checked_at_utc": "2026-08-25T20:40:39.549055+00:00", "status": "DEAD", "age_seconds": 100.201539, "frame_id": "7334b5214cde429c833b4252d8e9f1a3", "restarted": false}

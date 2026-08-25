@@ -1,6 +1,5 @@
 import json
 
-
 def load_tasks(path)-> list[dict]:
     with open(path, "r") as f:
         tasks = json.load(f)

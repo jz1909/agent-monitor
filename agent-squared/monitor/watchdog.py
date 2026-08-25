@@ -1,39 +1,72 @@
 from datetime import datetime, timezone
 import json
-from hb_config import status, HEARTBEAT_PATH, WARNING_AFTER_SECONDS, REPORT_FILE
+import os
+import time
+from uuid import uuid4
+
+from hb_config import (
+    status,
+    HEARTBEAT_PATH,
+    WARNING_AFTER_SECONDS,
+    CHECK_INTERVAL_SECONDS,
+    REPORT_FILE,
+)
 
 
-def classify(hb_time):
+def classify(age_seconds):
+    if age_seconds is None or age_seconds >= WARNING_AFTER_SECONDS:
+        return status.DEAD
+    return status.OK
 
-    curr_time = datetime.now(timezone.utc)
-    hb_dt = datetime.fromisoformat(hb_time)
-    age_seconds = (curr_time - hb_dt).total_seconds()
-
-    if age_seconds >= WARNING_AFTER_SECONDS:
-        return (age_seconds, status.DEAD)
-    return (age_seconds, status.OK)
 
 def read_hb():
+    
     with open(HEARTBEAT_PATH, 'r') as hb_file:
         hb_data = json.load(hb_file)
+    hb_dt = datetime.fromisoformat(hb_data['time_utc'])
+    
 
-    hb_time = hb_data['time_utc']
-    return hb_time
+    if hb_dt.tzinfo is None:
+        hb_dt = hb_dt.replace(tzinfo=timezone.utc)
 
-def write_liveness():
-    hb_time = read_hb()
-    last_hb_time, curr_status = classify(hb_time)
+    age_seconds = (datetime.now(timezone.utc) - hb_dt).total_seconds()
+    return age_seconds, hb_data.get('frame_id')
 
-    record = {"status":curr_status, "hb_time": last_hb_time}
+
+
+def emit(record):
+    print(f"{record['status']} age={record['age_seconds']} frame={record['frame_id']}", flush=True)
     with open(REPORT_FILE, 'a') as report_file:
         report_file.write(json.dumps(record) + "\n")
 
 
+def check_once(prev_frame_id):
+    age_seconds, frame_id = read_hb()
+    curr_status = classify(age_seconds)
+
+    record = {
+        "checked_at_utc": datetime.now(timezone.utc).isoformat(),
+        "status": curr_status.name,
+        "age_seconds": age_seconds,
+        "frame_id": frame_id,
+        "restarted": prev_frame_id is not None and frame_id is not None and frame_id != prev_frame_id,
+    }
+    return record, frame_id
+
+
+def main():
+
+    wd_frame_id = uuid4().hex
+    prev_frame_id = None
     
+    while True:
+        record, frame_id = check_once(prev_frame_id)
+        if frame_id is not None:
+            prev_frame_id = frame_id
+        emit(record)
+        time.sleep(CHECK_INTERVAL_SECONDS)
+   
 
 
-
-    
-
-
-
+if __name__ == "__main__":
+    main()

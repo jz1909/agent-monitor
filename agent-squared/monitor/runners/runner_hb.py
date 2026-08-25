@@ -1,4 +1,4 @@
-import json
+import time
 
 from state import status
 from typing import Any
@@ -6,11 +6,12 @@ from typing import Any
 from buffer import stream_buffer
 from nodes import compact_node
 from render import renderState
-from config import AGENT_EFFORT, AGENT_MODEL
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
+from config import AGENT_MODEL
+from heartbeat import HeartbeatWriter, HEARTBEAT_TOOL_SPEC
+from hb_config import HEARTBEAT_TOOL_NAME, wrap_prompt, AGENT_EFFORT
 
-class McpTaskRunner:
+
+class HbTaskRunner:
 
     def __init__(self, task, chain, openai_client, snapshot_window:int = 1, loop_iterations:int = 5):
             self.task:str= task
@@ -32,102 +33,87 @@ class McpTaskRunner:
             self.input = []
             self.prev_id = None
             self.answer_parts: list[str] = []
-            
-            
+            self.hb: HeartbeatWriter = HeartbeatWriter()
 
 
     async def run(self) -> dict:
 
-        params = StdioServerParameters(
-        command='npx',
-        args=["-y", "@modelcontextprotocol/server-filesystem", "."])
+        self.tool_specs = [HEARTBEAT_TOOL_SPEC]
 
-        async with stdio_client(params) as (read, write):
-            async with ClientSession(read, write) as session:
-                await session.initialize()
-                listed_tools = await session.list_tools()
-                
+        self.input = [{"role":"user", "content":wrap_prompt(self.task["prompt"])}]
 
-                for tool in listed_tools.tools:
-                    spec = {
-                        "type":"function",
-                        "name":tool.name,
-                        "description":tool.description,
-                        "parameters": tool.input_schema,
-                    }
+        run_start = time.monotonic()
 
-                    self.tool_specs.append(spec)
+        for turn in range(1, self.loop_iterations + 1):
+            print(f"[turn {turn}] opening stream", flush=True)
 
-                self.input = [{"role":"user", "content":self.task["prompt"]}]
+            stream = await self._open_stream()
+            calls = []
+            async for event in stream:
+                if event.type == "response.created":
+                    self.prev_id = event.response.id
+                elif event.type == "response.output_text.delta":
+                    self.answer_parts.append(event.delta)
+                elif event.type == "response.reasoning_summary_text.delta":
+                    idx = event.summary_index
+                    await self._handle_summary_delta(event, idx)
+                    self.prev_idx = idx
+                elif event.type == "response.output_item.done":
+                    if event.item.type == "function_call":
+                            calls.append(event.item)
+            if self.prev_idx is not None:
+                await self._flush_summary(self.prev_idx)
+            self.summaries.clear()
+            self.prev_idx = None
 
-                for _ in range(self.loop_iterations):
-                    stream = await self._open_stream()
-                    calls = []
-                    async for event in stream:
-                        if event.type == "response.created":
-                            self.prev_id = event.response.id
-                        elif event.type == "response.output_text.delta":
-                            self.answer_parts.append(event.delta)
-                        elif event.type == "response.reasoning_summary_text.delta":
-                            idx = event.summary_index
-                            await self._handle_summary_delta(event, idx)
-                            self.prev_idx = idx
-                        elif event.type == "response.output_item.done":
-                            if event.item.type == "function_call":
-                                    calls.append(event.item)
-                    if self.prev_idx is not None:
-                        await self._flush_summary(self.prev_idx)
-                    self.summaries.clear()
-                    self.prev_idx = None
+            if not calls:
+                print(f"[end] agent stopped calling tools on turn {turn}", flush=True)
+                break
 
-                    if not calls:
-                        break 
+            self.input = await self._call_tool(tool_calls = calls)
+            self.renderer.update_tool_call(self.tool_call_hist)
 
-                    self.input = await self._call_tool(session=session, tool_calls = calls)
-                    self.renderer.update_tool_call(self.tool_call_hist)
 
-                                
-                                
-                await self._finalize()
-                return self._build_result()
+        await self._finalize()
+        return self._build_result()
 
-    async def _call_tool(self, session, tool_calls) -> list[Any]:
+
+    async def _call_tool(self, tool_calls) -> list[Any]:
         input = []
         for tool_call in tool_calls:
             self.tool_call_count += 1
             self.tool_call_hist.append(tool_call.name)
-            args = json.loads(tool_call.arguments)
-            r = await session.call_tool(tool_call.name, args)
-            output = self._mcp_result(r)
+
+            if tool_call.name == HEARTBEAT_TOOL_NAME:
+                output = self._beat()
+            else:
+                output = f"unknown tool: {tool_call.name}"
+
             input.append({
                         "type":"function_call_output",
                         "call_id":tool_call.call_id,
                         "output": output
                     })
         return input
-        
 
-    def _mcp_result(self, r):
-        parts = []
 
-        for c in r.content:
-            if getattr(c, "type") == "text":
-                parts.append(c.text)
-            elif getattr(c, "type") == "image":
-                parts.append(f"[image {c.mimeType}, {len(c.data)} b64chars]")
-            else:
-                parts.append(f"[{getattr(c, 'type', 'unknown')}] block")
+    def _beat(self) -> str:
+        try:
+            self.hb.beat()
+            print(f"[beat #{self.hb.beat_count}]", flush=True)
+            return "ok"
+        except Exception as e:
+            print(f"[beat FAILED] {e}", flush=True)
+            return f"heartbeat failed: {e}"
 
-        return "".join(parts) 
-         
-    
+
     async def _open_stream(self):
 
         kwargs = dict(
         model=AGENT_MODEL,
         reasoning={"effort": AGENT_EFFORT, "summary": "auto"},
-        tools=self.tool_specs,         
-        input=self.input,               
+        tools=self.tool_specs,
+        input=self.input,
         stream=True,
     )
 
@@ -138,17 +124,15 @@ class McpTaskRunner:
 
         return await self.openai_client.responses.create(**kwargs)
 
+
     async def _flush_summary(self, idx):
 
-        """When we're completed with a entire block of summary, we export it and reset stuff
-        """
         if idx not in self.summaries:
             return
-        
+
         self.buffer.append(self.summaries[idx])
 
         recent_sums = self.buffer.return_snapshot(self.snapshot_window)
-
         result = await self.chain.ainvoke({
             "reasoning_sums": recent_sums,
             "last_sum": self.compacted_sum,
@@ -180,11 +164,10 @@ class McpTaskRunner:
             await self._flush_summary(self.prev_idx)
 
 
-   
     async def _finalize(self):
         if not self.compacted_sum:
             return
-        
+
         final = await compact_node({
             "reasoning_sums": self.buffer.return_snapshot(1),
             "last_sum": self.compacted_sum,
@@ -197,16 +180,18 @@ class McpTaskRunner:
             new_curr_sum=self.compacted_sum,
             new_curr_analysis=self.renderer.curr_analysis,
         )
-                
+
 
     def _build_result(self) -> dict[Any]:
         return  {
             "question_id": self.task.get("question_id"),
             "question_title": self.task.get("question_title"),
             "agent_answer":"".join(self.answer_parts),
+            "frame_id": self.hb.frame_id,
+            "beat_count": self.hb.beat_count,
             **self.renderer.to_dict()
         }
-    
-async def run_mcp_task(task, chain, openai_client, snapshot_window, loop_iterations=10) -> dict:
-    return await McpTaskRunner(task, chain, openai_client, snapshot_window, loop_iterations).run()
-    
+
+
+async def run_hb_task(task, chain, openai_client, snapshot_window, loop_iterations=25) -> dict:
+    return await HbTaskRunner(task, chain, openai_client, snapshot_window, loop_iterations).run()
