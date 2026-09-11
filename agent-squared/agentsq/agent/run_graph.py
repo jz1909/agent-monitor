@@ -9,7 +9,7 @@ async def run_graph_task(task, experiment, monitor, client, run_dir) -> dict:
     adapter = experiment.workflow
     graph = adapter.build()
 
-    monitor.topology = adapter.topology(graph)
+    monitor.topos = adapter.topology(graph) if experiment.use_topos else ""
 
     stream = graph.astream(
         adapter.make_input(task),

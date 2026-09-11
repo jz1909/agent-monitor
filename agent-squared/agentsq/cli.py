@@ -58,7 +58,7 @@ async def main_async(args, rd):
     async def run_one(task):
         monitor = Monitor(chain, experiment.snapshot_window)
         async with sem:
-            result = await run_task(task, experiment, monitor, client, rd)
+            result = await experiment.runner(task, experiment, monitor, client, rd)
         async with lock:
             append_results(output, [result])
             print(f"done: {task.get('question_id')}", flush=True)

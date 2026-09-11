@@ -15,3 +15,4 @@ class MonitorState(TypedDict):
     curr_analysis: str
     curr_state: Phase
     status_history: list[Phase]
+    topology: str

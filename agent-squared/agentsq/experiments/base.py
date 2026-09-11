@@ -2,19 +2,24 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
+from agentsq.agent.run import run_task
 from agentsq.agent.tools.base import ToolBackend
 
 
 @dataclass
 class Experiment:
     name: str
-    backend: Callable[[Path], ToolBackend]
+    backend: Callable[[Path], ToolBackend] = None
     effort: str = "medium"
     max_turns: int = 1
     concurrency: int = 10
     snapshot_window: int = 1
     watchdog: bool = False
     wrap: Callable[[str], str] = lambda prompt: prompt
+    workflow: object = None
+    loops: int = 3
+    use_topos:bool = False
+    runner: Callable = run_task
 
 
 REGISTRY: dict[str, Experiment] = {}

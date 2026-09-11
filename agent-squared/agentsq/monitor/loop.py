@@ -6,9 +6,10 @@ from agentsq.monitor.trace import RunTrace
 
 class Monitor:
 
-    def __init__(self, chain, snapshot_window: int = 1):
+    def __init__(self, chain, snapshot_window: int = 1, topos: str =""):
         self.chain = chain
         self.snapshot_window = snapshot_window
+        self.topos = topos
 
         self.buffer = SummaryBuffer()
         self.trace = RunTrace()
@@ -26,6 +27,7 @@ class Monitor:
             "curr_analysis": "",
             "curr_state": self.phase,
             "status_history": self.history,
+            "topology": self.topos,
         })
 
         self.trace.update(

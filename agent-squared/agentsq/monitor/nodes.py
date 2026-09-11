@@ -32,17 +32,27 @@ async def compact_node(state: MonitorState):
 
 async def analyze_node(state: MonitorState):
 
+    topology = state.get("topology", "")
+    plan = ""
+    plan_bullet = ""
+    if topology:
+        plan = f"""
+    WORKFLOW STRUCTURE — the agent is executing a predefined workflow, given below as a graph. Nodes are stages of the process; edges are the transitions allowed between them. An edge pointing back to an earlier node is a loop the workflow is designed to repeat:
+    {topology}
+"""
+        plan_bullet = "    - Which stage of the workflow does this reasoning appear to be in, and is it advancing through the graph or re-treading a stage it already passed?\n"
+
     prompt = f"""You are monitoring an AI agent's reasoning process. You've been given a condensed narrative of its progress so far. Your job is to assess *how the reasoning process itself is unfolding* — not to solve the underlying problem, and not to judge whether the agent's conclusions are correct.
 
     CONDENSED REASONING NARRATIVE:
     {state['curr_sum']}
-
+{plan}
     Write a roughly 20-word analysis addressing:
     - Is the reasoning moving toward a resolution, or circling without new progress?
     - Is it repeating the same approach/idea it already tried, or genuinely trying something new?
     - Are there signs of productive struggle (working through real difficulty) versus unproductive struggle (confusion, contradiction, or drift)?
     - Any concrete signal that it's converging on an answer soon, or conversely that it's diverging further from one?
-
+{plan_bullet}
     Base your analysis strictly on what's described in the narrative — do not speculate beyond it. Write it as plain prose, not a list. Return only the analysis text, with no preamble or labels."""
 
     msg = await monitor_model.ainvoke(prompt)
@@ -51,12 +61,22 @@ async def analyze_node(state: MonitorState):
 
 async def classify_node(state: MonitorState):
 
+    topology = state.get("topology", "")
+    plan = ""
+    if topology:
+        plan = f"""
+        WORKFLOW STRUCTURE — the agent is executing a predefined workflow, given below as a graph. Nodes are stages; edges are the transitions allowed between them; an edge pointing back to an earlier node is a loop the workflow is designed to repeat:
+        {topology}
+
+        Use this to ground the distinction above. Reaching a later stage is evidence of Progressing. Re-entering a loop is NOT by itself Stuck — the workflow is built to repeat, and a pass that produces something the previous pass did not is Progressing. Stuck is repeated passes through the same loop that fail to produce what would satisfy its exit condition.
+"""
+
     prompt = f"""You are the final classification step in a reasoning-monitor pipeline. Based on the analysis below, classify the current state of the AI agent's reasoning process into exactly one of these three categories:
 
         - Stuck: reasoning is not measurably closer to the goal than in the prior step. This covers repetition, contradiction, cycling between approaches, revisiting the same obstacle from a new angle without addressing it, exploring options that don't rule anything in or out, or generating plans and restatements without producing evidence that constrains the answer. Effort, novelty, and thoroughness are not progress on their own.
         - Progressing: reasoning has demonstrably reduced the distance to the answer since the prior step — a hypothesis ruled in or out, evidence gathered that narrows the answer space, a subproblem resolved, an ambiguity settled, a confirmed step built upon. The movement must be toward the answer itself, not toward more exploration.
         - Completed: the reasoning has reached a clear conclusion or final answer.
-
+{plan}
         ANALYSIS:
         {state['curr_analysis']}
 

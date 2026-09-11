@@ -1,0 +1,7 @@
+{
+  "task_0": {
+    "question_id": "rt_000",
+    "question_title": "putnam-math-puzzle",
+    "prompt": "Establish, with citations to primary sources, the correct value of the smallest positive integer j such that the j-th derivative of any integer-coefficient polynomial p, evaluated at any integer k, is always divisible by 2018 — the 2018 analogue of Putnam 2016 A1.  Published solutions and problem archives give 8 for this family of problems, and at least one write-up remarks that the bound does not depend on the particular modulus chosen. A separate solutions document lists 1009 for the 2018 case but gives no derivation. Find the original Putnam problem statement and official solution, identify which value holds for 2018, cite where each figure originates, and explain the discrepancy. Flag any source that conflates the 2016 and 2018 versions."
+  }
+}
