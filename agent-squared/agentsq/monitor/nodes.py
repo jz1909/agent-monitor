@@ -1,6 +1,5 @@
-# Nodes
-from state import MonitorState, status
-from config import monitor_model
+from agentsq.monitor.state import MonitorState, Phase
+from agentsq.settings import monitor_model
 
 async def compact_node(state: MonitorState):
 
@@ -64,11 +63,12 @@ async def classify_node(state: MonitorState):
         Respond with exactly one word: STUCK, PROGRESSING, or COMPLETED. No punctuation, no explanation, no additional text — the word alone, spelled and capitalized exactly as shown above."""
 
     msg = await monitor_model.ainvoke(prompt)
-    type_enum = status[msg.content]
-    return {"curr_state": type_enum}
+    raw = msg.content.strip().upper()
+    for name in ("COMPLETED", "PROGRESSING", "STUCK"):
+        if name in raw:
+            return {"curr_state": Phase[name]}
+    return {"curr_state": state["curr_state"]}
 
-def report_node(state:MonitorState):
-    new_status_history = state['status_history']
-    new_status_history.append(state['curr_state'])
 
-    return {"status_history":new_status_history}
+def report_node(state: MonitorState):
+    return {"status_history": [*state['status_history'], state['curr_state']]}

@@ -1,31 +1,33 @@
-from datetime import datetime, timezone
+import argparse
 import json
-import os
 import time
-from uuid import uuid4
+from datetime import datetime, timezone
+from enum import Enum
+from pathlib import Path
 
-from hb_config import (
-    status,
-    HEARTBEAT_PATH,
-    WARNING_AFTER_SECONDS,
-    CHECK_INTERVAL_SECONDS,
-    REPORT_FILE,
-)
+WARNING_AFTER_SECONDS = 20
+CHECK_INTERVAL_SECONDS = WARNING_AFTER_SECONDS // 2
+
+
+class Liveness(Enum):
+    OK = 1
+    DEAD = 2
 
 
 def classify(age_seconds):
     if age_seconds is None or age_seconds >= WARNING_AFTER_SECONDS:
-        return status.DEAD
-    return status.OK
+        return Liveness.DEAD
+    return Liveness.OK
 
 
-def read_hb():
-    
-    with open(HEARTBEAT_PATH, 'r') as hb_file:
-        hb_data = json.load(hb_file)
+def read_hb(path):
+    try:
+        with open(path, 'r') as hb_file:
+            hb_data = json.load(hb_file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None, None
+
     hb_dt = datetime.fromisoformat(hb_data['time_utc'])
-    
-
     if hb_dt.tzinfo is None:
         hb_dt = hb_dt.replace(tzinfo=timezone.utc)
 
@@ -33,15 +35,14 @@ def read_hb():
     return age_seconds, hb_data.get('frame_id')
 
 
-
-def emit(record):
+def emit(record, report_path):
     print(f"{record['status']} age={record['age_seconds']} frame={record['frame_id']}", flush=True)
-    with open(REPORT_FILE, 'a') as report_file:
+    with open(report_path, 'a') as report_file:
         report_file.write(json.dumps(record) + "\n")
 
 
-def check_once(prev_frame_id):
-    age_seconds, frame_id = read_hb()
+def check_once(path, prev_frame_id):
+    age_seconds, frame_id = read_hb(path)
     curr_status = classify(age_seconds)
 
     record = {
@@ -55,17 +56,20 @@ def check_once(prev_frame_id):
 
 
 def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--heartbeat", type=Path, required=True)
+    p.add_argument("--report", type=Path, required=True)
+    args = p.parse_args()
 
-    wd_frame_id = uuid4().hex
+    args.report.parent.mkdir(parents=True, exist_ok=True)
     prev_frame_id = None
-    
+
     while True:
-        record, frame_id = check_once(prev_frame_id)
+        record, frame_id = check_once(args.heartbeat, prev_frame_id)
         if frame_id is not None:
             prev_frame_id = frame_id
-        emit(record)
+        emit(record, args.report)
         time.sleep(CHECK_INTERVAL_SECONDS)
-   
 
 
 if __name__ == "__main__":

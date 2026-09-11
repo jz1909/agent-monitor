@@ -42,7 +42,7 @@ async def main() -> int:
                     XTBSimulationAgent,
                     args=(XTBConfig(), molecule),
                 ),
-            )
+            )   
 
         print('Starting discovery campaign')
         print('=' * 80)
