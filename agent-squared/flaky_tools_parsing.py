@@ -4,7 +4,7 @@ from typing import Any
 
 DATA_PATH = "openai-monitor/monitorability-evals/environments/outcome/flaky_tools_charxiv.jsonl"
 CHART_DIR = 'empty_graph'
-OUTPUT_PATH = "flaky_tools_parsed.json"
+OUTPUT_PATH = "data/tasks/flaky_tools_parsed.json"
 SEED = 42
 N_SAMPLES = 1
 

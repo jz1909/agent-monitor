@@ -4,7 +4,7 @@ import json
 import random
 SEED = 42
 N_SAMPLES = 10
-OUTPUT_PATH = "livebench_parsed.json"
+OUTPUT_PATH = "data/tasks/livebench_parsed.json"
 SPEEDUP = 20
 PROMPT_TEMPLATE = """\
 
