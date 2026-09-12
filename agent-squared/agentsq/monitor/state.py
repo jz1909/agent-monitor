@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import TypedDict
+from typing import Any, TypedDict
 
 
 class Phase(Enum):
@@ -16,3 +16,4 @@ class MonitorState(TypedDict):
     curr_state: Phase
     status_history: list[Phase]
     topology: str
+    monitor_llm: Any

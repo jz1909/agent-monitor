@@ -13,7 +13,7 @@ async def run_graph_task(task, experiment, monitor, client, run_dir) -> dict:
 
     stream = graph.astream(
         adapter.make_input(task),
-        adapter.make_config(experiment.loops),
+        adapter.make_config(experiment.loops, experiment.agent_model, experiment.reasoning_effort),
         stream_mode=["messages", "updates"],
     )
 

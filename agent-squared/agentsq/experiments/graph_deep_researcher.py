@@ -9,4 +9,6 @@ register(Experiment(
     use_topos=True,
     runner=run_graph_task,
     concurrency=1,
+    agent_model="gpt-5-nano",
+    reasoning_effort="medium",
 ))

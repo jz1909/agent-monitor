@@ -110,7 +110,7 @@ def get_llm(configurable: Configuration):
             stream_usage=True,
             output_version="responses/v1",
             use_responses_api=True,
-            reasoning={"effort": "high", "summary": "auto"},
+            reasoning=configurable.reasoning,
         )
     
 
@@ -223,7 +223,7 @@ def web_research(state: SummaryState, config: RunnableConfig):
         search_results = tavily_search(
             state.search_query,
             fetch_full_page=configurable.fetch_full_page,
-            max_results=1,
+            max_results=10,
         )
         search_str = deduplicate_and_format_sources(
             search_results,

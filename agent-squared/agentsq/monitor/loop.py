@@ -6,10 +6,11 @@ from agentsq.monitor.trace import RunTrace
 
 class Monitor:
 
-    def __init__(self, chain, snapshot_window: int = 1, topos: str =""):
+    def __init__(self, chain, snapshot_window: int = 1, topos: str ="", monitor_llm=None):
         self.chain = chain
         self.snapshot_window = snapshot_window
         self.topos = topos
+        self.monitor_llm = monitor_llm
 
         self.buffer = SummaryBuffer()
         self.trace = RunTrace()
@@ -28,6 +29,7 @@ class Monitor:
             "curr_state": self.phase,
             "status_history": self.history,
             "topology": self.topos,
+            "monitor_llm": self.monitor_llm,
         })
 
         self.trace.update(
@@ -49,6 +51,7 @@ class Monitor:
         final = await compact_node({
             "reasoning_sums": self.buffer.return_snapshot(1),
             "last_sum": self.compacted_sum,
+            "monitor_llm": self.monitor_llm,
         })
 
         self.compacted_sum = final['curr_sum']

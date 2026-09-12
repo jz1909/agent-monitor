@@ -1,11 +1,10 @@
 from agentsq.agent.stream import SummarySegmenter
-from agentsq.settings import AGENT_MODEL
 
 
 def stream_kwargs(experiment, specs, inputs, prev_id):
     kwargs = dict(
-        model=AGENT_MODEL,
-        reasoning={"effort": experiment.effort, "summary": "auto"},
+        model=experiment.agent_model,
+        reasoning={"effort": experiment.reasoning_effort, "summary": "auto"},
         input=inputs,
         stream=True,
     )

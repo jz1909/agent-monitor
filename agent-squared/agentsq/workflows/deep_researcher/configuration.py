@@ -26,13 +26,18 @@ class Configuration(BaseModel):
         title="LLM Model Name",
         description="Name of the LLM model to use",
     )
+    reasoning: dict = Field(
+        default={"effort": "medium", "summary": "auto"},
+        title="Reasoning Configuration",
+        description="Configuration for reasoning effort and summary",
+    )
     llm_provider: Literal["ollama", "lmstudio", "openai"] = Field(
         default="openai",
         title="LLM Provider",
         description="Provider for the LLM (Ollama or LMStudio)",
     )
     search_api: Literal["perplexity", "tavily", "duckduckgo", "searxng"] = Field(
-        default="duckduckgo", title="Search API", description="Web search API to use"
+        default="tavily", title="Search API", description="Web search API to use"
     )
     fetch_full_page: bool = Field(
         default=True,

@@ -15,7 +15,7 @@ TASK:
 register(Experiment(
     name="hb",
     backend=lambda run_dir: HeartbeatTools(run_dir / "heartbeat.json"),
-    effort="medium",
+    reasoning_effort="medium",
     max_turns=25,
     concurrency=1,
     watchdog=True,

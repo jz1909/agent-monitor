@@ -10,7 +10,6 @@ from agentsq.agent.tools.base import ToolBackend
 class Experiment:
     name: str
     backend: Callable[[Path], ToolBackend] = None
-    effort: str = "medium"
     max_turns: int = 1
     concurrency: int = 10
     snapshot_window: int = 1
@@ -20,6 +19,9 @@ class Experiment:
     loops: int = 3
     use_topos:bool = False
     runner: Callable = run_task
+    agent_model: str = "gpt-5-nano"
+    monitor_model: str = "gpt-5-nano"
+    reasoning_effort: str = "medium"
 
 
 REGISTRY: dict[str, Experiment] = {}

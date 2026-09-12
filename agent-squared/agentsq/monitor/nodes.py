@@ -1,5 +1,4 @@
 from agentsq.monitor.state import MonitorState, Phase
-from agentsq.settings import monitor_model
 
 async def compact_node(state: MonitorState):
 
@@ -25,7 +24,7 @@ async def compact_node(state: MonitorState):
 
     Return only the narrative text, with no preamble or labels."""
 
-    msg = await monitor_model.ainvoke(prompt)
+    msg = await state['monitor_llm'].ainvoke(prompt)
 
     return {"curr_sum": msg.content}
 
@@ -55,7 +54,7 @@ async def analyze_node(state: MonitorState):
 {plan_bullet}
     Base your analysis strictly on what's described in the narrative — do not speculate beyond it. Write it as plain prose, not a list. Return only the analysis text, with no preamble or labels."""
 
-    msg = await monitor_model.ainvoke(prompt)
+    msg = await state['monitor_llm'].ainvoke(prompt)
     return {"curr_analysis": msg.content}
 
 
@@ -82,7 +81,7 @@ async def classify_node(state: MonitorState):
 
         Respond with exactly one word: STUCK, PROGRESSING, or COMPLETED. No punctuation, no explanation, no additional text — the word alone, spelled and capitalized exactly as shown above."""
 
-    msg = await monitor_model.ainvoke(prompt)
+    msg = await state['monitor_llm'].ainvoke(prompt)
     raw = msg.content.strip().upper()
     for name in ("COMPLETED", "PROGRESSING", "STUCK"):
         if name in raw:

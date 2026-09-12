@@ -5,9 +5,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from langchain.chat_models import init_chat_model
 from openai import AsyncOpenAI
 
-from agentsq.agent.run import run_task
 from agentsq.experiments import REGISTRY, get
 from agentsq.monitor.loop import Monitor
 from agentsq.monitor.pipeline import build_chain
@@ -21,6 +21,9 @@ def parse_args():
     p.add_argument("--output", type=Path)
     p.add_argument("--experiment", required=True, choices=sorted(REGISTRY))
     p.add_argument("--run-id")
+    p.add_argument("--agent-model")
+    p.add_argument("--monitor-model")
+    p.add_argument("--reasoning-effort")
     return p.parse_args()
 
 
@@ -46,17 +49,25 @@ def stop_watchdog(proc):
 
 async def main_async(args, rd):
     experiment = get(args.experiment)
+    if args.agent_model:
+        experiment.agent_model = args.agent_model
+    if args.monitor_model:
+        experiment.monitor_model = args.monitor_model
+    if args.reasoning_effort:
+        experiment.reasoning_effort = args.reasoning_effort
+
     tasks = load_tasks(args.input)
     output = args.output or rd / "results.jsonl"
 
     chain = build_chain()
     client = AsyncOpenAI()
+    monitor_llm = init_chat_model(experiment.monitor_model)
 
     sem = asyncio.Semaphore(experiment.concurrency)
     lock = asyncio.Lock()
 
     async def run_one(task):
-        monitor = Monitor(chain, experiment.snapshot_window)
+        monitor = Monitor(chain, experiment.snapshot_window, monitor_llm=monitor_llm)
         async with sem:
             result = await experiment.runner(task, experiment, monitor, client, rd)
         async with lock:
