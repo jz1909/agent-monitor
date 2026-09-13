@@ -12,11 +12,8 @@ from langgraph.graph import START, END, StateGraph
 from .configuration import Configuration, SearchAPI
 from .utils import (
     deduplicate_and_format_sources,
-    tavily_search,
+    tavily_wrapper,
     format_sources,
-    perplexity_search,
-    duckduckgo_search,
-    searxng_search,
     strip_thinking_tokens,
     get_config_value,
 )
@@ -220,47 +217,18 @@ def web_research(state: SummaryState, config: RunnableConfig):
 
     # Search the web
     if search_api == "tavily":
-        search_results = tavily_search(
+        search_results = tavily_wrapper(configurable.search_version,
             state.search_query,
             fetch_full_page=configurable.fetch_full_page,
             max_results=10,
         )
+        
         search_str = deduplicate_and_format_sources(
             search_results,
             max_tokens_per_source=MAX_TOKENS_PER_SOURCE,
             fetch_full_page=configurable.fetch_full_page,
         )
-    elif search_api == "perplexity":
-        search_results = perplexity_search(
-            state.search_query, state.research_loop_count
-        )
-        search_str = deduplicate_and_format_sources(
-            search_results,
-            max_tokens_per_source=MAX_TOKENS_PER_SOURCE,
-            fetch_full_page=configurable.fetch_full_page,
-        )
-    elif search_api == "duckduckgo":
-        search_results = duckduckgo_search(
-            state.search_query,
-            max_results=3,
-            fetch_full_page=configurable.fetch_full_page,
-        )
-        search_str = deduplicate_and_format_sources(
-            search_results,
-            max_tokens_per_source=MAX_TOKENS_PER_SOURCE,
-            fetch_full_page=configurable.fetch_full_page,
-        )
-    elif search_api == "searxng":
-        search_results = searxng_search(
-            state.search_query,
-            max_results=3,
-            fetch_full_page=configurable.fetch_full_page,
-        )
-        search_str = deduplicate_and_format_sources(
-            search_results,
-            max_tokens_per_source=MAX_TOKENS_PER_SOURCE,
-            fetch_full_page=configurable.fetch_full_page,
-        )
+    
     else:
         raise ValueError(f"Unsupported search API: {configurable.search_api}")
 

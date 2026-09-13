@@ -11,6 +11,7 @@ class RunTrace:
         self.phase_history: list[Phase] = []
         self.analysis_log: list[str] = []
         self.summary_log: list[str] = []
+        self.raw_summary_log: list[str] = []
         self.phase_counter: int = 0
         self.tool_history: list[str] = []
 
@@ -21,6 +22,7 @@ class RunTrace:
             "phase_history": [p.name for p in self.phase_history],
             "analysis_log": self.analysis_log,
             "summary_log": self.summary_log,
+            "raw_summary_log": self.raw_summary_log,
             "tool_call": self.tool_history,
         }
 
@@ -32,6 +34,7 @@ class RunTrace:
         self.phase_history.append(phase)
         self.analysis_log.append(curr_analysis)
         self.summary_log.append(curr_sum)
+        self.raw_summary_log.append(summary_text)
         self.phase_counter += 1
 
     def set_tool_calls(self, tool_hist):

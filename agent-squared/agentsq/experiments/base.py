@@ -22,6 +22,7 @@ class Experiment:
     agent_model: str = "gpt-5-nano"
     monitor_model: str = "gpt-5-nano"
     reasoning_effort: str = "medium"
+    search_version:str = "baseline"
 
 
 REGISTRY: dict[str, Experiment] = {}

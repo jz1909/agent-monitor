@@ -14,12 +14,13 @@ def make_input(task):
     return {"research_topic": task['prompt']}
 
 
-def make_config(loops, agent_model, reasoning_effort) -> dict[Any]:
+def make_config(loops, agent_model, reasoning_effort, search_version) -> dict[Any]:
     return {
         'configurable': {
             "max_web_research_loops": loops,
             "local_llm": agent_model,
             "reasoning": {"effort": reasoning_effort, "summary": "auto"},
+            "search_version":search_version
         },
         'recursion_limit': 10
          + NODES_PER_LOOP * (loops+2),

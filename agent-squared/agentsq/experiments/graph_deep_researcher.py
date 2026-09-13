@@ -11,4 +11,5 @@ register(Experiment(
     concurrency=1,
     agent_model="gpt-5-nano",
     reasoning_effort="medium",
+    search_version="baseline"
 ))

@@ -64,6 +64,11 @@ class Configuration(BaseModel):
         title="Use Tool Calling",
         description="Use tool calling instead of JSON mode for structured output",
     )
+    search_version: str = Field(
+        default="baseline",
+        title="Search tool", 
+        description="Calling different types of search for experimentation"
+    )
 
     @classmethod
     def from_runnable_config(

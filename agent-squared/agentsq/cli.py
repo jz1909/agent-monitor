@@ -24,6 +24,7 @@ def parse_args():
     p.add_argument("--agent-model")
     p.add_argument("--monitor-model")
     p.add_argument("--reasoning-effort")
+    p.add_argument("--search-version", choices=["baseline", "broken", "limited"])
     return p.parse_args()
 
 
@@ -55,6 +56,8 @@ async def main_async(args, rd):
         experiment.monitor_model = args.monitor_model
     if args.reasoning_effort:
         experiment.reasoning_effort = args.reasoning_effort
+    if args.search_version:
+        experiment.search_version = args.search_version
 
     tasks = load_tasks(args.input)
     output = args.output or rd / "results.jsonl"

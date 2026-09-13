@@ -1,3 +1,5 @@
+from langchain_core.callbacks import UsageMetadataCallbackHandler
+
 from agentsq.monitor.buffer import SummaryBuffer
 from agentsq.monitor.nodes import compact_node
 from agentsq.monitor.state import Phase
@@ -10,7 +12,8 @@ class Monitor:
         self.chain = chain
         self.snapshot_window = snapshot_window
         self.topos = topos
-        self.monitor_llm = monitor_llm
+        self.usage = UsageMetadataCallbackHandler()
+        self.monitor_llm = monitor_llm.with_config(callbacks=[self.usage]) if monitor_llm else None
 
         self.buffer = SummaryBuffer()
         self.trace = RunTrace()
