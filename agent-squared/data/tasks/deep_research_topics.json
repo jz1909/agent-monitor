@@ -1,0 +1,7 @@
+{
+    "task_0": {
+        "question_id": "drt_000",
+        "question_title": "frontier-ai-compute-thresholds",
+        "prompt": "Three jurisdictions have adopted compute-based or capability-based thresholds that trigger mandatory reporting obligations for frontier AI developers. For each, identify the exact numeric threshold, the legal instrument and section that sets it, and the effective date. Then determine which jurisdiction's threshold would capture the largest number of currently announced training runs, and show the comparison as a table."
+    }
+}

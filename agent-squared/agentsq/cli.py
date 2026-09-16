@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import subprocess
+from dataclasses import replace
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -15,7 +16,7 @@ from agentsq.settings import ROOT, run_dir
 from agentsq.tasks import append_results, load_tasks
 
 
-def parse_args():
+def parse_args(argv=None):
     p = argparse.ArgumentParser()
     p.add_argument("--input", type=Path, required=True)
     p.add_argument("--output", type=Path)
@@ -25,7 +26,8 @@ def parse_args():
     p.add_argument("--monitor-model")
     p.add_argument("--reasoning-effort")
     p.add_argument("--search-version", choices=["baseline", "broken", "limited"])
-    return p.parse_args()
+    p.add_argument("--use-topos", action=argparse.BooleanOptionalAction)
+    return p.parse_args(argv)
 
 
 def start_watchdog(rd):
@@ -49,15 +51,15 @@ def stop_watchdog(proc):
 
 
 async def main_async(args, rd):
-    experiment = get(args.experiment)
-    if args.agent_model:
-        experiment.agent_model = args.agent_model
-    if args.monitor_model:
-        experiment.monitor_model = args.monitor_model
-    if args.reasoning_effort:
-        experiment.reasoning_effort = args.reasoning_effort
-    if args.search_version:
-        experiment.search_version = args.search_version
+
+    overrides = {
+        "agent_model": args.agent_model,
+        "monitor_model": args.monitor_model,
+        "reasoning_effort": args.reasoning_effort,
+        "search_version": args.search_version,
+        "use_topos": args.use_topos,
+    }
+    experiment = replace(get(args.experiment), **{k: v for k, v in overrides.items() if v is not None})
 
     tasks = load_tasks(args.input)
     output = args.output or rd / "results.jsonl"
@@ -75,22 +77,25 @@ async def main_async(args, rd):
             result = await experiment.runner(task, experiment, monitor, client, rd)
         async with lock:
             append_results(output, [result])
-            print(f"done: {task.get('question_id')}", flush=True)
+            print(f"[{rd.name}] done: {task.get('question_id')}", flush=True)
 
     await asyncio.gather(*(run_one(task) for task in tasks))
 
 
-def main():
-    args = parse_args()
+async def run(args):
     rd = run_dir(args.run_id or f"{args.experiment}-{datetime.now():%Y%m%d-%H%M%S}")
     print(f"run dir: {rd}", flush=True)
 
     watchdog_proc = start_watchdog(rd) if get(args.experiment).watchdog else None
     try:
-        asyncio.run(main_async(args, rd))
+        await main_async(args, rd)
     finally:
         if watchdog_proc is not None:
             stop_watchdog(watchdog_proc)
+
+
+def main(argv=None):
+    asyncio.run(run(parse_args(argv)))
 
 
 if __name__ == "__main__":
