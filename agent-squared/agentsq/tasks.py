@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 
 def load_tasks(path) -> list[dict]:
@@ -8,6 +9,7 @@ def load_tasks(path) -> list[dict]:
 
 
 def append_results(path, results: list[dict]):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, "a") as f:
         for result in results:
             f.write(json.dumps(result) + "\n")

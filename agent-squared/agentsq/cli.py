@@ -14,6 +14,7 @@ from agentsq.monitor.loop import Monitor
 from agentsq.monitor.pipeline import build_chain
 from agentsq.settings import ROOT, run_dir
 from agentsq.tasks import append_results, load_tasks
+from agentsq.workflows.deep_researcher.graph import MAX_RETRIES, REQUEST_TIMEOUT, log
 
 
 def parse_args(argv=None):
@@ -66,7 +67,11 @@ async def main_async(args, rd):
 
     chain = build_chain()
     client = AsyncOpenAI()
-    monitor_llm = init_chat_model(experiment.monitor_model)
+    monitor_llm = init_chat_model(
+        experiment.monitor_model,
+        timeout=REQUEST_TIMEOUT,
+        max_retries=MAX_RETRIES,
+    )
 
     sem = asyncio.Semaphore(experiment.concurrency)
     lock = asyncio.Lock()

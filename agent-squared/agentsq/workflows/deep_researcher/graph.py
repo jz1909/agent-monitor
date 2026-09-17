@@ -1,4 +1,7 @@
+import functools
 import json
+import time
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 from typing_extensions import Literal
@@ -36,6 +39,32 @@ from .prompts import (
 # Constants
 MAX_TOKENS_PER_SOURCE = 1000
 CHARS_PER_TOKEN = 4
+# Fail fast instead of inheriting the OpenAI SDK default (600s x 2 retries = 30 min).
+REQUEST_TIMEOUT = 120
+MAX_RETRIES = 2
+
+
+def log(msg: str):
+    """Print a timestamped progress line, unbuffered so it shows up during a run."""
+    print(f"[{datetime.now():%H:%M:%S}] {msg}", flush=True)
+
+
+def trace_node(func):
+    """Log entry, exit and duration of a graph node so stalls are visible live."""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        log(f"-> {func.__name__}")
+        start = time.monotonic()
+        try:
+            result = func(*args, **kwargs)
+        except Exception as e:
+            log(f"!! {func.__name__} failed after {time.monotonic() - start:.1f}s: {e!r}")
+            raise
+        log(f"<- {func.__name__} ({time.monotonic() - start:.1f}s)")
+        return result
+
+    return wrapper
 
 def generate_search_query_with_structured_output(
     configurable: Configuration,
@@ -108,6 +137,8 @@ def get_llm(configurable: Configuration):
             output_version="responses/v1",
             use_responses_api=True,
             reasoning=configurable.reasoning,
+            timeout=REQUEST_TIMEOUT,
+            max_retries=MAX_RETRIES,
         )
     
 
@@ -141,6 +172,7 @@ def get_llm(configurable: Configuration):
     #         )
 
 # Nodes
+@trace_node
 def generate_query(state: SummaryState, config: RunnableConfig):
     """LangGraph node that generates a search query based on the research topic.
 
@@ -195,6 +227,7 @@ def generate_query(state: SummaryState, config: RunnableConfig):
     )
 
 
+@trace_node
 def web_research(state: SummaryState, config: RunnableConfig):
     """LangGraph node that performs web research using the generated search query.
 
@@ -223,6 +256,11 @@ def web_research(state: SummaryState, config: RunnableConfig):
             max_results=10,
         )
         
+        log(
+            f"   search[{configurable.search_version}] q={state.search_query!r} "
+            f"-> {len(search_results.get('results', []))} results"
+        )
+
         search_str = deduplicate_and_format_sources(
             search_results,
             max_tokens_per_source=MAX_TOKENS_PER_SOURCE,
@@ -239,6 +277,7 @@ def web_research(state: SummaryState, config: RunnableConfig):
     }
 
 
+@trace_node
 def summarize_sources(state: SummaryState, config: RunnableConfig):
     """LangGraph node that summarizes web research results.
 
@@ -292,6 +331,7 @@ def summarize_sources(state: SummaryState, config: RunnableConfig):
     return {"running_summary": running_summary}
 
 
+@trace_node
 def reflect_on_summary(state: SummaryState, config: RunnableConfig):
     """LangGraph node that identifies knowledge gaps and generates follow-up queries.
 
@@ -348,6 +388,7 @@ def reflect_on_summary(state: SummaryState, config: RunnableConfig):
     )
 
 
+@trace_node
 def finalize_summary(state: SummaryState):
     """LangGraph node that finalizes the research summary.
 

@@ -1,6 +1,7 @@
 from langchain_core.callbacks import UsageMetadataCallbackHandler
 
 from agentsq.agent.stream import LCSSegmenter
+from agentsq.workflows.deep_researcher.graph import log
 
 
 async def run_graph_task(task, experiment, monitor, client, run_dir) -> dict:
@@ -47,6 +48,7 @@ async def run_graph_task(task, experiment, monitor, client, run_dir) -> dict:
                     continue
                 block_result = segmenter.feed(node, summary["index"], text)
                 if block_result:
+                    log(f"   monitor.observe #{monitor.trace.phase_counter + 1} ({node})")
                     await monitor.observe(block_result)
 
   
