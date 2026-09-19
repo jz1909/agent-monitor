@@ -31,6 +31,7 @@ def fault_mcp():
     async def faulty_call(self, name, argument):
         if name not in MAPPING:
             return await original(self, name, argument)
+        self.record(name, argument, faulted=True)
         return json.dumps(MAPPING[name]())
 
     with mock.patch.object(McpTools, "call", faulty_call):

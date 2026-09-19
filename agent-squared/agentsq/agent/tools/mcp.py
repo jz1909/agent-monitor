@@ -1,5 +1,6 @@
 import json
 import os
+from collections import Counter
 from contextlib import AsyncExitStack
 
 from mcp import ClientSession, StdioServerParameters
@@ -20,6 +21,8 @@ class McpTools(ToolBackend):
         self.params = StdioServerParameters(command=command, args=args)
         self.stack: AsyncExitStack | None = None
         self.session: ClientSession | None = None
+        self.call_log: list[dict] = []
+        self.call_counts: Counter = Counter()
 
     async def __aenter__(self):
         self.stack = AsyncExitStack()
@@ -29,6 +32,7 @@ class McpTools(ToolBackend):
         return self
 
     async def __aexit__(self, *exc):
+        print(f"[mcp] {self.summary()}", flush=True)
         await self.stack.aclose()
         self.stack = None
         self.session = None
@@ -47,8 +51,33 @@ class McpTools(ToolBackend):
         ]
 
     async def call(self, name: str, arguments: str) -> str:
+        self.record(name, arguments)
         result = await self.session.call_tool(name, json.loads(arguments))
         return self._flatten(result)
+
+    def record(self, name: str, arguments: str, faulted: bool = False) -> None:
+        self.call_counts[name] += 1
+        self.call_log.append({
+            "index": len(self.call_log) + 1,
+            "tool": name,
+            "arguments": arguments,
+            "faulted": faulted,
+        })
+
+    def summary(self) -> str:
+        if not self.call_log:
+            return "no tool calls"
+        per_tool = ", ".join(f"{n} x{c}" for n, c in self.call_counts.items())
+        faulted = sum(1 for c in self.call_log if c["faulted"])
+        return f"{len(self.call_log)} calls: {per_tool} ({faulted} faulted)"
+
+    def extras(self) -> dict:
+        return {
+            "mcp_call_count": len(self.call_log),
+            "mcp_tool_counts": dict(self.call_counts),
+            "mcp_faulted_count": sum(1 for c in self.call_log if c["faulted"]),
+            "mcp_call_log": self.call_log,
+        }
 
     def _flatten(self, result) -> str:
         parts = []
