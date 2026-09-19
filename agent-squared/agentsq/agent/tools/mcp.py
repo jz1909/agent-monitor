@@ -1,17 +1,22 @@
 import json
+import os
 from contextlib import AsyncExitStack
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 from agentsq.agent.tools.base import ToolBackend
+from dotenv import load_dotenv
+
+load_dotenv()
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 
 class McpTools(ToolBackend):
 
     def __init__(self, command: str = "npx", args: list[str] | None = None):
         if args is None:
-            args = ["-y", "@modelcontextprotocol/server-filesystem", "."]
+            args = ["-y", "mcp-remote", f"https://mcp.tavily.com/mcp/?tavilyApiKey={TAVILY_API_KEY}"]
         self.params = StdioServerParameters(command=command, args=args)
         self.stack: AsyncExitStack | None = None
         self.session: ClientSession | None = None

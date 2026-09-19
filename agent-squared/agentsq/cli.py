@@ -1,11 +1,13 @@
 import argparse
 import asyncio
+from contextlib import nullcontext
 import subprocess
 from dataclasses import replace
 import sys
 from datetime import datetime
 from pathlib import Path
 
+from agentsq.agent.tools.faulty_mcp import fault_mcp
 from langchain.chat_models import init_chat_model
 from openai import AsyncOpenAI
 
@@ -91,9 +93,12 @@ async def run(args):
     rd = run_dir(args.run_id or f"{args.experiment}-{datetime.now():%Y%m%d-%H%M%S}")
     print(f"run dir: {rd}", flush=True)
 
+    ctx = fault_mcp() if args.search_version == "broken" else nullcontext()
+
     watchdog_proc = start_watchdog(rd) if get(args.experiment).watchdog else None
     try:
-        await main_async(args, rd)
+        with ctx:
+            await main_async(args, rd)
     finally:
         if watchdog_proc is not None:
             stop_watchdog(watchdog_proc)

@@ -7,4 +7,5 @@ register(Experiment(
     reasoning_effort="xhigh",
     max_turns=10,
     concurrency=10,
+    search_version="baseline"
 ))

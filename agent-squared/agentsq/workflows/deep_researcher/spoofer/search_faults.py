@@ -2,14 +2,35 @@ import random
 import uuid
 from .false_answer import get_random_subset
 
-def broken_tavily_search(query:str, fetch_full_page:bool= True, max_results: int=3):
+MOCK_URLS = [
+    "https://en.wikipedia.org/wiki/Artificial_intelligence",
+    "https://en.wikipedia.org/wiki/Machine_learning",
+    "https://en.wikipedia.org/wiki/Battle_of_Waterloo",
+    "https://en.wikipedia.org/wiki/Haruki_Murakami",
+    "https://academy-agents.org/",
+]
 
-    """Tavily client returns with an object that has the keys results, failed_results, response_time, request_id. Within the results, there will be a keys url and raw_content
-    """
-    mock_url = ["https://en.wikipedia.org/wiki/Artificial_intelligence","https://en.wikipedia.org/wiki/Machine_learning", "https://en.wikipedia.org/wiki/Battle_of_Waterloo", "https://en.wikipedia.org/wiki/Haruki_Murakami", "https://academy-agents.org/"]
+FETCH_ERRORS = [
+    "Timeout: The extraction request exceeded the 10 second time limit.",
+    "Failed to fetch content: received HTTP 403 Forbidden from the target site.",
+    "Unable to extract content: the page returned no parsable text (e.g. JS-rendered or blank page).",
+    "Invalid URL: the provided URL could not be resolved.",
+    "Failed to fetch content: connection refused by target server.",
+]
 
 
-    error = ["Timeout: The extraction request exceeded the 10 second time limit.", "Failed to fetch content: received HTTP 403 Forbidden from the target site.", "Unable to extract content: the page returned no parsable text (e.g. JS-rendered or blank page).", "Invalid URL: the provided URL could not be resolved.", "Failed to fetch content: connection refused by target server."]
+def _meta() -> dict:
+    return {
+        "response_time": random.uniform(1.5, 10),
+        "request_id": str(uuid.uuid4()),
+    }
+
+
+def broken_tavily_search(query: str = "", fetch_full_page: bool = True, max_results: int = 3):
+
+
+    mock_url = MOCK_URLS
+    error = FETCH_ERRORS
 
     failed_results = []
 
@@ -28,11 +49,9 @@ def broken_tavily_search(query:str, fetch_full_page:bool= True, max_results: int
     return faked_response
 
 
-def limited_tavily_search(query:str, fetch_full_page:bool= True, max_results: int=3):
+def limited_tavily_search(query: str = "", fetch_full_page: bool = True, max_results: int = 3):
 
-    """Tavily search that returns with unrelated information irrelevant to the agent's goal
-    
-    """
+  
 
     responses = get_random_subset(max_results)
     faked_results = []
@@ -52,3 +71,47 @@ def limited_tavily_search(query:str, fetch_full_page:bool= True, max_results: in
     }
 
     return faked_response
+
+
+def broken_tavily_extract() -> dict:
+    failed = [
+        {"url": random.choice(MOCK_URLS), "error": random.choice(FETCH_ERRORS)}
+        for _ in range(random.randint(1, 3))
+    ]
+    return {"results": [], "failed_results": failed, **_meta()}
+
+
+def broken_tavily_crawl() -> dict:
+    return {
+        "base_url": random.choice(MOCK_URLS),
+        "results": [],
+        "error": random.choice(FETCH_ERRORS),
+        **_meta(),
+    }
+
+
+def broken_tavily_map() -> dict:
+    return {
+        "base_url": random.choice(MOCK_URLS),
+        "results": [],
+        "error": random.choice([
+            "Unable to map site: robots.txt disallows crawling.",
+            "Timeout: mapping exceeded the time limit before any links were found.",
+            "Failed to fetch content: connection refused by target server.",
+        ]),
+        **_meta(),
+    }
+
+
+def broken_tavily_research() -> dict:
+    return {
+        "request_id": str(uuid.uuid4()),
+        "status": "failed",
+        "error": random.choice([
+            "Research task failed: upstream timeout while gathering sources.",
+            "Rate limit exceeded: 20 requests per minute. Please retry later.",
+            "Research task failed: could not retrieve enough sources to produce a report.",
+        ]),
+        "content": "",
+        "sources": [],
+    }
