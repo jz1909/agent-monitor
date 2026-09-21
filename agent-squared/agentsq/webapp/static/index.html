@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Experiment run dashboard</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <h1>Experiment runs</h1>
+  <nav class="tabs" id="tabs"></nav>
+  <span class="census" id="census">loading…</span>
+  <span class="spacer"></span>
+  <button id="reload">resync</button>
+</header>
+
+<main>
+  <div id="charts">
+    <section class="card">
+      <h2>Design grid</h2>
+      <p class="sub">One cell per run. Click a cell to pin it in the detail panel.</p>
+      <div class="design" id="design"></div>
+    </section>
+
+    <section class="card">
+      <h2>Phase per step</h2>
+      <p class="sub">One segment per monitor step. Click a segment to read that step's reasoning.</p>
+      <div class="legend" id="phase-legend"></div>
+      <div id="phase-ribbon"></div>
+      <p class="axis-note">Position within run, step index scaled to 0–1.</p>
+    </section>
+
+    <section class="card">
+      <h2>STUCK share per run</h2>
+      <p class="sub">Dot colour is the monitor model, size is the step count.</p>
+      <div class="legend" id="stuck-legend"></div>
+      <div id="stuck-plot"></div>
+    </section>
+
+    <section class="card" id="sec-tokens" hidden>
+      <h2>Monitor vs agent tokens</h2>
+      <p class="sub">Stacked monitor tokens beside the agent total; the label is the monitor/agent ratio.</p>
+      <div class="legend" id="token-legend"></div>
+      <div id="token-bars"></div>
+    </section>
+
+    <section class="card" id="sec-calls" hidden>
+      <h2>Tool calls per run</h2>
+      <p class="sub">Stacked by tool, annotated with fault counts.</p>
+      <div class="legend" id="tool-legend-bars"></div>
+      <div id="call-bars"></div>
+    </section>
+
+    <section class="card" id="sec-tool-ribbon" hidden>
+      <h2>Tool called per call</h2>
+      <p class="sub">One segment per MCP call. Click a segment to see its arguments.</p>
+      <div class="legend" id="tool-legend"></div>
+      <div id="tool-ribbon"></div>
+      <p class="axis-note">
+        Position within the call sequence, call index scaled to 0–1. This is a
+        different clock from the phase ribbon above: the record carries no link
+        between a tool call and the step it happened under, so the two are not
+        aligned.
+      </p>
+    </section>
+
+    <section class="card" id="sec-fault-ribbon" hidden>
+      <h2>Fault status per call</h2>
+      <p class="sub">Faulted calls never reach the server; they return a canned error.</p>
+      <div class="legend" id="fault-legend"></div>
+      <div id="fault-ribbon"></div>
+    </section>
+  </div>
+
+  <aside>
+    <section class="card" id="detail">
+      <p class="empty-state">Select a run, a step or a tool call.</p>
+    </section>
+  </aside>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@ from agentsq.experiments.base import Experiment, register
 
 register(Experiment(
     name="plain",
-    backend=lambda run_dir: NoTools(),
+    backend=lambda run_dir, experiment: NoTools(),
     reasoning_effort="xhigh",
     max_turns=1,
     concurrency=10,

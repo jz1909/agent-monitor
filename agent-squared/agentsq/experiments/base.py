@@ -9,7 +9,7 @@ from agentsq.agent.tools.base import ToolBackend
 @dataclass
 class Experiment:
     name: str
-    backend: Callable[[Path], ToolBackend] = None
+    backend: Callable[[Path, "Experiment"], ToolBackend] = None
     max_turns: int = 1
     concurrency: int = 10
     snapshot_window: int = 1
