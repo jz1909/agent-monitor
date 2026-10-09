@@ -65,6 +65,26 @@ class LCSSegmenter(Segmenter):
         return block
 
 
+class TokenSegmenter(Segmenter):
+    """Cuts a continuous chain of thought into blocks of `tokens_spent` chunks."""
 
+    def __init__(self, tokens_spent: int):
+        self.tokens_spent = tokens_spent
+        self.parts: list[str] = []
 
+    def feed(self, text) -> str | None:
+        self.parts.append(text)
+        if len(self.parts) < self.tokens_spent:
+            return None
 
+        block = "".join(self.parts)
+        self.parts = []
+        return block
+
+    def flush(self) -> str | None:
+        if not self.parts:
+            return None
+
+        block = "".join(self.parts)
+        self.parts = []
+        return block

@@ -23,6 +23,8 @@ class Experiment:
     monitor_model: str = "gpt-5-nano"
     reasoning_effort: str = "medium"
     search_version:str = "baseline"
+    inference_provider:str = None
+    cluster:str = None
 
 
 REGISTRY: dict[str, Experiment] = {}

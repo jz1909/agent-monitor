@@ -1,0 +1,32 @@
+{
+    "task_0": {
+        "question_id": "d2578782c5a95437ecc67a063d93ddd72ac09d2ca78db12b55c671b4e06d0571",
+        "question_title": "polymer_startup",
+        "prompt": "A polymer materials startup founded by academic researchers in 2020 focuses on high-performance materials for additive manufacturing. Its chief technology officer holds a faculty position at a public research university in North Carolina that houses both a center for nanotechnology in drug delivery and a polymer science research program within its chemistry department. The polymer research community at that university includes a materials scientist who earned a doctoral degree in polymer science from a flagship public land-grant university in New England. That New England university recently opened a new health sciences facility overseen by a dean whose doctoral degree is from a university outside the state where her current institution is located, and whose research focuses on nutritional epidemiology. This dean announced a teaching excellence award recipient who leads a pre-college program preparing high school students for careers in health sciences. Considering the timeline, how many full calendar years separate the materials scientist's doctoral graduation year from the opening year of this new health sciences facility?",
+        "answer": "22"
+    },
+    "task_1": {
+        "question_id": "7a71c4ff476ed4054f1957ab614bce668070e7cc9c1bab0949dffd6049fac3ee",
+        "question_title": "diving_world_cup",
+        "prompt": "During the 2026 diving season, an early‑season World Cup event was held in North America. One of the Colombian athletes who earned a podium finish in a springboard discipline at that meet is a male diver who has, on occasion, paired with a fellow countryman for synchronized events. That synchronized partner shares his nationality with a female diver who took part in a recent overseas training camp in Canada and also competed in the women’s 3‑meter springboard at that same North American World Cup stop. What was her personal‑best score in that competition?",
+        "answer": "277.40"
+    },
+    "task_2": {
+        "question_id": "3cc4e77a4a66cbaed29f88a96c058694dc6afaa5459ee649430732f402afcaaf",
+        "question_title": "philosophy_faculty",
+        "prompt": "A public research university in the northeastern United States, originally established as a colonial college before acquiring land-grant status, once employed a philosophy faculty member who served on the institution's undergraduate curriculum reform committee and published articles in the Journal of Applied Ethics. This professor established an initiative to increase participation from groups historically underrepresented in philosophy, which later organized a summer institute in 2026 featuring workshops on inclusive pedagogical approaches. The keynote speaker for this institute was a philosopher who, despite not having previously held an endowed chair, recently received a mid-career achievement award in applied ethics. This philosopher accepted a new academic position effective in 2026 at a public university in California that, despite being established considerably later than the oldest campuses in its university system, has developed particular strength in interdisciplinary environmental studies and is located in a community facing the Pacific Ocean. What is the name of this coastal California institution?",
+        "answer": "University of California, Santa Cruz"
+    },
+    "task_3": {
+        "question_id": "26a69ddfc7b5de1d6f2ac7f3b58538e18bc5ed72606431bf6f0e1704ac7a0787",
+        "question_title": "shipping_ceo",
+        "prompt": "A CEO of a major container shipping line, who began his maritime career as a deck officer and later obtained a business degree from a UK university, addressed a major logistics conference held in early 2026 on the U.S. West Coast. During his presentation, which focused on the human impact of a Middle Eastern conflict that had severely disrupted shipping through a critical maritime chokepoint, he cited a specific casualty figure for seafarers. What number did he mention as having been killed in the attacks?",
+        "answer": "7"
+    },
+    "task_4": {
+        "question_id": "222b56ca3c905b0692940d6e32ab58bec311207ea37f7ca0fc9004fc2a88d76a",
+        "question_title": "rule_of_law_debate",
+        "prompt": "In an international organization where monthly leadership rotates alphabetically among member states, the country holding that role in the first month of 2026 planned a signature debate focused on strengthening the international rule of law. Among the experts considered for this debate was a former judge from the Horn of Africa who had recently concluded his tenure at the world's principal judicial body. The jurist who succeeded him in that judicial role is an academic who has never served as an ambassador or career diplomat, but was elected to a prestigious international law institute in October 2025. This jurist's home country formally launched her candidature for a full term on the same court in late January 2026. At what specific venue in Nairobi did this launch event take place?",
+        "answer": "The launch event was held at the Ministry of Foreign Affairs headquarters in Nairobi"
+    }
+}

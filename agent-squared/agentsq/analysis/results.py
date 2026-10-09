@@ -21,7 +21,13 @@ RUNS_ROOT = ROOT / "runs"
 
 # Known levels are hints, not a whitelist: parse_run_id works from the right so
 # an unseen model or effort still parses.
-MODELS = ["gpt-5.6-luna", "gpt-5.6-terra", "gpt-5.6-sol", "gpt-5-nano"]
+MODELS = ["gpt-5.6-luna", "gpt-5.6-terra", "gpt-5.6-sol", "gpt-5-nano",
+          "gpt-oss-120b", "gpt-oss-20b", "inkling-bf16"]
+CLUSTERS = {"sophia", "minerva"}
+
+# A results.jsonl holds one line per task. When a run has several, each task
+# becomes its own row, named "<run dir>~<line index>".
+TASK_SEP = "~"
 TOOLS = ["tavily_search", "tavily_research", "tavily_extract",
          "tavily_crawl", "tavily_map"]
 
@@ -67,15 +73,17 @@ def split_models(mid):
 def parse_run_id(name):
     """Pull metadata out of a run directory name.
 
-    Parsed from the right (date, time, topos, effort are the last four fields)
-    so new models, efforts and conditions do not need a code change. Returns
+    Parsed from the right (date, time, an optional cluster, then topos and
+    effort) so new models, efforts and conditions do not need a code change. Returns
     None-ish fields rather than raising, so one odd directory -- the legacy
     heartbeat run is not named like a sweep cell at all -- cannot stop a sync.
     """
     meta = dict(batch=None, trial=None, condition=None, agent_model=None,
                 monitor_model=None, effort=None, topos=None, started=None,
-                parsed=False)
+                cluster=None, parsed=False)
     parts = name.split("-")
+    if len(parts) >= 3 and parts[-3] in CLUSTERS:
+        meta["cluster"] = parts.pop(-3).upper()
     if len(parts) < 8 or not re.fullmatch(r"\d{8}", parts[-2]) \
             or not re.fullmatch(r"\d{6}", parts[-1]):
         return meta
@@ -119,13 +127,22 @@ def _tokens(d):
             "visible_output": max(out - rea, 0), "total": inp + out}
 
 
-def read_record(path):
-    """First JSON object in a results.jsonl, or None if the file is empty."""
+def read_records(path):
+    """Every JSON object in a results.jsonl, one per task, in finish order.
+
+    A run still in progress may be mid-append, so an unparseable line is
+    skipped rather than failing the whole file.
+    """
+    records = []
     with open(path) as fh:
         for line in fh:
-            if line.strip():
-                return json.loads(line)
-    return None
+            if not line.strip():
+                continue
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return records
 
 
 def parse_result(experiment, name, rec):
@@ -147,10 +164,12 @@ def parse_result(experiment, name, rec):
     at, mt = _tokens(rec.get("agent_tokens")), _tokens(rec.get("monitor_tokens"))
     has_tokens = bool(rec.get("agent_tokens") or rec.get("monitor_tokens"))
 
+    run_id, _, task = name.partition(TASK_SEP)
     run = {
         "experiment": experiment,
         "run": name,
-        **parse_run_id(name),
+        **parse_run_id(run_id),
+        "task": int(task) if task else 0,
         "question_id": rec.get("question_id"),
         "question_title": rec.get("question_title"),
         "n_steps": len(ph),
@@ -225,21 +244,22 @@ def iter_experiments(runs_root=RUNS_ROOT):
 
 
 def iter_results(runs_root=RUNS_ROOT, experiment=None):
-    """Yield (experiment, run_name, path, record) for every results.jsonl.
+    """Yield (experiment, run_name, path, record) for every task record.
 
     Recursive within each family, so a new batch folder dropped in is picked up
     with no change here. The run name is the containing directory, except for a
-    results.jsonl sitting directly in the family folder, which is the family.
+    results.jsonl sitting directly in the family folder, which is the family;
+    a file holding several tasks gets a TASK_SEP suffix per task.
     """
     for fam, d in iter_experiments(runs_root):
         if experiment and fam != experiment:
             continue
         for path in sorted(d.rglob("results.jsonl")):
-            rec = read_record(path)
-            if rec is None:
-                continue
-            name = fam if path.parent == d else path.parent.name
-            yield fam, name, path, rec
+            records = read_records(path)
+            base = fam if path.parent == d else path.parent.name
+            for i, rec in enumerate(records):
+                name = base if len(records) == 1 else f"{base}{TASK_SEP}{i}"
+                yield fam, name, path, rec
 
 
 def load(runs_root=RUNS_ROOT, experiment=None):
@@ -257,7 +277,7 @@ def load(runs_root=RUNS_ROOT, experiment=None):
         src_rows.extend(sources)
 
     runs = pd.DataFrame(run_rows).sort_values(
-        ["experiment", "batch", "trial"]).reset_index(drop=True)
+        ["experiment", "batch", "trial", "task"]).reset_index(drop=True)
     for t in TOOLS:
         if t not in runs:
             runs[t] = 0

@@ -48,7 +48,8 @@ function modelColor(m) {
 function short(run) {
   const r = state.byRun.get(run);
   if (!r || !r.parsed) return run.length > 22 ? run.slice(0, 21) + "…" : run;
-  return `b${r.batch}-${r.trial} ${r.condition}`;
+  const task = run.includes("~") ? ` t${run.split("~").pop()}` : "";
+  return `b${r.batch}-${r.trial}${task} ${r.condition}`;
 }
 const pct = x => (x == null ? "–" : `${Math.round(x * 100)}%`);
 const num = x => (x == null ? "–" : x.toLocaleString());
@@ -464,6 +465,18 @@ function prettyArgs(raw) {
   }
 }
 
+/* The list payload leaves out answers (large); fetch one run's on demand. */
+const answerCache = new Map();
+function loadAnswers(run) {
+  const key = `${run.experiment}/${run.run}`;
+  if (!answerCache.has(key)) {
+    answerCache.set(key, fetch(`/api/runs/${encodeURIComponent(run.experiment)}/${encodeURIComponent(run.run)}`)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .catch(err => { answerCache.delete(key); throw err; }));
+  }
+  return answerCache.get(key);
+}
+
 function renderDetail() {
   const host = document.getElementById("detail");
   host.replaceChildren();
@@ -579,10 +592,19 @@ function renderDetail() {
     dl.append(el("dt", null, k), el("dd", null, String(v)));
   }
   host.append(dl);
-  if (!run.answer_len) {
-    host.append(block("agent answer", "", false,
-                      "this run produced no answer text"));
-  }
+  const answers = el("div", "answers");
+  host.append(answers);
+  loadAnswers(run).then(a => {
+    if (state.sel !== sel) return;          // selection moved on while fetching
+    answers.replaceChildren();
+    if (a.prompt != null) answers.append(block("prompt", a.prompt));
+    answers.append(
+      block("agent answer", a.agent_answer || "", false,
+            "this run produced no answer text"));
+    if (a.expected_answer != null) {
+      answers.append(block("expected answer", a.expected_answer));
+    }
+  }).catch(() => {});
   host.append(el("p", "axis-note",
     "Click a segment in any ribbon to read that step or call."));
 }

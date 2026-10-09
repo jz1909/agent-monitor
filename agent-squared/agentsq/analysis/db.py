@@ -294,12 +294,36 @@ def sources_for(conn, experiment=None, run=None):
                  " ORDER BY experiment, run, i", args)
 
 
+TASKS_DIR = ROOT / "data" / "tasks"
+
+
+def task_index(tasks_dir=TASKS_DIR):
+    """question_id -> {"prompt", "answer"} from every task file; answer is optional."""
+    out = {}
+    for path in sorted(Path(tasks_dir).glob("*.json")):
+        try:
+            tasks = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        for task in tasks.values() if isinstance(tasks, dict) else []:
+            if isinstance(task, dict) and task.get("question_id"):
+                entry = out.setdefault(task["question_id"], {})
+                if "prompt" in task:
+                    entry["prompt"] = str(task["prompt"])
+                if "answer" in task:
+                    entry["answer"] = str(task["answer"])
+    return out
+
+
 def run_detail(conn, experiment, run):
     row = conn.execute("SELECT * FROM runs WHERE experiment = ? AND run = ?",
                        (experiment, run)).fetchone()
     if row is None:
         return None
     detail = dict(row)
+    task = task_index().get(detail["question_id"], {})
+    detail["prompt"] = task.get("prompt")
+    detail["expected_answer"] = task.get("answer")
     detail["topos"] = bool(detail["topos"]) if detail["topos"] is not None else None
     detail["parsed"] = bool(detail["parsed"])
     detail["has_tokens"] = bool(detail["has_tokens"])

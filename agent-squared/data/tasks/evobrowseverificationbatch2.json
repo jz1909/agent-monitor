@@ -1,0 +1,32 @@
+{
+    "task_0": {
+        "question_id": "4ab34f2fd5a393f32ffbcb5278d6ec4d52847ab15621b5693e1e926a8edbc48c",
+        "question_title": "lifetime_achievement_award",
+        "prompt": "An actor who returned to major studio films in 2026 with a holiday-themed adaptation shares the screen with an actress who that same year took on a leading role in a new lunar thriller series. The director of that series previously worked with a celebrated British actress on a historical drama about a European empress. This director is known for winning an Emmy for his work on a police procedural series. The actress he collaborated with was honored with a lifetime achievement award at a major entertainment ceremony in 2026. On what date did that ceremony take place?",
+        "answer": "January 8, 2026"
+    },
+    "task_1": {
+        "question_id": "80f3a738cd2e890c768123dee27a0c68469143048c9c1c634194e879d2a90261",
+        "question_title": "planetary_defense_smallsat",
+        "prompt": "A European national space agency was established in a year marked by both the adoption of a landmark environmental protocol and the formalization of an international framework for collaborative space station development. The agency's current chief administrator previously served in senior roles within their nation's defense ministry while also pursuing academic research. Under this leader's coordination, the agency recently facilitated the signing of a joint planetary defense mission agreement between two major space agencies. The prime contractor selected for that mission is headquartered in a European city whose skyline features a distinctive brutalist skyscraper designed by a collective of architects, which recently reopened after a multi-year restoration. This prime contractor contributed to developing the attitude determination and control system for a small satellite focused on multispectral ocean observation. The satellite was developed at a major Asian engineering university known for its nanosatellite development program. This satellite is scheduled to be carried as a secondary payload on a test flight of a launch vehicle that represents a key contribution from the Asian partner agency to the planetary defense mission. What is the name of this small satellite?",
+        "answer": "PETREL"
+    },
+    "task_2": {
+        "question_id": "a983251d5afd44eba812c88acbba805d5a3a45cec990e4840d5138c8fbee341e",
+        "question_title": "primate_tourism_levy",
+        "prompt": "An Italian photographer, who has never won a World Press Photo award, achieved a historic milestone by becoming the first from their country to claim the top prize in a prestigious travel photography competition's history. Several years later, a Welsh wildlife photographer joined the judging panel of that same competition. That same Welsh photographer subsequently served as a judge for a major African travel journalism award ceremony held in 2026, where a London-based travel writer won the gold award in a sustainability-focused category. That award-winning writer had recently published an article highlighting 2026 as a significant year for primate tourism in a specific East African country, mentioning a new luxury lodge opening there. According to that writer's article, what is the amount of the conservation levy per guest that this new lodge contributes to wildlife protection and community projects?",
+        "answer": "$25"
+    },
+    "task_3": {
+        "question_id": "0c751b8f2e3b77e750ed9703357be9022917f48e1862b2b0e94de7e91f0169a5",
+        "question_title": "nsf_3d_vision_grant",
+        "prompt": "A researcher who completed postdoctoral work at a Swiss technical university after earning their doctorate there now leads a workshop focusing on AI and creativity at a major computer vision conference in 2026. This workshop includes a competitive challenge co-organized by an industrial researcher with over a decade of experience. That industrial researcher recently co-authored a paper on neural rendering accepted at a top-tier machine learning conference in 2026 alongside a professor from a Texas university. That professor, who had previously received an early-career award from a major U.S. science foundation, served as an area chair for that same 2026 conference and was awarded a medium-sized research grant from that foundation in 2025 for collaborative work in 3D vision and graphics. What was the dollar amount of that 2025 medium-sized research grant?",
+        "answer": "$1,200,000"
+    },
+    "task_4": {
+        "question_id": "aa8bb581acbbd4cdef012ca910e68713378b01918bba8e3616bcb23fdf939843",
+        "question_title": "automotive_host_city",
+        "prompt": "The chief administrative officer of an international sports federation, who according to that federation's statutes chairs its committee responsible for sports event regulations, attended a cross-country championship in early 2026 held in a European town. This town is notable both for a historic religious site that was rebuilt after wartime destruction and for hosting a major automotive manufacturing facility specializing in premium vehicle production. At a subsequent meeting in a different city, this officer presented a long-term strategic plan for the federation. This host city shares the characteristic of having the automotive sector as its dominant economic activity, accounting for more than 70% of its industrial output value. What is the name of this city, which will also host a major winter sports event for university students?",
+        "answer": "Changchun"
+    }
+}

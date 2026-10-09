@@ -32,15 +32,15 @@ def stream_kwargs(experiment, specs, inputs, prev_id, tool_choice=None):
     return kwargs
 
 
-async def consume(stream, segmenter, monitor, answer_parts):
-    """Drain one streamed response; return its tool calls and response id."""
-    calls, prev_id = [], None
+async def consume(stream, segmenter, monitor):
+    """Drain one streamed response; return its tool calls, response id and text."""
+    calls, prev_id, text_parts = [], None, []
 
     async for event in stream:
         if event.type == "response.created":
             prev_id = event.response.id
         elif event.type == "response.output_text.delta":
-            answer_parts.append(event.delta)
+            text_parts.append(event.delta)
         elif event.type == "response.reasoning_summary_text.delta":
             block = segmenter.feed(event)
             if block:
@@ -53,12 +53,14 @@ async def consume(stream, segmenter, monitor, answer_parts):
     if block:
         await monitor.observe(block)
 
-    return calls, prev_id
+    return calls, prev_id, "".join(text_parts)
 
 
 async def run_task(task, experiment, monitor, client, run_dir) -> dict:
     segmenter = SummarySegmenter()
-    answer_parts: list[str] = []
+    # only the text of the turn that ends the run counts as the answer; text
+    # written alongside tool calls is preamble ("let me search...")
+    answer = ""
     tool_calls: list[str] = []
     prev_id = None
     stop_reason, turns_used = "max_turns", 0
@@ -75,11 +77,12 @@ async def run_task(task, experiment, monitor, client, run_dir) -> dict:
                 **stream_kwargs(experiment, specs, pending, prev_id))
             pending = []
 
-            calls, response_id = await consume(stream, segmenter, monitor, answer_parts)
+            calls, response_id, text = await consume(stream, segmenter, monitor)
             if response_id is not None:
                 prev_id = response_id
 
             if not calls:
+                answer = text
                 stop_reason = "tools_stopped"
                 if experiment.max_turns > 1:
                     print(f"[end] agent stopped calling tools on turn {turn}", flush=True)
@@ -97,14 +100,14 @@ async def run_task(task, experiment, monitor, client, run_dir) -> dict:
         # Force an answer when the run produced no text, whether it ran out of
         # turns or stopped calling tools without writing anything. Tools are
         # switched off for this turn so the model has to reply in prose.
-        forced_answer = not answer_parts
+        forced_answer = not answer.strip()
         if forced_answer:
             print(f"[final] no answer after turn {turns_used} ({stop_reason}); "
                   "requesting one with tools off", flush=True)
             pending.append({"role": "user", "content": FINAL_NUDGE})
             stream = await client.responses.create(
                 **stream_kwargs(experiment, specs, pending, prev_id, tool_choice="none"))
-            _, response_id = await consume(stream, segmenter, monitor, answer_parts)
+            _, response_id, answer = await consume(stream, segmenter, monitor)
             if response_id is not None:
                 prev_id = response_id
 
@@ -113,7 +116,7 @@ async def run_task(task, experiment, monitor, client, run_dir) -> dict:
         return {
             "question_id": task.get("question_id"),
             "question_title": task.get("question_title"),
-            "agent_answer": "".join(answer_parts),
+            "agent_answer": answer,
             "turns_used": turns_used,
             "stop_reason": stop_reason,
             "forced_answer": forced_answer,

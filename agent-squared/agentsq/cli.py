@@ -28,6 +28,7 @@ def parse_args(argv=None):
     p.add_argument("--reasoning-effort")
     p.add_argument("--search-version", choices=["baseline", "broken", "limited"])
     p.add_argument("--use-topos", action=argparse.BooleanOptionalAction)
+    p.add_argument("--cluster", choices=['SOPHIA', 'MINERVA'])
     return p.parse_args(argv)
 
 
@@ -59,6 +60,7 @@ async def main_async(args, rd):
         "reasoning_effort": args.reasoning_effort,
         "search_version": args.search_version,
         "use_topos": args.use_topos,
+        "cluster": args.cluster
     }
     experiment = replace(get(args.experiment), **{k: v for k, v in overrides.items() if v is not None})
 
@@ -67,10 +69,20 @@ async def main_async(args, rd):
 
     chain = build_chain()
     client = AsyncOpenAI()
+
+    monitor_kwargs = {}
+    if experiment.inference_provider == 'ALCF':
+        if experiment.cluster is None:
+            raise ValueError("ALCF experiments need --cluster (SOPHIA or MINERVA)")
+        from inference_auth_token import get_access_token
+        from agentsq.agent.run_cont_stream import BASE_URLS
+        monitor_kwargs = dict(model_provider='openai', base_url=BASE_URLS[experiment.cluster], api_key=get_access_token())
+
     monitor_llm = init_chat_model(
         experiment.monitor_model,
         timeout=REQUEST_TIMEOUT,
         max_retries=MAX_RETRIES,
+        **monitor_kwargs
     )
 
     sem = asyncio.Semaphore(experiment.concurrency)
@@ -79,10 +91,17 @@ async def main_async(args, rd):
     async def run_one(task):
         monitor = Monitor(chain, experiment.snapshot_window, monitor_llm=monitor_llm)
         async with sem:
-            result = await experiment.runner(task, experiment, monitor, client, rd)
+            try:
+                result = await experiment.runner(task, experiment, monitor, client, rd)
+            except Exception as e:
+                # one task crashing must not cancel the rest of the run
+                result = {"question_id": task.get("question_id"),
+                          "question_title": task.get("question_title"),
+                          "error": repr(e)}
         async with lock:
             append_results(output, [result])
-            print(f"[{rd.name}] done: {task.get('question_id')}", flush=True)
+            status = "FAILED" if "error" in result else "done"
+            print(f"[{rd.name}] {status}: {task.get('question_id')}", flush=True)
 
     await asyncio.gather(*(run_one(task) for task in tasks))
 

@@ -3,7 +3,7 @@ import os
 from collections import Counter
 from contextlib import AsyncExitStack
 
-from mcp import ClientSession, StdioServerParameters
+from mcp import ClientSession, MCPError, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 from agentsq.agent.tools.base import ToolBackend
@@ -52,7 +52,13 @@ class McpTools(ToolBackend):
 
     async def call(self, name: str, arguments: str) -> str:
         self.record(name, arguments)
-        result = await self.session.call_tool(name, json.loads(arguments))
+        try:
+            result = await self.session.call_tool(name, json.loads(arguments))
+        except (MCPError, json.JSONDecodeError) as e:
+            # a malformed call goes back to the model as the tool's output, so
+            # it can fix its arguments rather than crash the task
+            self.call_log[-1]["error"] = str(e)
+            return f"Error calling {name}: {e}"
         return self._flatten(result)
 
     def record(self, name: str, arguments: str, faulted: bool = False) -> None:
@@ -69,13 +75,15 @@ class McpTools(ToolBackend):
             return "no tool calls"
         per_tool = ", ".join(f"{n} x{c}" for n, c in self.call_counts.items())
         faulted = sum(1 for c in self.call_log if c["faulted"])
-        return f"{len(self.call_log)} calls: {per_tool} ({faulted} faulted)"
+        errors = sum(1 for c in self.call_log if c.get("error"))
+        return f"{len(self.call_log)} calls: {per_tool} ({faulted} faulted, {errors} errored)"
 
     def extras(self) -> dict:
         return {
             "mcp_call_count": len(self.call_log),
             "mcp_tool_counts": dict(self.call_counts),
             "mcp_faulted_count": sum(1 for c in self.call_log if c["faulted"]),
+            "mcp_error_count": sum(1 for c in self.call_log if c.get("error")),
             "mcp_call_log": self.call_log,
         }
 
