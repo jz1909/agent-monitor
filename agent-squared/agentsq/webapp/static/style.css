@@ -58,6 +58,10 @@ header .spacer { flex: 1; }
   background: var(--ink); border-color: var(--ink); color: #fff; font-weight: 600;
 }
 .tabs button .n { opacity: .7; margin-left: 5px; }
+.filters { flex-basis: 100%; display: flex; gap: 20px; flex-wrap: wrap; align-items: baseline; }
+.filters[hidden] { display: none; }
+.filters .filter { display: flex; gap: 8px; align-items: baseline; }
+.filters .filter > span { color: var(--muted); font-size: 12px; }
 header button {
   font: inherit; font-size: 12px; padding: 5px 11px; cursor: pointer;
   border: 1px solid var(--axis); border-radius: 6px; background: var(--surface);

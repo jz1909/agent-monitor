@@ -13,7 +13,8 @@ import sqlite3
 import time
 from pathlib import Path
 
-from agentsq.analysis.results import RUNS_ROOT, iter_results, parse_result
+from agentsq.analysis.results import (RUNS_ROOT, iter_results, parse_result,
+                                      run_folders)
 from agentsq.settings import ROOT
 
 DB_PATH = ROOT / "runs" / "experiments.sqlite3"
@@ -23,6 +24,8 @@ CREATE TABLE IF NOT EXISTS runs (
     experiment         TEXT NOT NULL,
     run                TEXT NOT NULL,
     batch              INTEGER,
+    run_group          TEXT,
+    model_group        TEXT,
     trial              INTEGER,
     condition          TEXT,
     agent_model        TEXT,
@@ -116,7 +119,7 @@ CREATE INDEX IF NOT EXISTS runs_exp    ON runs (experiment);
 """
 
 RUN_COLS = [
-    "experiment", "run", "batch", "trial", "condition", "agent_model",
+    "experiment", "run", "batch", "run_group", "model_group", "trial", "condition", "agent_model",
     "monitor_model", "effort", "topos", "started", "parsed", "question_id",
     "question_title", "n_steps", "n_body_steps", "final_phase", "n_stuck",
     "stuck_share", "n_completed_labels", "agent_answer", "answer_len",
@@ -134,6 +137,12 @@ TABLES = ("steps", "calls", "sources", "tool_counts", "runs")
 def connect(db_path=DB_PATH):
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
+    have = {r["name"] for r in conn.execute("PRAGMA table_info(runs)")}
+    if have and not set(RUN_COLS) <= have:
+        # the database is only a cache: an old schema is dropped and the next
+        # sync rebuilds it from the results files
+        for table in TABLES:
+            conn.execute(f"DROP TABLE IF EXISTS {table}")
     conn.executescript(SCHEMA)
     return conn
 
@@ -145,7 +154,8 @@ def _delete_run(conn, experiment, name):
 
 
 def _insert(conn, experiment, name, path, rec, stat):
-    run, steps, calls, sources = parse_result(experiment, name, rec)
+    run, steps, calls, sources = parse_result(experiment, name, rec,
+                                              run_folders(experiment, path))
     tool_counts = run.pop("tool_counts")
     run["extras"] = json.dumps(run.get("extras") or {})
     run.update(source_path=str(path), source_mtime=stat.st_mtime,
@@ -180,13 +190,15 @@ def _insert(conn, experiment, name, path, rec, stat):
 def sync(conn, runs_root=RUNS_ROOT, prune=True):
     """Ingest new or changed results files across every experiment family.
 
-    A run is re-ingested when its source file's mtime or size has moved, and
+    A run is re-ingested when its source file's path, mtime or size has moved
+    (a run filed into a new folder keeps its mtime but changes group), and
     (with prune) dropped when its source file is gone -- the database mirrors
     whatever is on disk right now.
     """
-    known = {(r["experiment"], r["run"]): (r["source_mtime"], r["source_size"])
-             for r in conn.execute(
-                 "SELECT experiment, run, source_mtime, source_size FROM runs")}
+    known = {(r["experiment"], r["run"]):
+             (r["source_path"], r["source_mtime"], r["source_size"])
+             for r in conn.execute("SELECT experiment, run, source_path, "
+                                   "source_mtime, source_size FROM runs")}
     seen, added, updated = set(), [], []
 
     for fam, name, path, rec in iter_results(runs_root):
@@ -197,7 +209,7 @@ def sync(conn, runs_root=RUNS_ROOT, prune=True):
         if prev is None:
             _insert(conn, fam, name, path, rec, stat)
             added.append(f"{fam}/{name}")
-        elif prev != (stat.st_mtime, stat.st_size):
+        elif prev != (str(path), stat.st_mtime, stat.st_size):
             _delete_run(conn, fam, name)
             _insert(conn, fam, name, path, rec, stat)
             updated.append(f"{fam}/{name}")
@@ -254,7 +266,8 @@ def experiments(conn):
 def all_runs(conn, experiment=None):
     where, args = _where(experiment)
     runs = _rows(conn, "SELECT * FROM runs" + where +
-                 " ORDER BY experiment, batch, trial, run", args)
+                 " ORDER BY experiment, batch, run_group, model_group, trial, run",
+                 args)
     counts = {}
     for r in conn.execute("SELECT experiment, run, tool, n FROM tool_counts" + where, args):
         counts.setdefault((r["experiment"], r["run"]), {})[r["tool"]] = r["n"]

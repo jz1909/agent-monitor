@@ -21,6 +21,9 @@ const TOKEN_PARTS = [["input", "#86b6ef"], ["visible_output", "#3987e5"],
 
 const state = {
   experiment: null, experiments: [],
+  // `all` is the whole family; runs/steps/calls are what the filters let through
+  all: { runs: [], steps: [], calls: [] },
+  filter: { batch: null, model: null },
   runs: [], steps: [], calls: [], byRun: new Map(), sel: null,
 };
 
@@ -44,13 +47,20 @@ function modelColor(m) {
   return modelColors.get(m);
 }
 
-// batch1-1-broken-gpt-5.6-sol-... -> b1-1 broken; anything else is left alone
+// batch1-1-broken-gpt-5.6-sol-... -> b1-1 broken; a run filed under a model
+// folder (benchmark_runs/broken-batch2/inkling/...) -> b2 t3 inkling broken,
+// since its batch is the question set and its trial index is always 0
 function short(run) {
   const r = state.byRun.get(run);
   if (!r || !r.parsed) return run.length > 22 ? run.slice(0, 21) + "…" : run;
   const task = run.includes("~") ? ` t${run.split("~").pop()}` : "";
-  return `b${r.batch}-${r.trial}${task} ${r.condition}`;
+  return r.model_group
+    ? `b${r.batch}${task} ${r.model_group} ${r.condition}`
+    : `b${r.batch}-${r.trial}${task} ${r.condition}`;
 }
+const tagOf = r => r.model_group
+  ? `b${r.batch ?? "?"} · ${r.model_group}`
+  : `b${r.batch ?? "?"}-${r.trial ?? "?"}`;
 const pct = x => (x == null ? "–" : `${Math.round(x * 100)}%`);
 const num = x => (x == null ? "–" : x.toLocaleString());
 const pair = r =>
@@ -88,6 +98,30 @@ function conditions() {
 }
 const runsIn = cond => state.runs.filter(r => r.condition === cond);
 
+/* Ribbon groups. A family filed by model (benchmark_runs) groups by batch, then
+   model, then condition, so baseline and broken for one model sit together;
+   every other family keeps one group per condition. */
+const byNum = (a, b) => (a ?? Infinity) - (b ?? Infinity);
+function ribbonGroups() {
+  if (!state.runs.some(r => r.model_group)) {
+    return conditions().map(cond => ({ cond, title: cond, rows: runsIn(cond) }));
+  }
+  const conds = conditions();
+  const groups = new Map();
+  for (const r of state.runs) {
+    const key = `${r.batch}|${r.model_group}|${r.condition}`;
+    if (!groups.has(key)) {
+      groups.set(key, { cond: r.condition, batch: r.batch, model: r.model_group || "",
+                        title: `batch ${r.batch ?? "?"} · ${r.model_group || "?"} · ${r.condition}`,
+                        rows: [] });
+    }
+    groups.get(key).rows.push(r);
+  }
+  return [...groups.values()].sort((a, b) =>
+    byNum(a.batch, b.batch) || a.model.localeCompare(b.model)
+    || conds.indexOf(a.cond) - conds.indexOf(b.cond));
+}
+
 /* --- selection ------------------------------------------------------------ */
 function select(sel) {
   state.sel = sel;
@@ -120,7 +154,7 @@ function renderDesign() {
     cell.style.borderColor = color;
     cell.style.background = color + "1f";
 
-    cell.append(el("div", "tag", `b${r.batch ?? "?"}-${r.trial ?? "?"}`));
+    cell.append(el("div", "tag", tagOf(r)));
     const cond = el("div", "cond", r.condition || "unparsed run id");
     cond.style.color = color;
     cell.append(cond);
@@ -143,10 +177,10 @@ function renderRibbon(hostId, spec) {
   const host = document.getElementById(hostId);
   host.replaceChildren();
 
-  for (const cond of conditions()) {
-    const rows = [...runsIn(cond)].sort(spec.sort);
-    const head = el("div", "group-head", `${cond}  (${rows.length} runs)`);
-    head.style.color = condColor(cond);
+  for (const group of ribbonGroups()) {
+    const rows = [...group.rows].sort(spec.sort);
+    const head = el("div", "group-head", `${group.title}  (${rows.length} runs)`);
+    head.style.color = condColor(group.cond);
     host.append(head);
 
     for (const r of rows) {
@@ -622,6 +656,50 @@ function renderTabs() {
   }
 }
 
+/* --- batch / model filters ----------------------------------------------- */
+/* A row of buttons per folder level that actually varies in this family:
+   batch (the question set, for benchmark_runs) and the model folder. */
+const FILTERS = [["batch", "batch", r => r.batch, b => `batch ${b}`],
+                 ["model", "model", r => r.model_group, m => m]];
+
+function renderFilters() {
+  const host = document.getElementById("filters");
+  host.replaceChildren();
+  for (const [key, label, get, name] of FILTERS) {
+    const values = [...new Set(state.all.runs.map(get).filter(v => v != null))]
+      .sort((a, b) => typeof a === "number" ? a - b : String(a).localeCompare(b));
+    if (values.length < 2) continue;
+    const box = el("div", "filter");
+    box.append(el("span", null, label));
+    const nav = el("nav", "tabs");
+    for (const v of [null, ...values]) {
+      const b = el("button", null, v == null ? "all" : name(v));
+      b.append(el("span", "n",
+        `${state.all.runs.filter(r => v == null || get(r) === v).length}`));
+      b.setAttribute("aria-current", String(state.filter[key] === v));
+      b.onclick = () => {
+        if (state.filter[key] === v) return;
+        state.filter[key] = v;
+        render();
+      };
+      nav.append(b);
+    }
+    box.append(nav);
+    host.append(box);
+  }
+  host.hidden = !host.children.length;
+}
+
+function applyFilter() {
+  const keep = r => FILTERS.every(([key, , get]) =>
+    state.filter[key] == null || get(r) === state.filter[key]);
+  state.runs = state.all.runs.filter(keep);
+  const names = new Set(state.runs.map(r => r.run));
+  state.steps = state.all.steps.filter(s => names.has(s.run));
+  state.calls = state.all.calls.filter(c => names.has(c.run));
+  state.byRun = new Map(state.runs.map(r => [r.run, r]));
+}
+
 /* A family only gets a chart when it has the data behind it. */
 function applyVisibility() {
   const hasCalls = state.calls.length > 0;
@@ -659,26 +737,32 @@ async function load(experiment) {
     const biggest = [...state.experiments].sort((a, b) => b.n_runs - a.n_runs)[0];
     return load(biggest.experiment);
   }
-  if (experiment !== state.experiment) state.sel = null;
+  if (experiment !== state.experiment) {
+    state.sel = null;
+    state.filter = { batch: null, model: null };
+  }
   state.experiment = experiment;
-  state.runs = data.runs;
-  state.steps = data.steps;
-  state.calls = data.calls;
-  state.byRun = new Map(data.runs.map(r => [r.run, r]));
+  state.all = { runs: data.runs, steps: data.steps, calls: data.calls };
 
   const s = data.sync || {};
-  const changed = [
+  state.changed = [
     s.added?.length ? `+${s.added.length} new` : null,
     s.updated?.length ? `~${s.updated.length} updated` : null,
     s.removed?.length ? `-${s.removed.length} removed` : null,
   ].filter(Boolean).join(", ");
+  renderTabs();
+  render();
+}
+
+/* Draw the current family through the current filters. */
+function render() {
+  applyFilter();
+  renderFilters();
   const vis = applyVisibility();
-  census.textContent =
+  document.getElementById("census").textContent =
     `${state.runs.length} runs · ${state.steps.length} steps`
     + (vis.hasCalls ? ` · ${state.calls.length} tool calls` : "")
-    + (changed ? `  (resync: ${changed})` : "");
-
-  renderTabs();
+    + (state.changed ? `  (resync: ${state.changed})` : "");
   renderDesign();
   renderPhaseRibbon();
   renderStuckPlot();

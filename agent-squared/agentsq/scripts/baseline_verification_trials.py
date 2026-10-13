@@ -1,5 +1,6 @@
 import argparse
 import asyncio
+import re
 import sys
 from datetime import datetime
 
@@ -12,6 +13,7 @@ input_path = BATCH2
 
 INKLING_MODEL = 'inkling-bf16'
 NEMOTRON_MODEL = 'nemotron-3-ultra'
+MODEL = INKLING_MODEL
 
 
 
@@ -19,10 +21,17 @@ def trial(search_version, main, monitor, reasoning, topos, cluster):
     return {'experiment': 'continous', 'main': main, 'monitor': monitor, 'reasoning': reasoning, 'search_version': search_version, 'topos': topos, 'cluster': cluster}
 
 batch1 = [
-    trial('broken', NEMOTRON_MODEL, NEMOTRON_MODEL, 'medium', False, 'MINERVA'),
+    trial('broken', MODEL, MODEL, 'medium', False, 'MINERVA'),
 ]
 
 BATCHES = {f"batch{i}": b for i, b in enumerate([batch1], start=1)}
+
+
+def benchmark_folder(trial):
+    """runs/benchmark_runs/<search_version>-batch<N>/<model>, N from the question set."""
+    question_batch = re.search(r"batch(\d+)", input_path).group(1)
+    model = trial['main'].split('/')[-1].split('-')[0]   # inkling-bf16 -> inkling
+    return f"benchmark_runs/{trial['search_version']}-batch{question_batch}/{model}"
 
 
 def trial_argv(trial, run_id):
@@ -50,7 +59,7 @@ async def main_async(batch, trials=None):
         # strip the provider prefix: a '/' in the run id nests the run directory
         main, monitor = t['main'].split('/')[-1], t['monitor'].split('/')[-1]
         run_id = f"{batch}-{i}-{t['search_version']}-{main}-{monitor}-{t['reasoning']}-{topos}-{t['cluster'].lower()}-{stamp}"
-        runs[run_id] = parse_cli_args(trial_argv(t, run_id))
+        runs[run_id] = parse_cli_args(trial_argv(t, f"{benchmark_folder(t)}/{run_id}"))
 
     results = await asyncio.gather(*(run(args) for args in runs.values()), return_exceptions=True)
 

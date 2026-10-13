@@ -22,7 +22,7 @@ RUNS_ROOT = ROOT / "runs"
 # Known levels are hints, not a whitelist: parse_run_id works from the right so
 # an unseen model or effort still parses.
 MODELS = ["gpt-5.6-luna", "gpt-5.6-terra", "gpt-5.6-sol", "gpt-5-nano",
-          "gpt-oss-120b", "gpt-oss-20b", "inkling-bf16"]
+          "gpt-oss-120b", "gpt-oss-20b", "inkling-bf16", "nemotron-3-ultra"]
 CLUSTERS = {"sophia", "minerva"}
 
 # A results.jsonl holds one line per task. When a run has several, each task
@@ -53,7 +53,9 @@ FAIL_RE = re.compile(
     r"could not (?:fetch|retrieve|find)|404|blocked|unavailable", re.I)
 
 SOURCE_RE = re.compile(r"^\s*[*-]\s*(?P<title>.*?)\s*:\s*(?P<url>https?://\S+)\s*$")
-_MODELISH = re.compile(r"^(?:gpt|claude|o\d|llama|qwen|grok)[\w.\-]*$", re.I)
+_MODELISH = re.compile(r"^(?:gpt|claude|o\d|llama|qwen|grok|inkling|nemotron)[\w.\-]*$", re.I)
+# "broken-batch2", "batch-1", "batch_3": the folder's batch number
+_FOLDER_BATCH = re.compile(r"batch[-_]?(\d+)", re.I)
 
 
 def split_models(mid):
@@ -145,7 +147,36 @@ def read_records(path):
     return records
 
 
-def parse_result(experiment, name, rec):
+def run_folders(experiment, path):
+    """The folders between the family folder and the run folder.
+
+    runs/benchmark_runs/broken-batch2/inkling/<run>/results.jsonl gives
+    ("broken-batch2", "inkling"); a results.jsonl directly in the family
+    folder gives ().
+    """
+    parts = Path(path).parent.parts
+    if parts and parts[-1] == experiment:
+        return ()
+    idx = max((i for i, p in enumerate(parts[:-1]) if p == experiment), default=None)
+    return tuple(parts[idx + 1:-1]) if idx is not None else ()
+
+
+def parse_location(folders):
+    """Grouping taken from where a run sits on disk, not from its name.
+
+    The first folder is the run group (a batch, or condition-batch for the
+    benchmark runs) and carries the question batch; the second, when there is
+    one, is the model the runs are filed under. The folder's batch wins over
+    the one in the run id, which the benchmark script always writes as batch1.
+    """
+    group = folders[0] if folders else None
+    m = _FOLDER_BATCH.search(group or "")
+    return {"run_group": group,
+            "model_group": folders[1] if len(folders) > 1 else None,
+            "folder_batch": int(m.group(1)) if m else None}
+
+
+def parse_result(experiment, name, rec, folders=()):
     """Turn one raw record into (run, steps, calls, sources) plain dicts."""
     ph = rec.get("phase_history") or []
     alog = rec.get("analysis_log") or []
@@ -165,10 +196,15 @@ def parse_result(experiment, name, rec):
     has_tokens = bool(rec.get("agent_tokens") or rec.get("monitor_tokens"))
 
     run_id, _, task = name.partition(TASK_SEP)
+    meta, loc = parse_run_id(run_id), parse_location(folders)
+    folder_batch = loc.pop("folder_batch")
+    if folder_batch is not None:
+        meta["batch"] = folder_batch
     run = {
         "experiment": experiment,
         "run": name,
-        **parse_run_id(run_id),
+        **meta,
+        **loc,
         "task": int(task) if task else 0,
         "question_id": rec.get("question_id"),
         "question_title": rec.get("question_title"),
@@ -267,8 +303,9 @@ def load(runs_root=RUNS_ROOT, experiment=None):
     import pandas as pd
 
     run_rows, step_rows, call_rows, src_rows = [], [], [], []
-    for fam, name, _path, rec in iter_results(runs_root, experiment):
-        run, steps, calls, sources = parse_result(fam, name, rec)
+    for fam, name, path, rec in iter_results(runs_root, experiment):
+        run, steps, calls, sources = parse_result(fam, name, rec,
+                                                  run_folders(fam, path))
         run.update(run.pop("tool_counts"))
         run.pop("extras")
         run_rows.append(run)
@@ -277,7 +314,8 @@ def load(runs_root=RUNS_ROOT, experiment=None):
         src_rows.extend(sources)
 
     runs = pd.DataFrame(run_rows).sort_values(
-        ["experiment", "batch", "trial", "task"]).reset_index(drop=True)
+        ["experiment", "batch", "run_group", "model_group", "trial", "task"],
+        na_position="first").reset_index(drop=True)
     for t in TOOLS:
         if t not in runs:
             runs[t] = 0
