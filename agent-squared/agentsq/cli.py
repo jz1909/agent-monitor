@@ -98,6 +98,8 @@ async def main_async(args, rd):
                 result = {"question_id": task.get("question_id"),
                           "question_title": task.get("question_title"),
                           "error": repr(e)}
+        # graded by hand afterwards: true/false once someone checks the answer
+        result.setdefault("correct", None)
         async with lock:
             append_results(output, [result])
             status = "FAILED" if "error" in result else "done"

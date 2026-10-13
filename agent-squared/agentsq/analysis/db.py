@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS runs (
     parsed             INTEGER,
     question_id        TEXT,
     question_title     TEXT,
+    correct            INTEGER,
     n_steps            INTEGER,
     n_body_steps       INTEGER,
     final_phase        TEXT,
@@ -121,7 +122,7 @@ CREATE INDEX IF NOT EXISTS runs_exp    ON runs (experiment);
 RUN_COLS = [
     "experiment", "run", "batch", "run_group", "model_group", "trial", "condition", "agent_model",
     "monitor_model", "effort", "topos", "started", "parsed", "question_id",
-    "question_title", "n_steps", "n_body_steps", "final_phase", "n_stuck",
+    "question_title", "correct", "n_steps", "n_body_steps", "final_phase", "n_stuck",
     "stuck_share", "n_completed_labels", "agent_answer", "answer_len",
     "n_sources", "research_loops", "mcp_call_count", "mcp_faulted_count",
     "faulted_share", "has_tokens", "agent_input", "agent_output",
@@ -163,6 +164,7 @@ def _insert(conn, experiment, name, path, rec, stat):
     run["topos"] = None if run["topos"] is None else int(run["topos"])
     run["parsed"] = int(run["parsed"])
     run["has_tokens"] = int(run["has_tokens"])
+    run["correct"] = None if run["correct"] is None else int(run["correct"])
 
     conn.execute(
         f"INSERT INTO runs ({','.join(RUN_COLS)}) "
@@ -252,6 +254,8 @@ def experiments(conn):
                sum(coalesce(mcp_call_count, 0)) AS n_calls,
                sum(has_tokens)         AS n_with_tokens,
                sum(coalesce(mcp_faulted_count, 0)) AS n_faulted,
+               count(correct)          AS n_graded,
+               sum(coalesce(correct, 0)) AS n_correct,
                max(started)            AS latest
           FROM runs
       GROUP BY experiment
@@ -276,6 +280,7 @@ def all_runs(conn, experiment=None):
         r["topos"] = bool(r["topos"]) if r["topos"] is not None else None
         r["parsed"] = bool(r["parsed"])
         r["has_tokens"] = bool(r["has_tokens"])
+        r["correct"] = None if r["correct"] is None else bool(r["correct"])
         r["extras"] = json.loads(r["extras"] or "{}")
         r.pop("agent_answer", None)      # kept out of list payloads; large
     return runs
@@ -340,6 +345,7 @@ def run_detail(conn, experiment, run):
     detail["topos"] = bool(detail["topos"]) if detail["topos"] is not None else None
     detail["parsed"] = bool(detail["parsed"])
     detail["has_tokens"] = bool(detail["has_tokens"])
+    detail["correct"] = None if detail["correct"] is None else bool(detail["correct"])
     detail["extras"] = json.loads(detail["extras"] or "{}")
     detail["tool_counts"] = {r["tool"]: r["n"] for r in conn.execute(
         "SELECT tool, n FROM tool_counts WHERE experiment = ? AND run = ?",

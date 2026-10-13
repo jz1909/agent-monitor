@@ -61,6 +61,17 @@ function short(run) {
 const tagOf = r => r.model_group
   ? `b${r.batch ?? "?"} · ${r.model_group}`
   : `b${r.batch ?? "?"}-${r.trial ?? "?"}`;
+/* Hand-graded answer: `correct` is true, false, or null until someone checks it. */
+const verdict = r => (r.correct == null ? "ungraded" : r.correct ? "right" : "wrong");
+const verdictMark = r => (r.correct == null ? "·" : r.correct ? "✓" : "✗");
+const verdictColor = r =>
+  r.correct == null ? css("muted") : r.correct ? css("completed") : css("alarm");
+// "3/5 right", or "" when none of the runs has been graded
+function rightOf(runs) {
+  const graded = runs.filter(r => r.correct != null);
+  return graded.length
+    ? `${graded.filter(r => r.correct).length}/${graded.length} right` : "";
+}
 const pct = x => (x == null ? "–" : `${Math.round(x * 100)}%`);
 const num = x => (x == null ? "–" : x.toLocaleString());
 const pair = r =>
@@ -157,9 +168,13 @@ function renderDesign() {
     cell.append(el("div", "tag", tagOf(r)));
     const cond = el("div", "cond", r.condition || "unparsed run id");
     cond.style.color = color;
+    const mark = el("span", "verdict", ` ${verdictMark(r)} ${verdict(r)}`);
+    mark.style.color = verdictColor(r);
+    cond.append(mark);
     cell.append(cond);
     const meta = el("div", "meta");
     meta.append(
+      el("div", null, r.question_title || "–"),
       el("div", null, `agent: ${r.agent_model || "?"}`),
       el("div", null, `monitor: ${r.monitor_model || "?"}`),
       el("div", null, `effort: ${r.effort || "?"}`),
@@ -179,14 +194,21 @@ function renderRibbon(hostId, spec) {
 
   for (const group of ribbonGroups()) {
     const rows = [...group.rows].sort(spec.sort);
-    const head = el("div", "group-head", `${group.title}  (${rows.length} runs)`);
+    const right = rightOf(rows);
+    const head = el("div", "group-head",
+      `${group.title}  (${rows.length} runs${right ? ` · ${right}` : ""})`);
     head.style.color = condColor(group.cond);
     host.append(head);
 
     for (const r of rows) {
       const items = spec.items(r);
       const row = el("div", "ribbon-row");
-      row.append(el("div", "label", spec.label(r, items)));
+      const label = el("div", "label");
+      const mark = el("span", "verdict", verdictMark(r) + " ");
+      mark.style.color = verdictColor(r);
+      mark.title = `answer ${verdict(r)}`;
+      label.append(mark, document.createTextNode(spec.label(r, items)));
+      row.append(label);
 
       const ribbon = el("div", "ribbon" + (items.length ? "" : " empty"));
       items.forEach((item, i) => {
@@ -589,13 +611,17 @@ function renderDetail() {
     return;
   }
 
-  head.append(el("span", "chip outline", run.effort || "?"),
+  const graded = el("span", "chip", `answer ${verdict(run)}`);
+  graded.style.background = verdictColor(run);
+  head.append(graded,
+              el("span", "chip outline", run.effort || "?"),
               el("span", "chip outline", run.topos ? "topos" : "notopos"));
   host.append(head, el("div", "detail-run", run.run));
 
   const dl = el("dl", "kv");
   const rows = [
     ["question", run.question_title || "–"],
+    ["correct", run.correct == null ? "not graded yet" : run.correct ? "yes" : "no"],
     ["agent", run.agent_model || "?"],
     ["monitor", run.monitor_model || "?"],
     ["steps", `${run.n_steps} (${run.n_body_steps} body)`],
@@ -607,10 +633,10 @@ function renderDetail() {
     ["started", run.started || "–"],
   ];
   if (run.mcp_faulted_count != null) {
-    rows.splice(8, 0, ["faulted", `${run.mcp_faulted_count} = ${pct(run.faulted_share)}`]);
+    rows.splice(9, 0, ["faulted", `${run.mcp_faulted_count} = ${pct(run.faulted_share)}`]);
   }
   if (Object.keys(run.tool_counts || {}).length) {
-    rows.splice(9, 0, ["tools", Object.entries(run.tool_counts)
+    rows.splice(10, 0, ["tools", Object.entries(run.tool_counts)
       .map(([t, n]) => `${t} x${n}`).join(", ")]);
   }
   if (run.research_loops != null) rows.push(["research loops", run.research_loops]);
@@ -762,6 +788,7 @@ function render() {
   document.getElementById("census").textContent =
     `${state.runs.length} runs · ${state.steps.length} steps`
     + (vis.hasCalls ? ` · ${state.calls.length} tool calls` : "")
+    + (rightOf(state.runs) ? ` · ${rightOf(state.runs)}` : "")
     + (state.changed ? `  (resync: ${state.changed})` : "");
   renderDesign();
   renderPhaseRibbon();

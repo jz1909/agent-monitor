@@ -1,0 +1,122 @@
+{
+    "task_0": {
+        "question_id": "18a4ba4cbeca638d77fb8cc570b5c8c51f253c1144e8f8677d2ddfd0c0ba2681",
+        "question_title": "robotaxi_fintech_acquisition",
+        "prompt": "A technology trend anticipated for 2026 involves autonomous vehicles launching service in a major European capital city. The company leading this expansion has partnered with a mobility fintech for fleet operations in that city. This fintech counts among its backers a Madrid-based venture capital firm founded in 2022, which frequently co-invests with a global organization supporting entrepreneurs in emerging markets. One portfolio company of that global organization, a financial technology startup, was acquired in a major deal in early 2026. What was the approximate value, in billions of dollars, of that acquisition deal?",
+        "answer": "$2.56 billion"
+    },
+    "task_1": {
+        "question_id": "b5d010090bc583d4c044bda4f300134c51a4b3ad087c3d1afbe75a3cc7a8eab5",
+        "question_title": "school_bond_proposition_a",
+        "prompt": "A city planner active in the early 1900s, who over a four-decade career prepared comprehensive plans for two dozen communities and designed park systems for several major cities—including one in Texas and another in a Rocky Mountain state. In late 2025, the mayor of that Rocky Mountain capital nominated a former department head, who had been serving in an interim capacity, to lead the community planning department permanently. The municipal planning department of the Texas city where that early planner worked oversees various development projects. In spring 2026, voters in that Texas city overwhelmingly approved a record-setting school construction funding measure consisting of four propositions. What percentage of the total bond package was allocated to Proposition A, rounded to the nearest whole percentage?",
+        "answer": "96%"
+    },
+    "task_2": {
+        "question_id": "443cddd4bf18ebd17962eb910b87e7652a3b6ce701b276247f2b495465bf4267",
+        "question_title": "space_station_awards",
+        "prompt": "A neuroscience conference scheduled for late summer 2026 features a keynote speaker who holds a chief scientist position at a neurotechnology institute. This institute recently received substantial funding from a cryptocurrency entrepreneur known for founding multiple blockchain ventures. This same entrepreneur also founded a space startup that recently secured major investment while competing for a government contract. According to the space agency's official transition strategy, when are the awards for the next phase of this commercial space station program planned to be made?",
+        "answer": "early 2026"
+    },
+    "task_3": {
+        "question_id": "aa676651bdf2f627719b5abc0910db66442a2bfd84eb5daa59478bb242eb00b4",
+        "question_title": "drip_irrigation_class_gap",
+        "prompt": "In 2026, a historian known for analyzing how campus activism shapes academic disciplines released a work engaging with environmental justice themes. That same year, a high school student recognized for environmental leadership chaired a conservation council for a water agency managing resources from a challenged river basin in the western U.S. How many days elapsed between the publication date of the historian's work and the date of a free drip irrigation class offered by that water agency?",
+        "answer": "60 days"
+    },
+    "task_4": {
+        "question_id": "eb83e1614adf5c8c9e773e5941965ce835dcda44948b51785606f07db257d099",
+        "question_title": "goalkeeper_fotmob_rating",
+        "prompt": "A South American national team set to compete in the upcoming global football tournament in 2026 is led by a head coach who began his playing days as a teenager at an amateur football organization based in a major Argentine city. In April 2026, that same amateur organization was embroiled in a violent on-field altercation during a match against another local team in a neighboring municipality, an incident that drew attention within regional amateur league circles. Another professional footballer, who was born in the same city as that head coach and currently represents the same national team as a goalkeeper, plays for an Argentine club in the top domestic division. Notably, this goalkeeper has never played for any club in a European top-flight league throughout his entire professional career. What was this goalkeeper's average performance rating (according to FotMob statistics) during the 2026 Liga Profesional Apertura season?",
+        "answer": "7.22"
+    },
+    "task_5": {
+        "question_id": "2fabdbe2e70f780b1e21cc510ceca5c309a1a2807b9dc796350cc65d890417c1",
+        "question_title": "seafaring_prehistory_project",
+        "prompt": "In a recent water infrastructure project in a Scandinavian city, archaeologists uncovered well-preserved historical wooden containers used for construction materials in early modern urban development. The lead researcher on this discovery, who recently completed doctoral studies at a major Nordic university and has presented on methods for identifying ancient inscriptions, participated in an academic forum that also featured a prominent scholar of early writing systems. This latter scholar is scheduled to speak at an upcoming international academic gathering focused on ancient writing systems, where one presentation will discuss a newly discovered inscription from a low-lying European country. That presentation is co-authored by a linguist specializing in prehistoric European languages who leads interdisciplinary projects combining archaeology, genetics, and linguistics. What is the scheduled end year of one of this linguist's major research initiatives that explores seafaring narratives as an alternative to terrestrial perspectives on European prehistory?",
+        "answer": "2026"
+    },
+    "task_6": {
+        "question_id": "424b95f7f54a8c5799bc02ed008e84e6309dfdc6a77ea2a473106a44028f9083",
+        "question_title": "biophilic_restoration_feature",
+        "prompt": "An urban planning approach that emphasizes daily contact with nature as essential for human wellbeing and focuses on creating ecologically resilient cities inspired a global collaborative network that was formally launched at an October 2013 conference and now includes over 40 partner cities worldwide. This network was founded by an academic who has authored more than 15 books on sustainable communities and holds a named professorship at a major American university. In early 2026, a major Asian port city with a population between 3.3 and 3.5 million people—which has been experiencing economic shifts relative to a northern rival port city—hosted an international conference on this planning approach after joining the network in 2024. A keynote speaker at that conference was a British landscape architect who was named a Royal Designer for Industry in 2012 and leads a firm with 11-50 employees. This architect's firm has a restoration project shortlisted for the 2026 RIBA Awards that involves creating a biophilic mixed-use development in a UK port city. According to documentation about this award-shortlisted restoration, what specific sustainability feature did it implement to support low-carbon transportation?",
+        "answer": "77 electric car parking spaces with charging stations"
+    },
+    "task_7": {
+        "question_id": "e0be4893c87cfc8c23775b26794185df92b2bbaaf2c723a9138f76f42dad2caa",
+        "question_title": "architecture_hall_of_fame",
+        "prompt": "A technique for accelerating Transformer models demonstrated roughly 11 times faster inference on a standard natural language understanding benchmark while keeping accuracy degradation under 1%. This work was presented at a major European computational linguistics conference in 2022. One author of that work later contributed to a 2026 study examining security vulnerabilities in a shuffling-based defense mechanism for secure Transformer inference. Looking at the author list of that 2026 security analysis, which researcher among them appears in the Computer Architecture Hall of Fame rankings (updated April 2026), and how many fewer papers do they have compared to the top-ranked researcher in that hall of fame?",
+        "answer": "Jingwen Leng, with 132 fewer papers"
+    },
+    "task_8": {
+        "question_id": "62b9c0f49e98133ba8653b5dc8ba0bd3b485f46e8211fbfa9d5152b8af810a7e",
+        "question_title": "taiwan_local_elections",
+        "prompt": "A consulting firm founder who once advised transportation technology startups and later spoke at a major urban innovation conference happening in late September 2026 on the East Coast of the United States. This conference shares its venue with another summit focused on adapting commercial technologies for national security purposes. One of the prominent technology exhibitors at the co-located events is a Taiwanese hardware company whose co-CEO also chairs an alliance promoting urban intelligence solutions. This company showcased a pioneering five-layer architecture for autonomous urban systems at a different Asia-Pacific exhibition in March 2026. One of the testbed cities for this architecture is a historic cultural capital in Southern Taiwan that's implementing AI-enhanced energy management. In the 2026 local elections in that country, a legislator who previously served as a city councilor in that same municipality won her party's primary to become its mayoral candidate. When are the next nationwide local elections scheduled to take place in that country?",
+        "answer": "November 28, 2026"
+    },
+    "task_9": {
+        "question_id": "dbde09919b2d26df20eb5ca74673d51db2e4be4cdaa8c8d9154aa94d523d592e",
+        "question_title": "quantum_roundtable_sponsor",
+        "prompt": "A foundational figure in quantum theory, who pursued a practical discipline at a West Country university following paternal guidance, laid early academic groundwork for an institution that would later establish a pioneering quantum engineering laboratory. This laboratory organizes a major annual workshop series in quantum information technologies. One of the academics who co-chairs that workshop's organizing committee was also a panelist in a virtual roundtable discussion focused on career pathways in quantum technology that took place in early 2026. Which organization provided sponsorship for that careers-focused quantum roundtable event?",
+        "answer": "Optica"
+    },
+    "task_10": {
+        "question_id": "6f531ede2c621f1fdc9219be7677444d660e20dcc0d9509c6e1cd1a52cd50972",
+        "question_title": "brazil_railway_budget",
+        "prompt": "A Portuguese-born business leader, whose early career included a stint at his home country's state-owned railway operator, later earned a top executive award from a major Brazilian financial newspaper during his tenure leading a major energy company. This newspaper extensively covers Brazil's infrastructure developments, including a significant 2026 concession package announced by the Transport Ministry comprising multiple projects. Among these, a particularly contentious railway project intended to connect agricultural heartlands to northern ports has faced substantial implementation hurdles in 2026. What is the estimated total budget, in Brazilian reais, for this delayed railway project that was part of the 2026 concession plan?",
+        "answer": "R$30 billion"
+    },
+    "task_11": {
+        "question_id": "82c59e8f0f4174ed4733c1378d9bc1f320cf03ddb00813cd89e923368ab87a5a",
+        "question_title": "compliance_regulator_report",
+        "prompt": "A scholar who pioneered the study of ethical decision-making in organizations during the mid-20th century taught at a business school located in a major Midwestern city known for its financial exchanges. That institution later established a dedicated center for business ethics research, which in recent years has collaborated with a compliance consulting firm specializing in multinational corporations. In its most recent effectiveness assessment released in early 2026, this consulting firm's report highlighted which specific regulatory body as facing the most significant compliance challenges across global industries?",
+        "answer": "U.S. Securities and Exchange Commission (SEC)"
+    },
+    "task_12": {
+        "question_id": "cd9810b543a4d6ef77776dbc33287d124d9dd86b80723d7a93e76ef697432889",
+        "question_title": "selection_committee_access",
+        "prompt": "A men's college basketball program captured its initial national championship in the same calendar year that a professional hockey team based in Texas won its first Stanley Cup. That college program added another title five years later. It was a founding member of a conference established in a year when a major international women's rights treaty was adopted by the United Nations. In the mid-2020s, this program fell short in a championship game to an opponent representing a state whose name originates from an Indigenous word meaning 'large lake.' The guard named Most Outstanding Player of that contest had transferred just one year earlier from an Atlantic Coast Conference institution. This ACC school is located in a state that shares a border with Virginia and also contains that state's capital city. Additionally, its creative writing program counts among its alumni a New York Times bestselling author who graduated in 1993. Following a disappointing early exit from the postseason tournament, that university made a high-profile coaching hire, bringing in a disciplinarian mentor renowned for developing NBA-ready talent during his extensive professional career. In his introductory remarks, the new coach pointedly referenced the mid-major program that had eliminated his new team. That mid-major is a public university competing in the Atlantic 10 Conference and situated in a city that once served as a capital of the Confederate States of America. The individual chairing the NCAA Division I Men's Basketball Selection Committee during this period had previously served as athletic director at an archrival of that mid-major institution. What specific percentage increase in championship access for teams did this committee chair announce would result from the format modification implemented the following season?",
+        "answer": "The championship access for teams increased from 18% to 21%, representing a 3 percentage point increase (or a 16.67% relative increase)."
+    },
+    "task_13": {
+        "question_id": "04f6f9e9f9912204741d97ca46dc0eaa99805830d27d8b5678238ce160fe8ae3",
+        "question_title": "north_sea_tunnel_valley",
+        "prompt": "A digital media enterprise was co-founded by an heir of an industrial dynasty whose wealth originated from hydrocarbon resources, who in 2024 received an honorary degree from a Roman university. The oil marketing entity established by this dynasty's patriarch became the subject of a landmark corporate acquisition that resulted in precedent-setting litigation. The acquiring petroleum firm later merged into a contemporary multinational energy corporation that announced in 2024 its exit from North Sea operations after more than 55 years. In early 2026, this corporation formed an alliance with a state-controlled energy enterprise from a Nordic nation—specifically not Sweden and not a member of the European Union—which has majority state ownership exceeding 65% and a significant offshore wind portfolio. Their partnership launched a marine ecosystem restoration initiative focused on carbon capture within the North Sea. What specific submerged tunnel valley, identified in a 2026 scientific review as a high organic carbon stock area vulnerable to trawling disturbance, was designated as the priority zone for this 2026 blue carbon sequestration effort?",
+        "answer": "The Outer Silver Pit region of the North Sea"
+    },
+    "task_14": {
+        "question_id": "78326732f949603e35ad0b025f8fb61c94c9e149f6fb6e21404a0d2e31d20113",
+        "question_title": "lunar_base_cooperation",
+        "prompt": "A Chinese-born aerospace engineer who co-drafted the founding document of a prominent NASA research laboratory during World War II contributed to the foundation of a national space program that later developed a robotic lunar mission scheduled for 2026. This mission, which includes scientific instruments developed through a joint venture between two Arab states, serves as reconnaissance for an international lunar base project. In late 2024, a West African nation formalized its participation in this lunar base initiative. In which month of 2026 did that West African nation's military and space agency establish a strategic cooperation framework?",
+        "answer": "February 2026"
+    },
+    "task_15": {
+        "question_id": "c5b0dbbb4964fd7ee9bed3068f774a99d506b9ba5f7703e7ca1c01b029aefbf3",
+        "question_title": "anti_doping_alumnus_year",
+        "prompt": "A programming language explicitly designed to prioritize the emotional experience of its users over raw computational efficiency was created by a developer who graduated from a national university located in a planned science city northeast of Tokyo. That university hosts an international academy focused on sport studies. An alumnus of that academy, who previously led his country's national cricket organization and was recently appointed to lead a newly established national anti-doping organization in 2026, hails from a Pacific island nation that gained independence from British colonial rule in 1970. In what year did this alumnus graduate from the academy?",
+        "answer": "2024"
+    },
+    "task_16": {
+        "question_id": "e29a6120d0eb663d4d1e1cdb4c1bca41d7239ace0b63e068c6a58a48de2483c2",
+        "question_title": "census_test_acceptance_speech",
+        "prompt": "A public health philanthropist whose career began at a major international foundation in the mid-20th century has an award named in their honor. The 2026 recipient of this award leads community investment initiatives at a foundation serving Appalachian communities that emphasizes data-driven decision making. Within this foundation's service area, a sovereign tribal territory has been selected for a 2026 federal statistical test that will employ predictive technology to optimize Mobile Questionnaire Assistance locations. Drawing from both the foundation's strategic approach and the test's methodological innovation, what guiding principle informed this award recipient's acceptance speech?",
+        "answer": "Data-driven predictive community engagement"
+    },
+    "task_17": {
+        "question_id": "2888e9f9301417e01cd97bc7411b54c9a528e596d1f8ca249add6697f3d21c1e",
+        "question_title": "fellowship_residency_quarter",
+        "prompt": "An Amsterdam-based entrepreneur in the publishing sector, who transitioned from a technical background to editorial leadership, established a periodical focused on spatial environments in the late 1990s and heads a firm that also produces a prominent art-focused publication. This individual is slated to present at a festival examining workplace culture in Cologne during late October 2026. Another presenter at that same event is a Swiss academic whose research centers on organizational communication—a professor who has never held a visiting professorship appointment at any university in the United Kingdom throughout her career. This professor will undertake a fellowship residency in 2026 at a Los Angeles cultural institution dedicated to fostering European-American dialogue. Given that this institution schedules its fellowship residencies to align with calendar quarters, and considering the professor's teaching commitments at her Swiss university during the spring semester of 2026, during which calendar quarter(s) of 2026 is her fellowship residency scheduled to occur?",
+        "answer": "The fourth quarter (October through December) of 2026"
+    },
+    "task_18": {
+        "question_id": "b84eb7efc3886e733b4f66cfe335a61ee752f6419daf3ea688847667777fe39d",
+        "question_title": "urban_resilience_event",
+        "prompt": "An upcoming international conference on sustainable construction, scheduled for mid‑2026 in Shanghai, is being organized by a major Chinese university known for its strong civil engineering programs and located in that city. At this university, a professor who recently completed a term as dean of the college focusing on structural engineering – and who also serves as executive deputy director of a state key laboratory dedicated to disaster reduction – now directs a recently established urban resilience laboratory that was launched in collaboration with an international development agency. This laboratory’s first flagship event, held in October 2025, attracted participants from numerous countries. From how many countries did participants attend this flagship event?",
+        "answer": "16 countries"
+    },
+    "task_19": {
+        "question_id": "3136ffa72abd36fc463e0317eb70fcccd510e70c835fb5a7be0a6f191512dbad",
+        "question_title": "illicit_flows_tracker_pilots",
+        "prompt": "A South African leader who was the first from his continent to receive a certain prestigious international honor in the early 1960s has a leadership institute named after him at a major university. A recent PhD graduate from this institute, who focused his doctoral research on relational leadership in complex organizational settings, was appointed in early 2026 to lead a national revenue service and simultaneously became chair of a pan-African tax forum. At a key continental meeting on tax policy and illicit financial flows that same year, this forum reported an 88% implementation rate of previous recommendations and highlighted a new policy tracker being tested in several African countries. How many countries were initially selected as pilot sites for this anti-illicit financial flows policy tracker?",
+        "answer": "5"
+    }
+}

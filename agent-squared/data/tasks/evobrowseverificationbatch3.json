@@ -1,0 +1,62 @@
+{
+    "task_0": {
+        "question_id": "163a83d2d92459d78e001067ae02625e3b274ddd576fb468ac0fbfe24cf088a7",
+        "question_title": "military_operation_casualties",
+        "prompt": "A former White House press secretary who became a media commentator appeared on a nationally syndicated radio talk show in April 2026 to discuss European reactions to an ongoing Middle Eastern conflict. The host of this program completed his undergraduate education at a private research university whose global affairs institute hosted a panel discussion the previous month examining the consequences of a specific U.S.-led military operation. According to official documentation from one of the belligerents involved in that operation, what approximate number of adversary combatants was reported killed?",
+        "answer": "Over 6,000"
+    },
+    "task_1": {
+        "question_id": "6a2599d065e5c23e6a5604e6f62c5b95972f71974fe5a596b1b0620b78c388c4",
+        "question_title": "acal_math_professor",
+        "prompt": "A weather forecasting office that began operations in a Caribbean territory shortly after the conclusion of a late-19th century conflict that resulted in the territory's transfer to the United States. The current head of that office recently served as a federal panelist at a major interagency summit focused on water challenges in that territory, held in February 2026. One of the other presenters at that summit was a pioneering female meteorologist from that territory who earned her undergraduate mathematics degree from a public university there. At the mathematics department of that same university, a professor was recently elected to the Academy of Sciences of Latin America. On what date was this professor elected to ACAL?",
+        "answer": "April 5, 2026"
+    },
+    "task_2": {
+        "question_id": "42d1ae7fe34d368dbb658880e7dedfcab777b30dbed7e91e8b3eb7b2e75441e6",
+        "question_title": "robotic_joint_award",
+        "prompt": "A surgeon who has significantly advanced treatment methods for joint injuries in overhead athletes, but who has never been honored with the Lasker-DeBakey Clinical Medical Research Award, founded a research institute that in early 2026 unveiled a novel robotic system for minimally invasive joint procedures. The clinical outcomes from this system's first human trials were presented at an international congress selected by the institute's partners to showcase breakthrough medical robotics, which featured a keynote address by a renowned biomechanics expert known for her work on tendon adaptation mechanisms. What specific award did the robotic system receive in the technology innovation category at this congress?",
+        "answer": "Pioneering Technology Award"
+    },
+    "task_3": {
+        "question_id": "486af0f0c23fe491beec1b149d8edd94bb7bab282f72619d33916a05674c96ce",
+        "question_title": "sumo_ozeki_rank",
+        "prompt": "Tracing back to a pre-war yokozuna renowned for employing a reactive initial charge technique known as go-no-sen, one finds a sumo stable that has produced several wrestlers from Japan's Kyushu region and underwent a leadership transition in 2021. This stable counts among its active members a former ozeki hailing from Kumamoto who, in a spring tournament two years prior to the 2026 World Sumo Championships, achieved a record just above the break-even point. What was this wrestler's rank in the tournament immediately following those championships?",
+        "answer": "West Maegashira #5"
+    },
+    "task_4": {
+        "question_id": "893dc6fe7af09027cc88af5bd96fde8492eaaea28bf4a6bfea35f45e88596c33",
+        "question_title": "regulatory_change_date",
+        "prompt": "A study that systematically compared water consumption patterns during a 19th‑century outbreak in a major European capital laid groundwork for a research design. Researchers at a Midwestern university medical school—which is not located in a state that borders any of the Great Lakes—later used this design in a landmark 1950 investigation. The senior author of that 1950 study headed the surgery department at that university for decades. In 2017, faculty at the same university published a perspective article in a prominent medical journal discussing qualifications for a specific regulatory leadership position. In early 2026, the individual holding that leadership position announced a major change to regulatory standards. When did this regulatory change take effect?",
+        "answer": "February 2026"
+    },
+    "task_5": {
+        "question_id": "facea270c338000b5cef12a5fc741913dd35d516253355b41fbff9317e60fefd",
+        "question_title": "computational_storage_cloud",
+        "prompt": "A Linux utility for manipulating block storage devices was originally developed by a programmer who also contributed significantly to improving I/O performance in the kernel. This programmer once gave a keynote at a major open-source conference about next-generation storage architectures. At that same conference several years later, a startup specializing in computational storage solutions made their debut presentation. Recently, this startup announced a strategic partnership with a major cloud infrastructure provider to integrate their technology. Which cloud provider entered into this partnership in early 2026?",
+        "answer": "Google Cloud"
+    },
+    "task_6": {
+        "question_id": "34c0d62cdff02959e49b38e9043ef2ab23280b18caced601dea7d2080a87225f",
+        "question_title": "ai_advisory_council",
+        "prompt": "A hospital whose construction was authorized by a 1944 public health act, had its cornerstone laid by a former U.S. president in 1951, and opened for patients in 1953, will welcome a new chief executive in mid-May 2026. This incoming CEO earned his medical degree from a public Michigan university whose medical school traces its origins to the 1860s and reported an endowment valued at $644 million as of June 30, 2025. The current president of that university is a legal scholar who once clerked for a former Supreme Court justice and later served as its law school dean before assuming the presidency. He graduated first in his class from a law school founded in 1859 that has produced over 125 state supreme court justices and was an early admitter of women and international students. That law school recently established an AI advisory council chaired by a Microsoft senior fellow who 'rewired' after more than 35 years at the company. On what date did this AI advisory council convene its inaugural meeting?",
+        "answer": "April 2, 2026"
+    },
+    "task_7": {
+        "question_id": "48dc08481f5db552d41676aed9051689e81941359deeca0db129f81103b0ce48",
+        "question_title": "achievement_luncheon_keynote",
+        "prompt": "An administrative office within a major federal health department, whose organizational structure was updated in early 2026, is led by an official who earned their bachelor's degree from a public research university located at the eastern base of the Sierra Nevada mountains. In 2026, that university's business college honored a marketing professional working for a women's empowerment nonprofit as its Alumni of the Year. The nonprofit organization that employs this honoree is hosting a major achievement luncheon in May 2026. Who is delivering the keynote address at that 2026 luncheon?",
+        "answer": "Rebecca Calder, Ph.D., CDR, USN (ret.)"
+    },
+    "task_8": {
+        "question_id": "3083e3b6d403ca5993567b287e1da7ec1723c8784f7625e79970ea111c2f75b7",
+        "question_title": "microsegmentation_award",
+        "prompt": "A computer scientist specializing in theoretical computer science at a public research university in California, who was honored as an ACM Fellow for contributions to algorithms but has never served as department chair at his institution, studied under a mathematician who has received prestigious fellowships and honors. That mathematician co-founded a company with a colleague who died in a tragic event. The company, an internet infrastructure business, received a particular award in 2026 based on customer feedback with a high recommendation rate. What is the name of this award?",
+        "answer": "2026 Gartner Peer Insights Customers' Choice for Network Security Microsegmentation"
+    },
+    "task_9": {
+        "question_id": "ead9584f76ac4ef3bf4ee81dc45499fef6c6cc69d5067bd83b0ec7240ae559d7",
+        "question_title": "digitized_library_works",
+        "prompt": "In a 2026 issue of a Swedish journal focusing on Eastern studies, an article examined the literary contributions of an 18th-century Chinese woman writer who served as a copyist for a reclusive scholar. This scholar's unpublished manuscript eventually became part of the collection of a private library founded by a wealthy bibliophile in a historic water town. Digital versions of collections from such historic libraries are accessible through a collaborative platform developed by a major Chinese university and a technology company. How many works did this digitization platform contain by 2026?",
+        "answer": "59,000 works"
+    }
+}

@@ -8,7 +8,10 @@ from agentsq.cli import parse_args as parse_cli_args, run
 
 BATCH1 = "data/tasks/evobrowseverificationbatch1.json"
 BATCH2 = "data/tasks/evobrowseverificationbatch2.json"
-input_path = BATCH2
+BATCH3 = "data/tasks/evobrowseverificationbatch3.json"
+BATCH4 = "data/tasks/evobrowseverificationbatch4.json"
+
+input_path = BATCH4
 
 
 INKLING_MODEL = 'inkling-bf16'
@@ -21,7 +24,7 @@ def trial(search_version, main, monitor, reasoning, topos, cluster):
     return {'experiment': 'continous', 'main': main, 'monitor': monitor, 'reasoning': reasoning, 'search_version': search_version, 'topos': topos, 'cluster': cluster}
 
 batch1 = [
-    trial('broken', MODEL, MODEL, 'medium', False, 'MINERVA'),
+    trial('baseline', MODEL, MODEL, 'medium', False, 'MINERVA'),
 ]
 
 BATCHES = {f"batch{i}": b for i, b in enumerate([batch1], start=1)}

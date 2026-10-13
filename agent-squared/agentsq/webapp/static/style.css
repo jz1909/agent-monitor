@@ -157,3 +157,7 @@ svg .val { font-size: 11px; fill: var(--ink); font-weight: 700; }
 svg .gridline { stroke: var(--grid); stroke-width: 1; }
 svg .dot { stroke: var(--panel); stroke-width: 1.6; cursor: pointer; }
 svg .bar { cursor: pointer; }
+
+/* hand-graded answer mark: ✓ right, ✗ wrong, · not graded */
+.design .cell .cond .verdict { font-size: 12px; font-weight: 600; margin-left: 4px; }
+.ribbon-row .label .verdict { font-weight: 700; }

@@ -37,7 +37,7 @@ KNOWN_KEYS = {
     "final_phase", "phase_history", "analysis_log", "summary_log",
     "raw_summary_log", "tool_call", "research_loop_count", "agent_tokens",
     "monitor_tokens", "mcp_call_count", "mcp_tool_counts", "mcp_faulted_count",
-    "mcp_call_log",
+    "mcp_call_log", "correct",
 }
 
 # Hedging language in the monitor's justification: near-miss STUCK calls.
@@ -208,6 +208,8 @@ def parse_result(experiment, name, rec, folders=()):
         "task": int(task) if task else 0,
         "question_id": rec.get("question_id"),
         "question_title": rec.get("question_title"),
+        # hand-graded answer: True / False, None until someone checks it
+        "correct": rec.get("correct") if isinstance(rec.get("correct"), bool) else None,
         "n_steps": len(ph),
         "n_body_steps": len(body),
         "final_phase": rec.get("final_phase"),
