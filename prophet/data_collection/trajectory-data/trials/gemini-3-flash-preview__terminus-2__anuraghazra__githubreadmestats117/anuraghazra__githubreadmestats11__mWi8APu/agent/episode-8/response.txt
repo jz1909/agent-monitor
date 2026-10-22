@@ -1,0 +1,10 @@
+{
+  "analysis": "Still nothing. Let me look at the files in `tests/`.",
+  "plan": "I will list the files in the `tests/` directory.",
+  "commands": [
+    {
+      "keystrokes": "ls tests/\n",
+      "duration": 0.1
+    }
+  ]
+}

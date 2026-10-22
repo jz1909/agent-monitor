@@ -1,0 +1,41 @@
+Current Terminal Screen:
+diff --git a/api/index.js b/api/index.js
+index 0a25e37..da01bf6 100644
+--- a/api/index.js
++++ b/api/index.js
+@@ -1,5 +1,5 @@
+ require("dotenv").config();
+-const { renderError, parseBoolean } = require("../src/utils");
++const { renderError, parseBoolean, clampValue } = require("../src/utils");
+ const fetchStats = require("../src/fetchStats");
+ const renderStatsCard = require("../src/renderStatsCard");
+
+@@ -17,10 +17,10 @@ module.exports = async (req, res) => {
+     text_color,
+     bg_color,
+     theme,
++    cache_seconds,
+   } = req.query;
+   let stats;
+
+-  res.setHeader("Cache-Control", "public, max-age=1800");
+   res.setHeader("Content-Type", "image/svg+xml");
+
+   try {
+@@ -29,6 +29,14 @@ module.exports = async (req, res) => {
+     return res.send(renderError(err.message));
+   }
+
++  const cacheSeconds = clampValue(
++    parseInt(cache_seconds) || 1800,
++    0,
++    86400
++  );
++
++  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
++
+   res.send(
+     renderStatsCard(stats, {
+       hide: JSON.parse(hide || "[]"),
+diff --git a/api/pin.js b/api/pin.js
+--More--

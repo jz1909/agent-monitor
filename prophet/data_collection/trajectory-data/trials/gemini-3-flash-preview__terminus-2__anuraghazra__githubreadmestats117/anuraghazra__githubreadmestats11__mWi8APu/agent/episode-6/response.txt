@@ -1,0 +1,10 @@
+{
+  "analysis": "I've reviewed `src/utils.js`. It has various utility functions, but nothing specifically for cache handling. \n\nNow I will look at the issue description again: \"feat: added ability to set custom cache\". \nLooking at the repository information and the pull request mention (#117), I should check if there's any mention of the parameter name. Since I don't have access to the PR content other than what's provided, I'll assume the parameter should be something like `cache_seconds` or `cache`.\n\nActually, I should check the existing tests to see if they give any hint about the expected parameter name, although the instructions said \"I've already taken care of all changes to any of the test files\". This means the tests might already contain the expected parameter name!",
+  "plan": "I will search for 'cache' in the `tests/` directory to see how the new feature is expected to be used.",
+  "commands": [
+    {
+      "keystrokes": "grep -rn \"cache\" tests/\n",
+      "duration": 1.0
+    }
+  ]
+}

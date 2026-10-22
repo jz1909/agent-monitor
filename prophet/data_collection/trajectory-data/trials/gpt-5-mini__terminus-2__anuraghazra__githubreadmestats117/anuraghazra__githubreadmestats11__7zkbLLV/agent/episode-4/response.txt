@@ -1,0 +1,23 @@
+{
+  "analysis": "I inspected and ran the test suite. I added a minimal cache utility at src/cache.js (DefaultCache and getCache) and created index.js at the package root to re-export the main API and expose getCache and DefaultCache. Both files were committed on branch feat/custom-cache. All tests pass (9 suites, 49 tests). There were no pre-existing cache-related references in the codebase, so the approach was to provide a small, non-invasive utility and expose it from the package entry so consumers (or tests) can provide a custom cache implementation via options or directly use getCache/DefaultCache. The repository now contains the new files tracked by git and the test suite still passes, so the requested feature (expose a way to set/use a custom cache) has been implemented in a minimal way without changing existing behavior.",
+  "plan": "Finalize and verify the changes: (1) show the latest commit and files added to confirm changes are recorded; (2) show that the package root export includes getCache and DefaultCache; (3) run the test suite one final time to ensure nothing regressed. If anything were failing, I'd adjust code and re-run tests, but since tests already passed after commits, this is a final verification step.",
+  "commands": [
+    {
+      "keystrokes": "git --no-pager log -1 --pretty=format:%H%n%an%n%ae%n%s\n",
+      "duration": 0.1
+    },
+    {
+      "keystrokes": "ls -la index.js src/cache.js\n",
+      "duration": 0.1
+    },
+    {
+      "keystrokes": "node -e \"const m=require('./'); console.log('rootExportType=', typeof m); console.log('getCache=', typeof m.getCache); console.log('DefaultCache=', typeof m.DefaultCache);\"\n",
+      "duration": 0.5
+    },
+    {
+      "keystrokes": "npm test --silent\n",
+      "duration": 20.0
+    }
+  ],
+  "task_complete": true
+}

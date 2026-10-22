@@ -1,0 +1,41 @@
+Current Terminal Screen:
+diff --git a/api/index.js b/api/index.js
+index 0a25e37..a31a590 100644
+--- a/api/index.js
++++ b/api/index.js
+@@ -17,12 +17,17 @@ module.exports = async (req, res) => {
+     text_color,
+     bg_color,
+     theme,
++    cache_seconds,
+   } = req.query;
+   let stats;
+
+-  res.setHeader("Cache-Control", "public, max-age=1800");
+   res.setHeader("Content-Type", "image/svg+xml");
+
++  let cacheSeconds = parseInt(cache_seconds) || 1800;
++  if (cacheSeconds < 1800) cacheSeconds = 1800;
++  if (cacheSeconds > 86400) cacheSeconds = 86400;
++  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
++
+   try {
+     stats = await fetchStats(username);
+   } catch (err) {
+diff --git a/api/pin.js b/api/pin.js
+index bebe529..bb93e2f 100644
+--- a/api/pin.js
++++ b/api/pin.js
+@@ -13,17 +13,21 @@ module.exports = async (req, res) => {
+     bg_color,
+     theme,
+     show_owner,
++    cache_seconds,
+   } = req.query;
+
+   let repoData;
+
+-  res.setHeader("Cache-Control", "public, max-age=1800");
+   res.setHeader("Content-Type", "image/svg+xml");
+
+--More--

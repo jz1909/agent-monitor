@@ -1,0 +1,41 @@
+Current Terminal Screen:
+  theme,
+  fallbackTheme = "default",
+}) {
+  const defaultTheme = themes[fallbackTheme];
+  const selectedTheme = themes[theme] || defaultTheme;
+
+  // get the color provided by the user else the theme color
+  // finally if both colors are invalid fallback to default theme
+  const titleColor = fallbackColor(
+    title_color || selectedTheme.title_color,
+    "#" + defaultTheme.title_color
+  );
+  const iconColor = fallbackColor(
+    icon_color || selectedTheme.icon_color,
+    "#" + defaultTheme.icon_color
+  );
+  const textColor = fallbackColor(
+    text_color || selectedTheme.text_color,
+    "#" + defaultTheme.text_color
+  );
+  const bgColor = fallbackColor(
+    bg_color || selectedTheme.bg_color,
+    "#" + defaultTheme.bg_color
+  );
+
+  return { titleColor, iconColor, textColor, bgColor };
+}
+
+module.exports = {
+  renderError,
+  kFormatter,
+  encodeHTML,
+  isValidHexColor,
+  request,
+  parseBoolean,
+  fallbackColor,
+  FlexLayout,
+  getCardColors,
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

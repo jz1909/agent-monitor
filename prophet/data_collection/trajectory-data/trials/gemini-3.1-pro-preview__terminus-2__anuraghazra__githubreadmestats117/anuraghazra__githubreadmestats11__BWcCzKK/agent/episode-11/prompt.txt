@@ -1,0 +1,89 @@
+Previous response had warnings:
+WARNINGS: - Extra text detected before JSON object
+- Extra text detected after JSON object
+
+New Terminal Output:
+
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# git branch -a
+* (HEAD detached at 9fb28c9)
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/add_missing_tests
+  remotes/origin/add_vercel_dev_dependency
+  remotes/origin/anu/disable-fluid
+  remotes/origin/anu/fix-retryer
+  remotes/origin/anu/new-donolink
+  remotes/origin/anu/pat-info-fix
+  remotes/origin/anu/svg-snapshots
+  remotes/origin/bulky_lang_card
+  remotes/origin/change_pin_card_align_code
+  remotes/origin/chatgpt-theme
+  remotes/origin/ci_add_themes_prs_closer_workflow
+  remotes/origin/ci_fix_pull_requests_labeler_workflow
+  remotes/origin/ci_preview_theme_allow_gradient_themes
+  remotes/origin/ci_prs_cache_clean_remove_redundant_checkout_step
+  remotes/origin/ci_temporary_disable_preview_theme_workflow
+  remotes/origin/ci_temporary_disable_stale_theme_pr_closer_workflow
+  remotes/origin/dependabot/github_actions/actions/setup-node-4.3.0
+  remotes/origin/dependabot/github_actions/codecov/codecov-action-4.0.1
+  remotes/origin/dependabot/npm_and_yarn/axios-1.8.3
+  remotes/origin/dependabot/npm_and_yarn/emoji-name-map-2.0.1
+  remotes/origin/dependabot/npm_and_yarn/eslint-plugin-jsdoc-50.6.8
+  remotes/origin/dependabot/npm_and_yarn/lint-staged-15.5.0
+  remotes/origin/docs_contributing_translations
+  remotes/origin/docs_wakatime_user_change
+  remotes/origin/feature_basic_querystring_params_validation
+  remotes/origin/fix_2737
+  remotes/origin/fix_e2e_rank
+  remotes/origin/fix_gh_id_token_bug
+  remotes/origin/fix_lang_docs
+  remotes/origin/fix_relative_file_links
+  remotes/origin/fix_theme_docs_action
+  remotes/origin/fix_wakatime_card_add_percent_display_format_for_compact_layout
+  remotes/origin/improve_folder_structure
+  remotes/origin/improve_theme_preview_action
+  remotes/origin/issue#287
+  remotes/origin/master
+
+...skipping 1 line
+  remotes/origin/patch-rank
+  remotes/origin/pull_request_trigger_test
+  remotes/origin/rank
+  remotes/origin/readd_progress
+  remotes/origin/refactor_remove_redundant_css_from_wakatime_card_and_resolve_type_errors
+  remotes/origin/remove_formatOnSave
+  remotes/origin/revert-2507-patch-2
+  remotes/origin/revert-2539-master
+  remotes/origin/rickstaa-patch-1
+  remotes/origin/test-card-image-header
+  remotes/origin/test-conflict
+  remotes/origin/test-conflict-2
+  remotes/origin/test_stale_if_error
+  remotes/origin/tests_wakatime_card_add_percent_display_format_test
+  remotes/origin/tests_wakatime_card_fix_correct_render_test
+  remotes/origin/theme_preview_batch
+  remotes/origin/ts_migration_base
+  remotes/origin/update_waka_to_new_api_2
+  remotes/origin/vercel
+  remotes/origin/zo/action
+  remotes/origin/zo/custom-cards
+  remotes/origin/zo/express
+  remotes/origin/zo/theme-restructure
+  remotes/origin/zo/theme-restructure-2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(END)

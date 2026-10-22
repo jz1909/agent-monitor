@@ -1,0 +1,115 @@
+{
+    "id": "01426c03-3268-4636-b884-46b8f3e25d51",
+    "task_name": "anuraghazra__githubreadmestats1608",
+    "trial_name": "anuraghazra__githubreadmestats16__7Fcx5ou",
+    "trial_uri": "<REDACTED_PATH>",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "67f4793bb9fc934e02ffe665748acee9f81a8236",
+        "path": "datasets/multi-swe-bench/anuraghazra__githubreadmestats1608"
+    },
+    "source": "adapter-experiments-batch2-phase4",
+    "task_checksum": "44a0eda4371bb0a37498d643264db8fe766c0a02c9fb92f3cd33837c23806bb9",
+    "config": {
+        "task": {
+            "path": "datasets/multi-swe-bench/anuraghazra__githubreadmestats1608",
+            "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+            "git_commit_id": "67f4793bb9fc934e02ffe665748acee9f81a8236",
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "adapter-experiments-batch2-phase4"
+        },
+        "trial_name": "anuraghazra__githubreadmestats16__7Fcx5ou",
+        "trials_dir": "jobs/multi-swe-bench__claude-code__opus-4.6__batch2__phase4",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "claude-code",
+            "import_path": null,
+            "model_name": "anthropic/claude-opus-4-6",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {
+                "version": "2.1.81"
+            },
+            "env": {
+                "ANTHROPIC_AUTH_TOKEN": "<REDACTED_SECRET>",
+                "ANTHROPIC_BASE_URL": "https://api.anthropic.com",
+                "ANTHROPIC_MODEL": "claude-opus-4-6",
+                "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-opus-4-6",
+                "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
+                "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-opus-4-6",
+                "CLAUDE_CODE_SUBAGENT_MODEL": "claude-opus-4-6",
+                "API_TIMEOUT_MS": "3000000"
+            }
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "env": {},
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "dc06d6ca-dbf4-4b7d-82bf-95156e47024f"
+    },
+    "agent_info": {
+        "name": "claude-code",
+        "version": "2.1.81",
+        "model_info": {
+            "name": "claude-opus-4-6",
+            "provider": "anthropic"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 455022,
+        "n_cache_tokens": 399851,
+        "n_output_tokens": 7001,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-04-24T20:46:09.084547Z",
+    "finished_at": "2026-04-24T20:53:31.861349Z",
+    "environment_setup": {
+        "started_at": "2026-04-24T20:46:09.086338Z",
+        "finished_at": "2026-04-24T20:47:56.998507Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-04-24T20:47:56.998551Z",
+        "finished_at": "2026-04-24T20:48:25.442607Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-04-24T20:48:25.442702Z",
+        "finished_at": "2026-04-24T20:52:42.314387Z"
+    },
+    "verifier": {
+        "started_at": "2026-04-24T20:52:42.662897Z",
+        "finished_at": "2026-04-24T20:53:03.783371Z"
+    }
+}

@@ -1,0 +1,41 @@
+Current Terminal Screen:
+  );
+  const bgColor = fallbackColor(
+    bg_color || selectedTheme.bg_color,
+    "#" + defaultTheme.bg_color
+  );
+
+  return { titleColor, iconColor, textColor, bgColor };
+}
+
+/**
+ * @param {Number} value
+ * @param {Number} min
+ * @param {Number} max
+ *
+ * @description
+ * Clamps a value between a minimum and maximum value
+ */
+function clampValue(value, min, max) {
+  if (value < min) {
+    return min;
+  }
+  if (value > max) {
+    return max;
+  }
+  return value;
+}
+
+module.exports = {
+  renderError,
+  kFormatter,
+  encodeHTML,
+  isValidHexColor,
+  request,
+  parseBoolean,
+  fallbackColor,
+  FlexLayout,
+  getCardColors,
+  clampValue,
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

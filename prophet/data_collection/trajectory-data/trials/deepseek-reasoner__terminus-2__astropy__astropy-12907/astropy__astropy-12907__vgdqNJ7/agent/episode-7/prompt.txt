@@ -1,0 +1,61 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -r '_calculate_separability_matrix' /testbed/astropy/modeling/
+grep: /testbed/astropy/modeling/__pycache__/core.cpython-39.pyc: binary file matches
+grep: /testbed/astropy/modeling/__pycache__/separable.cpython-39.pyc: binary file matches
+/testbed/astropy/modeling/core.py:    def _calculate_separability_matrix(self):
+/testbed/astropy/modeling/separable.py:    if (transform_matrix := transform._calculate_separability_matrix()) is not NotImplemented:
+/testbed/astropy/modeling/tests/test_models.py:    def _calculate_separability_matrix(self):
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -r '_separable' /testbed/astropy/modeling/core.py | head -10
+    _separable = None
+        if self._separable is not None:
+            return self._separable
+    _separable = True
+    cls._separable = True if (len(inputs) == 1) else False
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > debug.py << 'EOF'
+> import sys
+> sys.path.insert(0, '.')
+> from astropy.modeling import models as m
+> from astropy.modeling.separable import _separable, _coord_matrix
+> from astropy.modeling.core import CompoundModel
+>
+> cm = m.Linear1D(10) & m.Linear1D(5)
+> print('cm.separable:', cm.separable if hasattr(cm, 'separable') else 'No attr')
+> print('cm._separable:', cm._separable if hasattr(cm, '_separable') else 'No attr')
+> print('cm._calculate_separability_matrix:', cm._calculate_separability_matrix() if hasattr(cm, '_calculate_separability_matrix') else 'No')
+> print('\nNow compute separability matrix via _separable:')
+> sep = _separable(cm)
+> print('sep:', sep)
+> print('\nNow for Pix2Sky_TAN & cm:')
+> m3 = m.Pix2Sky_TAN() & cm
+> print('m3.n_inputs, n_outputs:', m3.n_inputs, m3.n_outputs)
+> print('m3.op:', m3.op)
+> print('m3.left:', m3.left)
+> print('m3.right:', m3.right)
+> sep2 = _separable(m3)
+> print('sep2:', sep2)
+> print('\nLet\'s manually compute for right (cm) as component:')
+> print('cm.n_inputs, n_outputs:', cm.n_inputs, cm.n_outputs)
+> print('cm.separable?', cm.separable if hasattr(cm, 'separable') else '?')
+> print('cm._separable?', cm._separable if hasattr(cm, '_separable') else '?')
+> # Simulate what _coord_matrix does for cm when pos='right' and noutp = ?
+> # We need to know noutp = total outputs of m3? Actually _cstack calls _coord_matrix with noutp = left.n_outputs + right.n_outputs
+> # Let's compute manually:
+> left = m.Pix2Sky_TAN()
+> right = cm
+> noutp = left.n_outputs + right.n_outputs
+> print('noutp:', noutp)
+> # Call _coord_matrix(right, 'right', noutp)
+> # We'll copy the function logic in Python
+> # But first let's check if right is separable via property
+> print('right.separable:', right.separable)
+> EOF
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python debug.py 2>&1
+Traceback (most recent call last):
+  File "/testbed/debug.py", line 8, in <module>
+    print('cm.separable:', cm.separable if hasattr(cm, 'separable') else 'No attr')
+  File "/testbed/./astropy/modeling/core.py", line 1537, in separable
+    raise NotImplementedError(
+NotImplementedError: The "separable" property is not defined for model CompoundModel
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

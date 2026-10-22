@@ -1,0 +1,64 @@
+New Terminal Output:
+
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat api/index.js
+require("dotenv").config();
+const { renderError, parseBoolean } = require("../src/utils");
+const fetchStats = require("../src/fetchStats");
+const renderStatsCard = require("../src/renderStatsCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    hide,
+    hide_title,
+    hide_border,
+    hide_rank,
+    show_icons,
+    line_height,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+  } = req.query;
+  let stats;
+
+  res.setHeader("Cache-Control", "public, max-age=1800");
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    stats = await fetchStats(username);
+  } catch (err) {
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderStatsCard(stats, {
+      hide: JSON.parse(hide || "[]"),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+    })
+  );
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat src/utils.js | grep -A5 parseBoolean
+function parseBoolean(value) {
+  if (value === "true") {
+    return true;
+  } else if (value === "false") {
+    return false;
+  } else {
+--
+  parseBoolean,
+  fallbackColor,
+  FlexLayout,
+  getCardColors,
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

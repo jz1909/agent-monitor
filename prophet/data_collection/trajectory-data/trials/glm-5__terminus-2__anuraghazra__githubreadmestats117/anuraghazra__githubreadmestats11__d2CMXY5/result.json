@@ -1,0 +1,143 @@
+{
+    "id": "f818da4a-9b49-4b79-97a8-acb8ade62648",
+    "task_name": "anuraghazra__githubreadmestats117",
+    "trial_name": "anuraghazra__githubreadmestats11__d2CMXY5",
+    "trial_uri": "<REDACTED_PATH>",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "67f4793bb9fc934e02ffe665748acee9f81a8236",
+        "path": "datasets/multi-swe-bench/anuraghazra__githubreadmestats117"
+    },
+    "source": "adapter-experiments-batch2-phase3",
+    "task_checksum": "fbaf07e3296bcdd051f89b95d8b84362aa9816db5cf00a9fafc15dbc5de86918",
+    "config": {
+        "task": {
+            "path": "datasets/multi-swe-bench/anuraghazra__githubreadmestats117",
+            "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+            "git_commit_id": "67f4793bb9fc934e02ffe665748acee9f81a8236",
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "adapter-experiments-batch2-phase3"
+        },
+        "trial_name": "anuraghazra__githubreadmestats11__d2CMXY5",
+        "trials_dir": "jobs/multi-swe-bench__terminus-2__glm-5__batch2__phase3",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2",
+            "import_path": null,
+            "model_name": "zai/glm-5",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "daytona",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "env": {},
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "b2389db4-f4a6-42ad-ade7-732eca5c4e95"
+    },
+    "agent_info": {
+        "name": "terminus-2",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "glm-5",
+            "provider": "zai"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 760896,
+        "n_cache_tokens": 510208,
+        "n_output_tokens": 14594,
+        "cost_usd": 0.3994303999999999,
+        "rollout_details": [],
+        "metadata": {
+            "n_episodes": 34,
+            "api_request_times_msec": [
+                34472.275257110596,
+                11743.987083435059,
+                32235.678911209106,
+                12185.965776443481,
+                33311.9900226593,
+                17914.295196533203,
+                11775.393962860107,
+                10577.678203582764,
+                8373.690843582153,
+                5098.958253860474,
+                9451.33090019226,
+                11452.73494720459,
+                22219.698905944824,
+                26803.756952285767,
+                31718.379974365234,
+                19827.238082885742,
+                7172.104120254517,
+                44230.437994003296,
+                23609.01188850403,
+                15543.270111083984,
+                15216.017723083496,
+                28100.89111328125,
+                11129.0602684021,
+                7133.687973022461,
+                3741.515636444092,
+                8339.563131332397,
+                7386.873960494995,
+                9095.433235168457,
+                26529.67119216919,
+                9355.034828186035,
+                17158.709049224854,
+                10324.106931686401,
+                17521.719217300415,
+                13968.366146087646
+            ],
+            "summarization_count": 0
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-04-20T07:26:04.066525Z",
+    "finished_at": "2026-04-20T07:43:29.726695Z",
+    "environment_setup": {
+        "started_at": "2026-04-20T07:26:04.067474Z",
+        "finished_at": "2026-04-20T07:26:09.367335Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-04-20T07:26:09.367345Z",
+        "finished_at": "2026-04-20T07:26:29.071391Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-04-20T07:26:29.071447Z",
+        "finished_at": "2026-04-20T07:43:16.196190Z"
+    },
+    "verifier": {
+        "started_at": "2026-04-20T07:43:21.384705Z",
+        "finished_at": "2026-04-20T07:43:29.257851Z"
+    }
+}

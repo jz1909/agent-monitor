@@ -1,0 +1,28 @@
+Previous response had warnings:
+WARNINGS: - Extra text detected before JSON object
+- Extra text detected after JSON object
+
+New Terminal Output:
+
+./api/pin.js:20:  res.setHeader("Cache-Control", "public, max-age=1800");
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# npm test
+
+> github-readme-stats@1.0.0 test
+> jest
+
+ PASS  tests/utils.test.js
+
+ RUNS  tests/renderStatsCard.test.js
+ RUNS  tests/renderRepoCard.test.js
+ RUNS  tests/api.test.js
+ RUNS  tests/pin.test.js
+ RUNS  tests/fetchRepo.test.js
+ RUNS  tests/utils.test.js
+ RUNS  tests/fetchStats.test.js
+ RUNS  tests/retryer.test.js
+ RUNS  tests/calculateRank.test.js
+
+Test Suites: 0 of 9 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        2 s

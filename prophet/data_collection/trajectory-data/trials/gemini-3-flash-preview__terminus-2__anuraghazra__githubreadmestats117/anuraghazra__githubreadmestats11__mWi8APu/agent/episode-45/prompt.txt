@@ -1,0 +1,41 @@
+Current Terminal Screen:
+     );
+   });
+ });
++
++describe("Test /api/pin cache control", () => {
++  it("should set the correct cache-control header", async () => {
++    const req = {
++      query: {
++        username: "anuraghazra",
++        repo: "convoychat",
++        cache_seconds: "3600",
++      },
++    };
++    const res = {
++      setHeader: jest.fn(),
++      send: jest.fn(),
++    };
++    mock.onPost("https://api.github.com/graphql").reply(200, data_user);
++
++    await pin(req, res);
++
++    expect(res.setHeader).toBeCalledWith("Cache-Control", "public, max-age=3600");
++  });
++});
+
+
+
+
+
+
+
+
+
+
+
+
+...skipping 1 line
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# est.js tests/pin.test.js
+bash: est.js: command not found
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

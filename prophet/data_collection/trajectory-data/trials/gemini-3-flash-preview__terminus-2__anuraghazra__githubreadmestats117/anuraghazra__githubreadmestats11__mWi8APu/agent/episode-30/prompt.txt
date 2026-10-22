@@ -1,0 +1,37 @@
+New Terminal Output:
+
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# cat <<EOF > repro.js
+> const api = require("./api/index");
+> const pin = require("./api/pin");
+>
+> async function test() {
+>   const res = {
+>     setHeader: (key, value) => console.log("Header: " + key + " = " + value),
+>     send: (data) => {}
+>   };
+>
+>   console.log("Testing /api/index with cache_seconds=3600");
+>   await api({ query: { username: "anuraghazra", cache_seconds: "3600" } }, res);
+>
+>   console.log("\\nTesting /api/index without cache_seconds");
+>   await api({ query: { username: "anuraghazra" } }, res);
+>
+>   console.log("\\nTesting /api/pin with cache_seconds=3600");
+>   await pin({ query: { username: "anuraghazra", repo: "repo", cache_seconds: "3600" } }, res);
+>
+>   console.log("\\nTesting /api/pin without cache_seconds");
+>   await pin({ query: { username: "anuraghazra", repo: "repo" } }, res);
+> }
+>
+> test();
+> EOF
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# node repro.js | grep Header
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=3600
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=1800
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=3600
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=1800
+

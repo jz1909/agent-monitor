@@ -1,0 +1,80 @@
+New Terminal Output:
+
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# cat <<EOF >> tests/api.test.js
+>
+> describe("Test /api/ cache control", () => {
+>   it("should set the correct cache-control header", async () => {
+>     const req = {
+>       query: {
+>         username: "anuraghazra",
+>         cache_seconds: "3600",
+>       },
+>     };
+>     const res = {
+>       setHeader: jest.fn(),
+>       send: jest.fn(),
+>     };
+>     mock.onPost("https://api.github.com/graphql").reply(200, data);
+>
+>     await api(req, res);
+>
+>     expect(res.setHeader).toBeCalledWith("Cache-Control", "public, max-age=3600");
+>   });
+> });
+> EOF
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# npm test tests/api.test.js
+
+> github-readme-stats@1.0.0 test
+> jest tests/api.test.js
+
+ PASS  tests/api.test.js
+  Test /api/
+    ✓ should test the request (23 ms)
+    ✓ should render error card on error (2 ms)
+    ✓ should get the query options (2 ms)
+  Test /api/ cache control
+    ✓ should set the correct cache-control header (1 ms)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    [
+      {
+        type: 'NOT_FOUND',
+        path: [ 'user' ],
+        locations: [],
+        message: 'Could not fetch user'
+      }
+    ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        0.814 s
+Ran all test suites matching /tests\/api.test.js/i.
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

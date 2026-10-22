@@ -1,0 +1,20 @@
+```json
+{
+  "analysis": "The task is to implement a feature to set a custom cache duration in the `github-readme-stats` repository. The issue description mentions 'feat: added ability to set custom cache' and links to issue #82. First, I need to navigate to the repository directory and explore the files to understand where caching is currently handled, likely in the API routes or utility functions handling HTTP responses.",
+  "plan": "I will change the directory to `/workspace/github-readme-stats` and list its contents. Then, I will search for 'Cache-Control' or 'cache' to see where the caching logic is implemented. I will also check the `package.json` to understand the project structure and how to run tests.",
+  "commands": [
+    {
+      "keystrokes": "cd /workspace/github-readme-stats\n",
+      "duration": 0.1
+    },
+    {
+      "keystrokes": "ls -la\n",
+      "duration": 0.1
+    },
+    {
+      "keystrokes": "grep -rn 'Cache-Control' .\n",
+      "duration": 0.5
+    }
+  ]
+}
+```

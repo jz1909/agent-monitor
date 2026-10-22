@@ -1,0 +1,2418 @@
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/home/github-readme-stats# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/home/github-readme-stats# clear
+[?2004l[H[J[3J[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/home/github-readme-stats# cd /workspace/github-readme-stats
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# ls -la
+[?2004ltotal 344
+drwxr-xr-x   1 root root   4096 Mar 18  2025 .
+drwxr-xr-x   1 root root     33 Mar 18  2025 ..
+drwxr-xr-x   1 root root     96 Mar 18  2025 .git
+drwxr-xr-x   1 root root    150 Mar 18  2025 .github
+-rw-r--r--   1 root root     43 Mar 18  2025 .gitignore
+-rw-r--r--   1 root root     22 Mar 18  2025 .vercelignore
+-rw-r--r--   1 root root   1069 Mar 18  2025 LICENSE
+drwxr-xr-x   1 root root    132 Mar 18  2025 api
+-rw-r--r--   1 root root     42 Mar 18  2025 jest.config.js
+drwxr-xr-x 377 root root  12288 Mar 18  2025 node_modules
+-rw-r--r--   1 root root 276403 Mar 18  2025 package-lock.json
+-rw-r--r--   1 root root    545 Mar 18  2025 package.json
+-rw-r--r--   1 root root   9800 Mar 18  2025 readme.md
+-rw-r--r--   1 root root   9617 Mar 18  2025 readme_cn.md
+drwxr-xr-x   1 root root   4096 Mar 18  2025 src
+drwxr-xr-x   1 root root   4096 Mar 18  2025 tests
+drwxr-xr-x   1 root root     39 Mar 18  2025 themes
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# grep -rn 'Cache-Control' .
+[?2004l./api/index.js:23:  res.setHeader("Cache-Control", "public, max-age=1800");
+./api/pin.js:20:  res.setHeader("Cache-Control", "public, max-age=1800");
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# npm test
+[?2004l
+> github-readme-stats@1.0.0 test
+> jest
+
+[1G[0K[1m[2mDetermining test suites to run...[22m[22m[999D[K
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 9 total
+[1mTests:       [22m[1m[32m7 passed[39m[22m, 7 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 9 total
+[1mTests:       [22m[1m[32m7 passed[39m[22m, 7 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 9 total
+[1mTests:       [22m[1m[32m7 passed[39m[22m, 7 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      {} undefined
+[2m[22m
+[2m      [2mat [22m[2m[0m[36mtests/retryer.test.js[39m[0m[2m:5:11[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_1 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_2
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_1 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_2
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_2 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_3
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_3 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_4
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_4 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_5
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_5 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_6
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_6 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_7
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_7 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_8
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_8 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 9 total
+[1mTests:       [22m[1m[32m7 passed[39m[22m, 7 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+[2m[22m
+[2m      [2mat fetchStats ([22m[2msrc/fetchStats.js[2m:64:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 9 total
+[1mTests:       [22m[1m[32m13 passed[39m[22m, 13 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 9 total
+[1mTests:       [22m[1m[32m13 passed[39m[22m, 13 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 9 total
+[1mTests:       [22m[1m[32m13 passed[39m[22m, 13 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 9 total
+[1mTests:       [22m[1m[32m13 passed[39m[22m, 13 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+[2m[22m
+[2m      [2mat Object.<anonymous>.module.exports ([22m[2mapi/pin.js[2m:26:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+[2m[22m
+[2m      [2mat Object.<anonymous>.module.exports ([22m[2mapi/pin.js[2m:26:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 9 total
+[1mTests:       [22m[1m[32m13 passed[39m[22m, 13 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 9 total
+[1mTests:       [22m[1m[32m13 passed[39m[22m, 13 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+[2m[22m
+[2m      [2mat fetchStats ([22m[2msrc/fetchStats.js[2m:64:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[1mTest Suites: [22m[1m[32m4 passed[39m[22m, 4 of 9 total
+[1mTests:       [22m[1m[32m13 passed[39m[22m, 13 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+
+[1mTest Suites: [22m[1m[32m9 passed[39m[22m, 9 total
+[1mTests:       [22m[1m[32m49 passed[39m[22m, 49 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
+[1mTest Suites: [22m[1m[32m9 passed[39m[22m, 9 total
+[1mTests:       [22m[1m[32m49 passed[39m[22m, 49 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        4.011 s
+[2mRan all test suites[22m[2m.[22m
+[1G[0K⠙[1G[0K[1mnpm[22m [96mnotice[39m
+[1mnpm[22m [96mnotice[39m New [31mmajor[39m version of npm available! [31m10.8.2[39m -> [34m11.12.1[39m
+[1mnpm[22m [96mnotice[39m Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.12.1[39m
+[1mnpm[22m [96mnotice[39m To update run: [4mnpm install -g npm@11.12.1[24m
+[1mnpm[22m [96mnotice[39m
+[1G[0K⠙[1G[0K[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# grep -rn 'cache' tests/
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# npm test
+[?2004l
+> github-readme-stats@1.0.0 test
+> jest
+
+[1G[0K[1m[2mDetermining test suites to run...[22m[22m[999D[K
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 3 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 3 s
+[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      {} undefined
+[2m[22m
+[2m      [2mat [22m[2m[0m[36mtests/retryer.test.js[39m[0m[2m:5:11[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_1 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_2
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_1 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_2
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_2 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_3
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_3 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_4
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_4 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_5
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_5 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_6
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_6 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_7
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_7 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_8
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_8 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m10 passed[39m[22m, 10 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m10 passed[39m[22m, 10 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+[2m[22m
+[2m      [2mat fetchStats ([22m[2msrc/fetchStats.js[2m:64:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+[2m[22m
+[2m      [2mat fetchStats ([22m[2msrc/fetchStats.js[2m:64:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 of 9 total
+[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+
+[1mTest Suites: [22m[1m[32m6 passed[39m[22m, 6 of 9 total
+[1mTests:       [22m[1m[32m22 passed[39m[22m, 22 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+
+[1mTest Suites: [22m[1m[32m6 passed[39m[22m, 6 of 9 total
+[1mTests:       [22m[1m[32m22 passed[39m[22m, 22 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+[2m[22m
+[2m      [2mat Object.<anonymous>.module.exports ([22m[2mapi/pin.js[2m:26:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+[2m[22m
+[2m      [2mat Object.<anonymous>.module.exports ([22m[2mapi/pin.js[2m:26:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+
+[1mTest Suites: [22m[1m[32m6 passed[39m[22m, 6 of 9 total
+[1mTests:       [22m[1m[32m22 passed[39m[22m, 22 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s, estimated 3 s
+[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[32m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[37m█[39m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m8 passed[39m[22m, 8 of 9 total
+[1mTests:       [22m[1m[32m36 passed[39m[22m, 36 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m8 passed[39m[22m, 8 of 9 total
+[1mTests:       [22m[1m[32m36 passed[39m[22m, 36 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+
+[1mTest Suites: [22m[1m[32m9 passed[39m[22m, 9 total
+[1mTests:       [22m[1m[32m49 passed[39m[22m, 49 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3 s[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
+[1mTest Suites: [22m[1m[32m9 passed[39m[22m, 9 total
+[1mTests:       [22m[1m[32m49 passed[39m[22m, 49 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3.296 s
+[2mRan all test suites[22m[2m.[22m
+[1G[0K⠙[1G[0K[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# grep -A 5 -B 5 'cache_seconds' tests/*.js
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat tests/api.test.js | grep -A 10 -B 2 'cache_seconds'
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# git status
+[?2004l[31mHEAD detached at [m9fb28c9
+nothing to commit, working tree clean
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# git diff HEAD
+[?2004l
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[7m--More--[K(END)[27m[K
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[7m--More--[K(END)[27m[K
+[7m--More--[K(END)[27m[K[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# git log --oneline -n 5
+[?2004l[33m9fb28c9[m[33m ([m[1;36mHEAD[m[33m)[m docs: added themes preview (#115)
+[33m8fc85c6[m docs(translation): Update & Improvements on Existing Simplified Chinese Translation of README (#109)
+[33mdd2c7ed[m fix: proper apostrophe in stats card's header
+[33m9a7ed8f[m docs: added themes screenshot
+[33m71c63ab[m Merge pull request #106 from hi120ki/fix-style-collapses-on-stats-card
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[7m--More--[K(END)[27m[K[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# grep -rin 'cache' tests/
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat api/index.js
+[?2004lrequire("dotenv").config();
+const { renderError, parseBoolean } = require("../src/utils");
+const fetchStats = require("../src/fetchStats");
+const renderStatsCard = require("../src/renderStatsCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    hide,
+    hide_title,
+    hide_border,
+    hide_rank,
+    show_icons,
+    line_height,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+  } = req.query;
+  let stats;
+
+  res.setHeader("Cache-Control", "public, max-age=1800");
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    stats = await fetchStats(username);
+  } catch (err) {
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderStatsCard(stats, {
+      hide: JSON.parse(hide || "[]"),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+    })
+  );
+};
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# git status -s
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# grep -rin 'cache' tests/ > cache_tests.txt
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat cache_tests.txt
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat api/pin.js
+[?2004lrequire("dotenv").config();
+const { renderError, parseBoolean } = require("../src/utils");
+const fetchRepo = require("../src/fetchRepo");
+const renderRepoCard = require("../src/renderRepoCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    repo,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    show_owner,
+  } = req.query;
+
+  let repoData;
+
+  res.setHeader("Cache-Control", "public, max-age=1800");
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    repoData = await fetchRepo(username, repo);
+  } catch (err) {
+    console.log(err);
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderRepoCard(repoData, {
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      show_owner: parseBoolean(show_owner),
+    })
+  );
+};
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat tests/api.test.js
+[?2004lrequire("@testing-library/jest-dom");
+const axios = require("axios");
+const MockAdapter = require("axios-mock-adapter");
+const api = require("../api/index");
+const renderStatsCard = require("../src/renderStatsCard");
+const { renderError } = require("../src/utils");
+const calculateRank = require("../src/calculateRank");
+
+const stats = {
+  name: "Anurag Hazra",
+  totalStars: 100,
+  totalCommits: 200,
+  totalIssues: 300,
+  totalPRs: 400,
+  contributedTo: 500,
+  rank: null,
+};
+stats.rank = calculateRank({
+  totalCommits: stats.totalCommits,
+  totalRepos: 1,
+  followers: 0,
+  contributions: stats.contributedTo,
+  stargazers: stats.totalStars,
+  prs: stats.totalPRs,
+  issues: stats.totalIssues,
+});
+
+const data = {
+  data: {
+    user: {
+      name: stats.name,
+      repositoriesContributedTo: { totalCount: stats.contributedTo },
+      contributionsCollection: { totalCommitContributions: stats.totalCommits },
+      pullRequests: { totalCount: stats.totalPRs },
+      issues: { totalCount: stats.totalIssues },
+      followers: { totalCount: 0 },
+      repositories: {
+        totalCount: 1,
+        nodes: [{ stargazers: { totalCount: 100 } }],
+      },
+    },
+  },
+};
+
+const error = {
+  errors: [
+    {
+      type: "NOT_FOUND",
+      path: ["user"],
+      locations: [],
+      message: "Could not fetch user",
+    },
+  ],
+};
+
+const mock = new MockAdapter(axios);
+
+afterEach(() => {
+  mock.reset();
+});
+
+describe("Test /api/", () => {
+  it("should test the request", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock.onPost("https://api.github.com/graphql").reply(200, data);
+
+    await api(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(renderStatsCard(stats, { ...req.query }));
+  });
+
+  it("should render error card on error", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock.onPost("https://api.github.com/graphql").reply(200, error);
+
+    await api(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(renderError(error.errors[0].message));
+  });
+
+  it("should get the query options", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+        hide: `["issues","prs","contribs"]`,
+        show_icons: true,
+        hide_border: true,
+        line_height: 100,
+        title_color: "fff",
+        icon_color: "fff",
+        text_color: "fff",
+        bg_color: "fff",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock.onPost("https://api.github.com/graphql").reply(200, data);
+
+    await api(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(
+      renderStatsCard(stats, {
+        hide: ["issues", "prs", "contribs"],
+        show_icons: true,
+        hide_border: true,
+        line_height: 100,
+        title_color: "fff",
+        icon_color: "fff",
+        text_color: "fff",
+        bg_color: "fff",
+      })
+    );
+  });
+});
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat src/utils.js
+[?2004lconst axios = require("axios");
+const themes = require("../themes");
+
+const renderError = (message) => {
+  return `
+    <svg width="495" height="100" viewBox="0 0 495 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+    .text { font: 600 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: #2F80ED }
+    .small { font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #252525 }
+    </style>
+    <rect x="0.5" y="0.5" width="494" height="99%" rx="4.5" fill="#FFFEFE" stroke="#E4E2E2"/>
+    <text x="25" y="45" class="text">Something went wrong! file an issue at https://git.io/JJmN9</text>
+    <text id="message" x="25" y="65" class="text small">${message}</text>
+    </svg>
+  `;
+};
+
+// https://stackoverflow.com/a/48073476/10629172
+function encodeHTML(str) {
+  return str.replace(/[\u00A0-\u9999<>&](?!#)/gim, function (i) {
+    return "&#" + i.charCodeAt(0) + ";";
+  });
+}
+
+function kFormatter(num) {
+  return Math.abs(num) > 999
+    ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
+    : Math.sign(num) * Math.abs(num);
+}
+
+function isValidHexColor(hexColor) {
+  return new RegExp(
+    /^([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4})$/
+  ).test(hexColor);
+}
+
+function parseBoolean(value) {
+  if (value === "true") {
+    return true;
+  } else if (value === "false") {
+    return false;
+  } else {
+    return value;
+  }
+}
+
+function fallbackColor(color, fallbackColor) {
+  return (isValidHexColor(color) && `#${color}`) || fallbackColor;
+}
+
+function request(data, headers) {
+  return axios({
+    url: "https://api.github.com/graphql",
+    method: "post",
+    headers,
+    data,
+  });
+}
+
+/**
+ *
+ * @param {String[]} items
+ * @param {Number} gap
+ * @param {string} direction
+ *
+ * @description
+ * Auto layout utility, allows us to layout things
+ * vertically or horizontally with proper gaping
+ */
+function FlexLayout({ items, gap, direction }) {
+  // filter() for filtering out empty strings
+  return items.filter(Boolean).map((item, i) => {
+    let transform = `translate(${gap * i}, 0)`;
+    if (direction === "column") {
+      transform = `translate(0, ${gap * i})`;
+    }
+    return `<g transform="${transform}">${item}</g>`;
+  });
+}
+
+// returns theme based colors with proper overrides and defaults
+function getCardColors({
+  title_color,
+  text_color,
+  icon_color,
+  bg_color,
+  theme,
+  fallbackTheme = "default",
+}) {
+  const defaultTheme = themes[fallbackTheme];
+  const selectedTheme = themes[theme] || defaultTheme;
+
+  // get the color provided by the user else the theme color
+  // finally if both colors are invalid fallback to default theme
+  const titleColor = fallbackColor(
+    title_color || selectedTheme.title_color,
+    "#" + defaultTheme.title_color
+  );
+  const iconColor = fallbackColor(
+    icon_color || selectedTheme.icon_color,
+    "#" + defaultTheme.icon_color
+  );
+  const textColor = fallbackColor(
+    text_color || selectedTheme.text_color,
+    "#" + defaultTheme.text_color
+  );
+  const bgColor = fallbackColor(
+    bg_color || selectedTheme.bg_color,
+    "#" + defaultTheme.bg_color
+  );
+
+  return { titleColor, iconColor, textColor, bgColor };
+}
+
+module.exports = {
+  renderError,
+  kFormatter,
+  encodeHTML,
+  isValidHexColor,
+  request,
+  parseBoolean,
+  fallbackColor,
+  FlexLayout,
+  getCardColors,
+};
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat tests/utils.test.js
+[?2004lconst {
+  kFormatter,
+  encodeHTML,
+  renderError,
+  FlexLayout,
+  getCardColors,
+} = require("../src/utils");
+
+describe("Test utils.js", () => {
+  it("should test kFormatter", () => {
+    expect(kFormatter(1)).toBe(1);
+    expect(kFormatter(-1)).toBe(-1);
+    expect(kFormatter(500)).toBe(500);
+    expect(kFormatter(1000)).toBe("1k");
+    expect(kFormatter(10000)).toBe("10k");
+    expect(kFormatter(12345)).toBe("12.3k");
+    expect(kFormatter(9900000)).toBe("9900k");
+  });
+
+  it("should test encodeHTML", () => {
+    expect(encodeHTML(`<html>hello world<,.#4^&^@%!))`)).toBe(
+      "&#60;html&#62;hello world&#60;,.#4^&#38;^@%!))"
+    );
+  });
+
+  it("should test renderError", () => {
+    document.body.innerHTML = renderError("Something went wrong");
+    expect(document.getElementById("message").textContent).toBe(
+      "Something went wrong"
+    );
+  });
+
+  it("should test FlexLayout", () => {
+    const layout = FlexLayout({
+      items: ["<text>1</text>", "<text>2</text>"],
+      gap: 60,
+    }).join("");
+
+    expect(layout).toBe(
+      `<g transform=\"translate(0, 0)\"><text>1</text></g><g transform=\"translate(60, 0)\"><text>2</text></g>`
+    );
+
+    const columns = FlexLayout({
+      items: ["<text>1</text>", "<text>2</text>"],
+      gap: 60,
+      direction: "column",
+    }).join("");
+
+    expect(columns).toBe(
+      `<g transform=\"translate(0, 0)\"><text>1</text></g><g transform=\"translate(0, 60)\"><text>2</text></g>`
+    );
+  });
+
+  it("getCardColors: should return expected values", () => {
+    let colors = getCardColors({
+      title_color: "f00",
+      text_color: "0f0",
+      icon_color: "00f",
+      bg_color: "fff",
+      theme: "dark",
+    });
+    expect(colors).toStrictEqual({
+      titleColor: "#f00",
+      textColor: "#0f0",
+      iconColor: "#00f",
+      bgColor: "#fff",
+    });
+  });
+
+  it("getCardColors: should fallback to default colors if color is invalid", () => {
+    let colors = getCardColors({
+      title_color: "invalidcolor",
+      text_color: "0f0",
+      icon_color: "00f",
+      bg_color: "fff",
+      theme: "dark",
+    });
+    expect(colors).toStrictEqual({
+      titleColor: "#2f80ed",
+      textColor: "#0f0",
+      iconColor: "#00f",
+      bgColor: "#fff",
+    });
+  });
+  
+  it("getCardColors: should fallback to specified theme colors if is not defined", () => {
+    let colors = getCardColors({
+      theme: "dark",
+    });
+    expect(colors).toStrictEqual({
+      titleColor: "#fff",
+      textColor: "#9f9f9f",
+      iconColor: "#79ff97",
+      bgColor: "#151515",
+    });
+  });
+});
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# git branch -a
+[?2004l* [32m(HEAD detached at 9fb28c9)[m
+  master[m
+  [31mremotes/origin/HEAD[m -> origin/master
+  [31mremotes/origin/add_missing_tests[m
+  [31mremotes/origin/add_vercel_dev_dependency[m
+  [31mremotes/origin/anu/disable-fluid[m
+  [31mremotes/origin/anu/fix-retryer[m
+  [31mremotes/origin/anu/new-donolink[m
+  [31mremotes/origin/anu/pat-info-fix[m
+  [31mremotes/origin/anu/svg-snapshots[m
+  [31mremotes/origin/bulky_lang_card[m
+  [31mremotes/origin/change_pin_card_align_code[m
+  [31mremotes/origin/chatgpt-theme[m
+  [31mremotes/origin/ci_add_themes_prs_closer_workflow[m
+  [31mremotes/origin/ci_fix_pull_requests_labeler_workflow[m
+  [31mremotes/origin/ci_preview_theme_allow_gradient_themes[m
+  [31mremotes/origin/ci_prs_cache_clean_remove_redundant_checkout_step[m
+  [31mremotes/origin/ci_temporary_disable_preview_theme_workflow[m
+  [31mremotes/origin/ci_temporary_disable_stale_theme_pr_closer_workflow[m
+  [31mremotes/origin/dependabot/github_actions/actions/setup-node-4.3.0[m
+  [31mremotes/origin/dependabot/github_actions/codecov/codecov-action-4.0.1[m
+  [31mremotes/origin/dependabot/npm_and_yarn/axios-1.8.3[m
+  [31mremotes/origin/dependabot/npm_and_yarn/emoji-name-map-2.0.1[m
+  [31mremotes/origin/dependabot/npm_and_yarn/eslint-plugin-jsdoc-50.6.8[m
+  [31mremotes/origin/dependabot/npm_and_yarn/lint-staged-15.5.0[m
+  [31mremotes/origin/docs_contributing_translations[m
+  [31mremotes/origin/docs_wakatime_user_change[m
+  [31mremotes/origin/feature_basic_querystring_params_validation[m
+  [31mremotes/origin/fix_2737[m
+  [31mremotes/origin/fix_e2e_rank[m
+  [31mremotes/origin/fix_gh_id_token_bug[m
+  [31mremotes/origin/fix_lang_docs[m
+  [31mremotes/origin/fix_relative_file_links[m
+  [31mremotes/origin/fix_theme_docs_action[m
+  [31mremotes/origin/fix_wakatime_card_add_percent_display_format_for_compact_layout[m
+  [31mremotes/origin/improve_folder_structure[m
+  [31mremotes/origin/improve_theme_preview_action[m
+  [31mremotes/origin/issue#287[m
+  [31mremotes/origin/master[m
+[7m--More--[27m[K
+...skipping 1 line
+  [31mremotes/origin/patch-rank[m
+  [31mremotes/origin/pull_request_trigger_test[m
+  [31mremotes/origin/rank[m
+  [31mremotes/origin/readd_progress[m
+  [31mremotes/origin/refactor_remove_redundant_css_from_wakatime_card_and_resolve_type_errors[m
+  [31mremotes/origin/remove_formatOnSave[m
+  [31mremotes/origin/revert-2507-patch-2[m
+  [31mremotes/origin/revert-2539-master[m
+  [31mremotes/origin/rickstaa-patch-1[m
+  [31mremotes/origin/test-card-image-header[m
+  [31mremotes/origin/test-conflict[m
+  [31mremotes/origin/test-conflict-2[m
+  [31mremotes/origin/test_stale_if_error[m
+  [31mremotes/origin/tests_wakatime_card_add_percent_display_format_test[m
+  [31mremotes/origin/tests_wakatime_card_fix_correct_render_test[m
+  [31mremotes/origin/theme_preview_batch[m
+  [31mremotes/origin/ts_migration_base[m
+  [31mremotes/origin/update_waka_to_new_api_2[m
+  [31mremotes/origin/vercel[m
+  [31mremotes/origin/zo/action[m
+  [31mremotes/origin/zo/custom-cards[m
+  [31mremotes/origin/zo/express[m
+  [31mremotes/origin/zo/theme-restructure[m
+  [31mremotes/origin/zo/theme-restructure-2[m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[7m--More--[K(END)[27m[K
+[7m--More--[K(END)[27m[K[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# ls -la src/
+[?2004ltotal 44
+drwxr-xr-x 1 root root 4096 Mar 18  2025 .
+drwxr-xr-x 1 root root   53 Apr 20 07:34 ..
+-rw-r--r-- 1 root root 2132 Mar 18  2025 calculateRank.js
+-rw-r--r-- 1 root root 1711 Mar 18  2025 fetchRepo.js
+-rw-r--r-- 1 root root 2374 Mar 18  2025 fetchStats.js
+-rw-r--r-- 1 root root 2062 Mar 18  2025 getStyles.js
+-rw-r--r-- 1 root root 2713 Mar 18  2025 icons.js
+-rw-r--r-- 1 root root 3449 Mar 18  2025 renderRepoCard.js
+-rw-r--r-- 1 root root 4762 Mar 18  2025 renderStatsCard.js
+-rw-r--r-- 1 root root 1318 Mar 18  2025 retryer.js
+-rw-r--r-- 1 root root 3271 Mar 18  2025 utils.js
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat << 'EOF' > patch.js
+[?2004l[?2004h> const fs = require('fs');
+[?2004l[?2004h> 
+[?2004l[?2004h> // 1. Update src/utils.js
+[?2004l[?2004h> let utils = fs.readFileSync('src/utils.js', 'utf8');
+[?2004l[?2004h> if (!utils.includes('clampValue')) {
+[?2004l[?2004h>   const clampValueFunc = `\nfunction clampValue(number, min, max) {\n  if (Number.isNaN(parseInt(number))) return min;\n  if (number < min) return min;\n  if (number > max) return max;\n  return number;\n}\n`;
+[?2004l[?2004h>   utils = utils.replace('module.exports = {', clampValueFunc + '\nmodule.exports = {\n  clampValue,');
+[?2004l[?2004h>   fs.writeFileSync('src/utils.js', utils);
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> // 2. Update api/index.js
+[?2004l[?2004h> let apiIndex = fs.readFileSync('api/index.js', 'utf8');
+[?2004l[?2004h> if (!apiIndex.includes('cache_seconds')) {
+[?2004l[?2004h>   apiIndex = apiIndex.replace('const { renderError, parseBoolean } = require("../src/utils");', 'const { renderError, parseBoolean, clampValue } = require("../src/utils");');
+[?2004l[?2004h>   apiIndex = apiIndex.replace('    theme,\n  } = req.query;', '    theme,\n    cache_seconds,\n  } = req.query;');
+[?2004l[?2004h>   apiIndex = apiIndex.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+[?2004l[?2004h>   fs.writeFileSync('api/index.js', apiIndex);
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> // 3. Update api/pin.js
+[?2004l[?2004h> let apiPin = fs.readFileSync('api/pin.js', 'utf8');
+[?2004l[?2004h> if (!apiPin.includes('cache_seconds')) {
+[?2004l[?2004h>   apiPin = apiPin.replace('const { renderError, parseBoolean } = require("../src/utils");', 'const { renderError, parseBoolean, clampValue } = require("../src/utils");');
+[?2004l[?2004h>   apiPin = apiPin.replace('    theme,\n    show_owner,\n  } = req.query;', '    theme,\n    show_owner,\n    cache_seconds,\n  } = req.query;');
+[?2004l[?2004h>   apiPin = apiPin.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+[?2004l[?2004h>   fs.writeFileSync('api/pin.js', apiPin);
+[?2004l[?2004h> }
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# node patch.js
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# npm test
+[?2004l
+> github-readme-stats@1.0.0 test
+> jest
+
+[1G[0K[1m[2mDetermining test suites to run...[22m[22m[999D[K
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mcalculateRank.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m0 of 9 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 9 total
+[1mTests:       [22m[1m[32m1 passed[39m[22m, 1 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 9 total
+[1mTests:       [22m[1m[32m1 passed[39m[22m, 1 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      {} undefined
+[2m[22m
+[2m      [2mat [22m[2m[0m[36mtests/retryer.test.js[39m[0m[2m:5:11[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_1 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_2
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_1 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_2
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_2 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_3
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_3 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_4
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_4 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_5
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_5 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_6
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_6 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_7
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_7 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_8
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      PAT_8 Failed
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:21:15)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mretryer.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 of 9 total
+[1mTests:       [22m[1m[32m1 passed[39m[22m, 1 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+[2m[22m
+[2m      [2mat fetchStats ([22m[2msrc/fetchStats.js[2m:64:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchStats.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mfetchRepo.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mutils.test.js[22m
+
+[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 9 total
+[1mTests:       [22m[1m[32m4 passed[39m[22m, 4 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[1mTest Suites: [22m[1m[32m5 passed[39m[22m, 5 of 9 total
+[1mTests:       [22m[1m[32m19 passed[39m[22m, 19 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[1mTest Suites: [22m[1m[32m5 passed[39m[22m, 5 of 9 total
+[1mTests:       [22m[1m[32m19 passed[39m[22m, 19 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:26:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+[2m[22m
+[2m      [2mat Object.<anonymous>.module.exports ([22m[2mapi/pin.js[2m:28:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:26:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+[2m[22m
+[2m      [2mat Object.<anonymous>.module.exports ([22m[2mapi/pin.js[2m:28:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[1mTest Suites: [22m[1m[32m5 passed[39m[22m, 5 of 9 total
+[1mTests:       [22m[1m[32m19 passed[39m[22m, 19 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[1mTest Suites: [22m[1m[32m5 passed[39m[22m, 5 of 9 total
+[1mTests:       [22m[1m[32m19 passed[39m[22m, 19 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+[2m[22m
+[2m      [2mat fetchStats ([22m[2msrc/fetchStats.js[2m:64:13)[22m[2m[22m
+
+    [2mconsole.log[22m
+      Trying PAT_1
+[2m[22m
+[2m      [2mat retryer ([22m[2msrc/retryer.js[2m:6:13)[22m[2m[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mpin.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mapi.test.js[22m
+
+[1mTest Suites: [22m[1m[32m5 passed[39m[22m, 5 of 9 total
+[1mTests:       [22m[1m[32m19 passed[39m[22m, 19 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m3 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m3 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderStatsCard.test.js[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2mtests/[22m[1mrenderRepoCard.test.js[22m
+
+[1mTest Suites: [22m[1m[32m7 passed[39m[22m, 7 of 9 total
+[1mTests:       [22m[1m[32m26 passed[39m[22m, 26 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m3 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+
+[1mTest Suites: [22m[1m[32m9 passed[39m[22m, 9 total
+[1mTests:       [22m[1m[32m49 passed[39m[22m, 49 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m3 s[39m[22m[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
+[1mTest Suites: [22m[1m[32m9 passed[39m[22m, 9 total
+[1mTests:       [22m[1m[32m49 passed[39m[22m, 49 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m3.506 s[39m[22m
+[2mRan all test suites[22m[2m.[22m
+[1G[0K⠙[1G[0K[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# ls -la api/
+[?2004ltotal 8
+drwxr-xr-x 1 root root   48 Mar 18  2025 .
+drwxr-xr-x 1 root root  103 Apr 20 07:41 ..
+-rw-r--r-- 1 root root 1186 Apr 20 07:41 index.js
+-rw-r--r-- 1 root root  964 Apr 20 07:41 pin.js
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat api/index.js
+[?2004lrequire("dotenv").config();
+const { renderError, parseBoolean, clampValue } = require("../src/utils");
+const fetchStats = require("../src/fetchStats");
+const renderStatsCard = require("../src/renderStatsCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    hide,
+    hide_title,
+    hide_border,
+    hide_rank,
+    show_icons,
+    line_height,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    cache_seconds,
+  } = req.query;
+  let stats;
+
+  const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);
+  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    stats = await fetchStats(username);
+  } catch (err) {
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderStatsCard(stats, {
+      hide: JSON.parse(hide || "[]"),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+    })
+  );
+};
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat api/pin.js
+[?2004lrequire("dotenv").config();
+const { renderError, parseBoolean, clampValue } = require("../src/utils");
+const fetchRepo = require("../src/fetchRepo");
+const renderRepoCard = require("../src/renderRepoCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    repo,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    show_owner,
+    cache_seconds,
+  } = req.query;
+
+  let repoData;
+
+  const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);
+  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    repoData = await fetchRepo(username, repo);
+  } catch (err) {
+    console.log(err);
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderRepoCard(repoData, {
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      show_owner: parseBoolean(show_owner),
+    })
+  );
+};
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat src/utils.js | tail -n 25
+[?2004l  );
+
+  return { titleColor, iconColor, textColor, bgColor };
+}
+
+
+function clampValue(number, min, max) {
+  if (Number.isNaN(parseInt(number))) return min;
+  if (number < min) return min;
+  if (number > max) return max;
+  return number;
+}
+
+module.exports = {
+  clampValue,
+  renderError,
+  kFormatter,
+  encodeHTML,
+  isValidHexColor,
+  request,
+  parseBoolean,
+  fallbackColor,
+  FlexLayout,
+  getCardColors,
+};
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# grep -rn 'Cache-Control' .
+[?2004l./api/index.js:25:  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+./api/pin.js:22:  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+./patch.js:16:  apiIndex = apiIndex.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+./patch.js:25:  apiPin = apiPin.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# rm patch.js
+[?2004l[?2004hroot@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# 

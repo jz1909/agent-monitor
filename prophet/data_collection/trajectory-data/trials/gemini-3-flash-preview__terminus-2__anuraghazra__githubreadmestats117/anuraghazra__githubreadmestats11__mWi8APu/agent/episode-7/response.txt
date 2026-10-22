@@ -1,0 +1,10 @@
+{
+  "analysis": "Wait, no 'cache' in tests either? That's strange. Let me search for 'max-age' in tests.",
+  "plan": "I will search for 'max-age' in the `tests/` directory.",
+  "commands": [
+    {
+      "keystrokes": "grep -rn \"max-age\" tests/\n",
+      "duration": 1.0
+    }
+  ]
+}

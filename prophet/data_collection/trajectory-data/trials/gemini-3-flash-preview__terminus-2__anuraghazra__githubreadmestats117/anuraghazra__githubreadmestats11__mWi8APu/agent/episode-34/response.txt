@@ -1,0 +1,10 @@
+{
+  "analysis": "No mention of cache in `readme.md`. \n\nI'll check if there's any other documentation file.",
+  "plan": "I will list all files in the root directory.",
+  "commands": [
+    {
+      "keystrokes": "ls -F\n",
+      "duration": 0.1
+    }
+  ]
+}

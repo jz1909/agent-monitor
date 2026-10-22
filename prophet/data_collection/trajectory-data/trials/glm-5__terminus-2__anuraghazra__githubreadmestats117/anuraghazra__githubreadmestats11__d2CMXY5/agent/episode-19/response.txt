@@ -1,0 +1,15 @@
+{
+  "analysis": "I've updated api/index.js to accept the `cache_seconds` parameter. Now I need to update api/pin.js similarly.",
+  "plan": "Update api/pin.js to:\n1. Import clampValue from utils\n2. Accept `cache_seconds` query parameter\n3. Use clampValue to constrain the value (0 to 86400 seconds)\n4. Set the Cache-Control header with the custom value",
+  "commands": [
+    {
+      "keystrokes": "cat > api/pin.js << 'EOF'\nrequire(\"dotenv\").config();\nconst { renderError, parseBoolean, clampValue } = require(\"../src/utils\");\nconst fetchRepo = require(\"../src/fetchRepo\");\nconst renderRepoCard = require(\"../src/renderRepoCard\");\n\nmodule.exports = async (req, res) => {\n  const {\n    username,\n    repo,\n    title_color,\n    icon_color,\n    text_color,\n    bg_color,\n    theme,\n    show_owner,\n    cache_seconds,\n  } = req.query;\n\n  let repoData;\n\n  res.setHeader(\"Content-Type\", \"image/svg+xml\");\n\n  try {\n    repoData = await fetchRepo(username, repo);\n  } catch (err) {\n    console.log(err);\n    return res.send(renderError(err.message));\n  }\n\n  const cacheSeconds = clampValue(\n    parseInt(cache_seconds) || 1800,\n    0,\n    86400\n  );\n\n  res.setHeader(\"Cache-Control\", `public, max-age=${cacheSeconds}`);\n\n  res.send(\n    renderRepoCard(repoData, {\n      title_color,\n      icon_color,\n      text_color,\n      bg_color,\n      theme,\n      show_owner: parseBoolean(show_owner),\n    })\n  );\n};\nEOF\n",
+      "duration": 0.5
+    },
+    {
+      "keystrokes": "cat api/pin.js\n",
+      "duration": 0.1
+    }
+  ],
+  "task_complete": false
+}

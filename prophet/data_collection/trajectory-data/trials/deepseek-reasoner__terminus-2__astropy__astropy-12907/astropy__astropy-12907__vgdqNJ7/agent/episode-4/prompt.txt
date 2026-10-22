@@ -1,0 +1,16 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed/astropy/modeling
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n 'separable' core.py | head -30
+655:    _separable = None
+656:    """ A boolean flag to indicate whether a model is separable."""
+810:        This is a hook which customises the behavior of modeling.separable.
+1532:    def separable(self):
+1533:        """ A flag indicating whether a model is separable."""
+1535:        if self._separable is not None:
+1536:            return self._separable
+1538:            'The "separable" property is not defined for '
+2826:    _separable = True
+4173:    The model is separable only if there is a single input.
+4353:    cls._separable = True if (len(inputs) == 1) else False
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling#

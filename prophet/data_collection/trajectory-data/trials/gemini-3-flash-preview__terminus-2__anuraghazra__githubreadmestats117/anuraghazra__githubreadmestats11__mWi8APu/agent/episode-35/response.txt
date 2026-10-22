@@ -1,0 +1,14 @@
+{
+  "analysis": "Nothing else seems relevant. \n\nI'll now check the existing tests again, specifically `tests/api.test.js` to see if I can add a test case there and run it with `npm test`.",
+  "plan": "I will add a test case to `tests/api.test.js` to verify the cache header.",
+  "commands": [
+    {
+      "keystrokes": "cat <<EOF >> tests/api.test.js\n\ndescribe(\"Test /api/ cache control\", () => {\n  it(\"should set the correct cache-control header\", async () => {\n    const req = {\n      query: {\n        username: \"anuraghazra\",\n        cache_seconds: \"3600\",\n      },\n    };\n    const res = {\n      setHeader: jest.fn(),\n      send: jest.fn(),\n    };\n    mock.onPost(\"https://api.github.com/graphql\").reply(200, data);\n\n    await api(req, res);\n\n    expect(res.setHeader).toBeCalledWith(\"Cache-Control\", \"public, max-age=3600\");\n  });\n});\nEOF\n",
+      "duration": 0.5
+    },
+    {
+      "keystrokes": "npm test tests/api.test.js\n",
+      "duration": 5.0
+    }
+  ]
+}

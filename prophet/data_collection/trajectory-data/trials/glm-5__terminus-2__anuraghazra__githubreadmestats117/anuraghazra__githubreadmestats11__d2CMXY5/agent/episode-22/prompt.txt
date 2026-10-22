@@ -1,0 +1,41 @@
+Current Terminal Screen:
+>   await pin(req, res);
+>
+>   if (headers["Cache-Control"] !== "public, max-age=7200") {
+>     throw new Error(`Expected 'public, max-age=7200', got '${headers["Cache-Control"]}'`);
+>   }
+> }
+>
+> async function main() {
+>   console.log("Running cache tests...\n");
+>
+>   await runTest("Default cache (1800s)", testDefaultCache);
+>   await runTest("Custom cache (3600s)", testCustomCache);
+>   await runTest("Min cache clamp (0s)", testMinCache);
+>   await runTest("Max cache clamp (86400s)", testMaxCache);
+>   await runTest("Pin default cache (1800s)", testPinDefaultCache);
+>   await runTest("Pin custom cache (7200s)", testPinCustomCache);
+>
+>   console.log("\nAll tests completed!");
+> }
+>
+> main();
+> EOF
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# node test_cache_impl.js 2>&1
+Running cache tests...
+
+Trying PAT_1
+PASS: Default cache (1800s)
+Trying PAT_1
+PASS: Custom cache (3600s)
+Trying PAT_1
+PASS: Min cache clamp (0s)
+Trying PAT_1
+PASS: Max cache clamp (86400s)
+Trying PAT_1
+PASS: Pin default cache (1800s)
+Trying PAT_1
+PASS: Pin custom cache (7200s)
+
+All tests completed!
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

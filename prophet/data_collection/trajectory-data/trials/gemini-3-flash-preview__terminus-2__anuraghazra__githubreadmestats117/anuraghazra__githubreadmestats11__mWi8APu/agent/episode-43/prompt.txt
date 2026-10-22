@@ -1,0 +1,41 @@
+Current Terminal Screen:
+      PAT_8 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+ PASS  tests/calculateRank.test.js
+ PASS  tests/pin.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+
+Test Suites: 9 passed, 9 total
+Tests:       51 passed, 51 total
+Snapshots:   0 total
+Time:        1.598 s
+Ran all test suites.
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

@@ -1,0 +1,15 @@
+{
+  "analysis": "I can see the git diff is showing the changes. Let me view the rest of it.",
+  "plan": "View the complete git diff to verify all changes are correct.",
+  "commands": [
+    {
+      "keystrokes": "q",
+      "duration": 0.1
+    },
+    {
+      "keystrokes": "git diff --no-pager\n",
+      "duration": 0.5
+    }
+  ],
+  "task_complete": false
+}

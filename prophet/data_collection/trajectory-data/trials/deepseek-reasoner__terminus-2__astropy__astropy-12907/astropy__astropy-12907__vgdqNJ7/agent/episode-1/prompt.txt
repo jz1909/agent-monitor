@@ -1,0 +1,43 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# ls -la
+total 644
+drwxrwxrwx  1 root root   4096 Sep 10  2025 .
+drwxr-xr-x  1 root root    117 Apr 12 00:08 ..
+-rw-r--r--  1 root root      0 Sep 10  2025 .astropy-root
+drwxrwxrwx  2 root root     32 Sep 10  2025 .circleci
+drwxrwxrwx  8 root root   4096 Sep 10  2025 .git
+-rw-r--r--  1 root root     16 Sep 10  2025 .gitattributes
+drwxrwxrwx  4 root root    116 Sep 10  2025 .github
+-rw-r--r--  1 root root   1218 Sep 10  2025 .gitignore
+-rw-r--r--  1 root root  19309 Sep 10  2025 .mailmap
+-rw-r--r--  1 root root   2056 Sep 10  2025 .pep8speaks.yml
+-rw-r--r--  1 root root   2788 Sep 10  2025 .pre-commit-config.yaml
+drwxrwxrwx  3 root root     59 Sep 10  2025 .pyinstaller
+-rw-r--r--  1 root root    425 Sep 10  2025 .readthedocs.yml
+-rw-r--r--  1 root root 504041 Sep 10  2025 CHANGES.rst
+-rw-r--r--  1 root root     66 Sep 10  2025 CITATION
+-rw-r--r--  1 root root    139 Sep 10  2025 CODE_OF_CONDUCT.md
+-rw-r--r--  1 root root   9569 Sep 10  2025 CONTRIBUTING.md
+-rw-r--r--  1 root root    129 Sep 10  2025 GOVERNANCE.md
+-rw-r--r--  1 root root   1496 Sep 10  2025 LICENSE.rst
+-rw-r--r--  1 root root    703 Sep 10  2025 MANIFEST.in
+-rw-r--r--  1 root root   4558 Sep 10  2025 README.rst
+drwxrwxrwx 24 root root   4096 Sep 10  2025 astropy
+drwxr-xr-x  2 root root    186 Sep 10  2025 astropy.egg-info
+-rw-r--r--  1 root root   4140 Sep 10  2025 azure-pipelines.yml
+drwxrwxrwx  5 root root    186 Sep 10  2025 cextern
+-rw-r--r--  1 root root     13 Sep 10  2025 codecov.yml
+-rw-r--r--  1 root root   2568 Sep 10  2025 conftest.py
+drwxrwxrwx 25 root root   4096 Sep 10  2025 docs
+drwxr-xr-x  5 root root     89 Sep 10  2025 examples
+drwxrwxrwx  2 root root   4096 Sep 10  2025 licenses
+-rw-r--r--  1 root root    268 Sep 10  2025 pip-requirements
+-rw-r--r--  1 root root   4494 Sep 10  2025 pyproject.toml
+-rw-r--r--  1 root root   6251 Sep 10  2025 setup.cfg
+-rwxr-xr-x  1 root root   1634 Sep 10  2025 setup.py
+-rw-r--r--  1 root root   5721 Sep 10  2025 tox.ini
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# find . -name 'separable.py' -type f 2>/dev/null | head -20
+./astropy/modeling/separable.py
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

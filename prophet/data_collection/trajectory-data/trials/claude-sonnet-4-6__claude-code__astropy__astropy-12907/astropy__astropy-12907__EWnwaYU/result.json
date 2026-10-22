@@ -1,0 +1,101 @@
+{
+    "id": "c553605d-98d7-4d6d-a4e3-117e128e4601",
+    "task_name": "astropy__astropy-12907",
+    "trial_name": "astropy__astropy-12907__EWnwaYU",
+    "trial_uri": "<REDACTED_PATH>",
+    "task_id": {
+        "path": "../harbor/datasets/swebench-verified/astropy__astropy-12907"
+    },
+    "source": "adapter-experiments-batch1-phase4",
+    "task_checksum": "253d2893d4f6302be1cb372acfb708b00171c691ff613e388aacbecb47b88e87",
+    "config": {
+        "task": {
+            "path": "../harbor/datasets/swebench-verified/astropy__astropy-12907",
+            "git_url": null,
+            "git_commit_id": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "adapter-experiments-batch1-phase4"
+        },
+        "trial_name": "astropy__astropy-12907__EWnwaYU",
+        "trials_dir": "jobs/swebench-verified__claude-code__claude-sonnet-4-6__batch1__phase4",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "claude-code",
+            "import_path": null,
+            "model_name": "anthropic/claude-sonnet-4-6",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {
+                "version": "2.1.81"
+            },
+            "env": {}
+        },
+        "environment": {
+            "type": "daytona",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "dba32b39-c17b-40b1-872b-8dcdc47723bb"
+    },
+    "agent_info": {
+        "name": "claude-code",
+        "version": "2.1.81",
+        "model_info": {
+            "name": "claude-sonnet-4-6",
+            "provider": "anthropic"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 92813,
+        "n_cache_tokens": 78278,
+        "n_output_tokens": 2023,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-04-16T20:41:45.692900Z",
+    "finished_at": "2026-04-16T20:44:04.112323Z",
+    "environment_setup": {
+        "started_at": "2026-04-16T20:41:45.696817Z",
+        "finished_at": "2026-04-16T20:41:47.208219Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-04-16T20:41:47.208230Z",
+        "finished_at": "2026-04-16T20:42:09.031895Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-04-16T20:42:09.032012Z",
+        "finished_at": "2026-04-16T20:42:58.092361Z"
+    },
+    "verifier": {
+        "started_at": "2026-04-16T20:43:00.060195Z",
+        "finished_at": "2026-04-16T20:44:03.367903Z"
+    }
+}

@@ -1,0 +1,10 @@
+Previous response had warnings:
+WARNINGS: - Command 1 should end with newline when followed by another command. Otherwise the two commands will be concatenated together on the same line.
+
+New Terminal Output:
+
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# qrm repro.js
+bash: qrm: command not found
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# git checkout tests/api.test.js tests/pin.test.js
+Updated 2 paths from the index
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

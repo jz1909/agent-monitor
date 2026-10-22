@@ -1,0 +1,477 @@
+Previous response had warnings:
+WARNINGS: - Command 1 should end with newline when followed by another command. Otherwise the two commands will be concatenated together on the same line.
+
+New Terminal Output:
+
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+Error: Maximum retries exceeded
+    at retryer (/home/<redacted>/src/retryer.js:3:11)
+    at retryer (/home/<redacted>/src/retryer.js:38:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async fetchRepo (/home/<redacted>/src/fetchRepo.js:50:13)
+    at async module.exports (/home/<redacted>/api/pin.js:24:16)
+    at async /home/<redacted>/reproduce-cache.js:21:3
+pin {
+  'Cache-Control': 'public, max-age=1800',
+  'Content-Type': 'image/svg+xml'
+}
+    <svg width="495" height="100" viewB
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# ^C
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# python - <<'PY'
+> from pathlib import Path
+> for file in ['api/index.js', 'api/pin.js']:
+>     p = Path(file)
+>     s = p.read_text()
+>     if file == 'api/index.js':
+>         s = s.replace('    theme,\n  } = req.query;', '    theme,\n    cache_seconds = 1800,\n  } = req.query;')
+>     else:
+>         s = s.replace('    show_owner,\n  } = req.query;', '    show_owner,\n    cache_seconds = 1800,\n  } = req.query;')
+>     s = s.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'res.setHeader("Cache-Control", `public, max-age=${cache_seconds}`);')
+>     p.write_text(s)
+> PY
+bash: python: command not found
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# sed -n '1,80p' api/index.js
+require("dotenv").config();
+const { renderError, parseBoolean } = require("../src/utils");
+const fetchStats = require("../src/fetchStats");
+const renderStatsCard = require("../src/renderStatsCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    hide,
+    hide_title,
+    hide_border,
+    hide_rank,
+    show_icons,
+    line_height,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+  } = req.query;
+  let stats;
+
+  res.setHeader("Cache-Control", "public, max-age=1800");
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    stats = await fetchStats(username);
+  } catch (err) {
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderStatsCard(stats, {
+      hide: JSON.parse(hide || "[]"),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+    })
+  );
+};
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# sed -n '1,80p' api/pin.js
+require("dotenv").config();
+const { renderError, parseBoolean } = require("../src/utils");
+const fetchRepo = require("../src/fetchRepo");
+const renderRepoCard = require("../src/renderRepoCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    repo,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    show_owner,
+  } = req.query;
+
+  let repoData;
+
+  res.setHeader("Cache-Control", "public, max-age=1800");
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    repoData = await fetchRepo(username, repo);
+  } catch (err) {
+    console.log(err);
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderRepoCard(repoData, {
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      show_owner: parseBoolean(show_owner),
+    })
+  );
+};
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# node reproduce-cache.js
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+npm test -- --runInBand tests/api.test.js tests/pin.test.js
+PAT_6 Failed
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+api {
+  'Cache-Control': 'public, max-age=1800',
+  'Content-Type': 'image/svg+xml'
+}
+    <svg width="495" height="100" viewB
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+PAT_6 Failed
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+Error: Maximum retries exceeded
+    at retryer (/home/<redacted>/src/retryer.js:3:11)
+    at retryer (/home/<redacted>/src/retryer.js:38:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async fetchRepo (/home/<redacted>/src/fetchRepo.js:50:13)
+    at async module.exports (/home/<redacted>/api/pin.js:24:16)
+    at async /home/<redacted>/reproduce-cache.js:21:3
+pin {
+  'Cache-Control': 'public, max-age=1800',
+  'Content-Type': 'image/svg+xml'
+}
+    <svg width="495" height="100" viewB
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# npm test -- --runInBand tests/api.test.js tests/pin.test.js
+
+> github-readme-stats@1.0.0 test
+> jest --runInBand tests/api.t
+[... output limited to 10000 bytes; 70 interior bytes omitted ...]
+n.test.js/i.
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# npm test -- --runInBand
+
+> github-readme-stats@1.0.0 test
+> jest --runInBand
+
+ PASS  tests/api.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/renderStatsCard.test.js
+ PASS  tests/renderRepoCard.test.js
+ PASS  tests/fetchRepo.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/utils.test.js
+ PASS  tests/fetchStats.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+ PASS  tests/retryer.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      {} undefined
+
+      at tests/retryer.test.js:5:11
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_2 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_3
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_3 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_4
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_4 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_5
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_5 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_6
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_6 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_7
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_7 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_8
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_8 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+ PASS  tests/calculateRank.test.js
+ PASS  tests/pin.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+
+Test Suites: 9 passed, 9 total
+Tests:       49 passed, 49 total
+Snapshots:   0 total
+Time:        1.676 s
+Ran all test suites.
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# git diff -- api/index.js api/pin.js reproduce-cache.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(END)

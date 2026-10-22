@@ -1,0 +1,262 @@
+New Terminal Output:
+
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# npm test 2>&1
+
+> github-readme-stats@1.0.0 test
+> jest
+
+ PASS  tests/utils.test.js
+ PASS  tests/calculateRank.test.js
+ PASS  tests/retryer.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      {} undefined
+
+      at tests/retryer.test.js:5:11
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_2 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_3
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_3 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_4
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_4 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_5
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_5 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_6
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_6 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_7
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_7 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_8
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_8 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+ PASS  tests/fetchStats.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+ PASS  tests/fetchRepo.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/pin.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+ PASS  tests/api.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/renderStatsCard.test.js
+ PASS  tests/renderRepoCard.test.js
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --de
+tectOpenHandles to find leaks.
+
+Test Suites: 9 passed, 9 total
+Tests:       49 passed, 49 total
+Snapshots:   0 total
+Time:        3.834 s
+Ran all test suites.
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

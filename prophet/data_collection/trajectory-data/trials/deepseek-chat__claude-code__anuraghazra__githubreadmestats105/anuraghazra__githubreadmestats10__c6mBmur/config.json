@@ -1,0 +1,62 @@
+{
+    "task": {
+        "path": "datasets/multi-swe-bench/anuraghazra__githubreadmestats105",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "67f4793bb9fc934e02ffe665748acee9f81a8236",
+        "name": null,
+        "ref": null,
+        "overwrite": false,
+        "download_dir": null,
+        "source": "adapter-experiments-batch2-phase4"
+    },
+    "trial_name": "anuraghazra__githubreadmestats10__c6mBmur",
+    "trials_dir": "jobs/multi-swe-bench__claude-code__deepseek-chat__batch2__phase4",
+    "timeout_multiplier": 1.0,
+    "agent_timeout_multiplier": null,
+    "verifier_timeout_multiplier": null,
+    "agent_setup_timeout_multiplier": null,
+    "environment_build_timeout_multiplier": null,
+    "agent": {
+        "name": "claude-code",
+        "import_path": null,
+        "model_name": "anthropic/deepseek-chat",
+        "override_timeout_sec": null,
+        "override_setup_timeout_sec": null,
+        "max_timeout_sec": null,
+        "kwargs": {
+            "version": "2.1.81"
+        },
+        "env": {
+            "ANTHROPIC_AUTH_TOKEN": "<REDACTED_SECRET>",
+            "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+            "ANTHROPIC_MODEL": "deepseek-chat",
+            "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-chat",
+            "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-chat",
+            "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-chat",
+            "CLAUDE_CODE_SUBAGENT_MODEL": "deepseek-chat",
+            "API_TIMEOUT_MS": "600000"
+        }
+    },
+    "environment": {
+        "type": "daytona",
+        "import_path": null,
+        "force_build": false,
+        "delete": true,
+        "override_cpus": null,
+        "override_memory_mb": null,
+        "override_storage_mb": null,
+        "override_gpus": null,
+        "suppress_override_warnings": false,
+        "mounts_json": null,
+        "env": {},
+        "kwargs": {}
+    },
+    "verifier": {
+        "override_timeout_sec": null,
+        "max_timeout_sec": null,
+        "env": {},
+        "disable": false
+    },
+    "artifacts": [],
+    "job_id": "9d2cb4ed-2b85-4730-a989-80dde7b36450"
+}

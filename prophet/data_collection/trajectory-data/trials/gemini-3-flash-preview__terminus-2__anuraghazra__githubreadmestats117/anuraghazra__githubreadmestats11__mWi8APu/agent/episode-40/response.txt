@@ -1,0 +1,14 @@
+{
+  "analysis": "It seems there are no other relevant constants. \n\nI'll now consider adding the clamping logic just to be safe and more robust. A common range is 1800 to 86400 seconds. If I add this, I should also update the tests.",
+  "plan": "I will update `api/index.js` and `api/pin.js` to include clamping for `cache_seconds` between 1800 and 86400.",
+  "commands": [
+    {
+      "keystrokes": "cat <<EOF > api/index.js\nrequire(\"dotenv\").config();\nconst { renderError, parseBoolean } = require(\"../src/utils\");\nconst fetchStats = require(\"../src/fetchStats\");\nconst renderStatsCard = require(\"../src/renderStatsCard\");\n\nmodule.exports = async (req, res) => {\n  const {\n    username,\n    hide,\n    hide_title,\n    hide_border,\n    hide_rank,\n    show_icons,\n    line_height,\n    title_color,\n    icon_color,\n    text_color,\n    bg_color,\n    theme,\n    cache_seconds,\n  } = req.query;\n  let stats;\n\n  res.setHeader(\"Content-Type\", \"image/svg+xml\");\n\n  let cacheSeconds = parseInt(cache_seconds) || 1800;\n  if (cacheSeconds < 1800) cacheSeconds = 1800;\n  if (cacheSeconds > 86400) cacheSeconds = 86400;\n  res.setHeader(\"Cache-Control\", \\`public, max-age=\\${cacheSeconds}\\`);\n\n  try {\n    stats = await fetchStats(username);\n  } catch (err) {\n    return res.send(renderError(err.message));\n  }\n\n  res.send(\n    renderStatsCard(stats, {\n      hide: JSON.parse(hide || \"[]\"),\n      show_icons: parseBoolean(show_icons),\n      hide_title: parseBoolean(hide_title),\n      hide_border: parseBoolean(hide_border),\n      hide_rank: parseBoolean(hide_rank),\n      line_height,\n      title_color,\n      icon_color,\n      text_color,\n      bg_color,\n      theme,\n    })\n  );\n};\nEOF\n",
+      "duration": 0.5
+    },
+    {
+      "keystrokes": "cat <<EOF > api/pin.js\nrequire(\"dotenv\").config();\nconst { renderError, parseBoolean } = require(\"../src/utils\");\nconst fetchRepo = require(\"../src/fetchRepo\");\nconst renderRepoCard = require(\"../src/renderRepoCard\");\n\nmodule.exports = async (req, res) => {\n  const {\n    username,\n    repo,\n    title_color,\n    icon_color,\n    text_color,\n    bg_color,\n    theme,\n    show_owner,\n    cache_seconds,\n  } = req.query;\n\n  let repoData;\n\n  res.setHeader(\"Content-Type\", \"image/svg+xml\");\n\n  let cacheSeconds = parseInt(cache_seconds) || 1800;\n  if (cacheSeconds < 1800) cacheSeconds = 1800;\n  if (cacheSeconds > 86400) cacheSeconds = 86400;\n  res.setHeader(\"Cache-Control\", \\`public, max-age=\\${cacheSeconds}\\`);\n\n  try {\n    repoData = await fetchRepo(username, repo);\n  } catch (err) {\n    return res.send(renderError(err.message));\n  }\n\n  res.send(\n    renderRepoCard(repoData, {\n      title_color,\n      icon_color,\n      text_color,\n      bg_color,\n      theme,\n      show_owner: parseBoolean(show_owner),\n    })\n  );\n};\nEOF\n",
+      "duration": 0.5
+    }
+  ]
+}

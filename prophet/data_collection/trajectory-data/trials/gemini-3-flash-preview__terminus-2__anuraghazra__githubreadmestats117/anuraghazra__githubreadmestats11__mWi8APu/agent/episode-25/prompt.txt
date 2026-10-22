@@ -1,0 +1,41 @@
+Current Terminal Screen:
+>     show_icons,
+>     line_height,
+>     title_color,
+>     icon_color,
+>     text_color,
+>     bg_color,
+>     theme,
+>     cache_seconds,
+>   } = req.query;
+>   let stats;
+>
+>   res.setHeader("Content-Type", "image/svg+xml");
+>
+>   try {
+>     stats = await fetchStats(username);
+>   } catch (err) {
+>     return res.send(renderError(err.message));
+>   }
+>
+>   const cacheSeconds = parseInt(cache_seconds) || 1800;
+>   res.setHeader("Cache-Control", \`public, max-age=\${cacheSeconds}\`);
+>
+>   res.send(
+>     renderStatsCard(stats, {
+>       hide: JSON.parse(hide || "[]"),
+>       show_icons: parseBoolean(show_icons),
+>       hide_title: parseBoolean(hide_title),
+>       hide_border: parseBoolean(hide_border),
+>       hide_rank: parseBoolean(hide_rank),
+>       line_height,
+>       title_color,
+>       icon_color,
+>       text_color,
+>       bg_color,
+>       theme,
+>     })
+>   );
+> };
+> EOF
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

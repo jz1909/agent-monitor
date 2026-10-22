@@ -1,0 +1,44 @@
+Previous response had warnings:
+WARNINGS: - Command 1 should end with newline when followed by another command. Otherwise the two commands will be concatenated together on the same line.
+
+Current Terminal Screen:
++
+   res.send(
+     renderRepoCard(repoData, {
+       title_color,
+diff --git a/src/utils.js b/src/utils.js
+index ca920e0..c748733 100644
+--- a/src/utils.js
++++ b/src/utils.js
+@@ -112,6 +112,24 @@ function getCardColors({
+   return { titleColor, iconColor, textColor, bgColor };
+ }
+
++/**
++ * @param {Number} value
++ * @param {Number} min
++ * @param {Number} max
++ *
++ * @description
++ * Clamps a value between a minimum and maximum value
++ */
++function clampValue(value, min, max) {
++  if (value < min) {
++    return min;
++  }
++  if (value > max) {
++    return max;
++  }
++  return value;
++}
++
+ module.exports = {
+   renderError,
+   kFormatter,
+@@ -122,4 +140,5 @@ module.exports = {
+   fallbackColor,
+   FlexLayout,
+   getCardColors,
++  clampValue,
+ };
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

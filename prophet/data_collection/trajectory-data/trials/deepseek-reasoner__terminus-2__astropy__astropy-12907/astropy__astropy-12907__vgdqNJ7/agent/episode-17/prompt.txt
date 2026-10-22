@@ -1,0 +1,41 @@
+Current Terminal Screen:
+
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > test_cdot_nested.py << 'EOF'
+> import sys
+> sys.path.insert(0, '.')
+> from astropy.modeling import models as m
+> from astropy.modeling.separable import separability_matrix
+>
+> # Create a nested composition: (Linear1D & Linear1D) | (Scale & Scale)
+> left = m.Linear1D(1) & m.Linear1D(2)
+> right = m.Scale(3) & m.Scale(4)
+> comp = left | right
+> print('Nested composition (Linear1D & Linear1D) | (Scale & Scale):')
+> print(separability_matrix(comp))
+> # Expected? Since both are separable and composition is just per-coordinate mapping,
+> # the matrix should be diagonal.
+> # Let's also test with non-separable component.
+> rot = m.Rotation2D(45)
+> comp2 = rot | rot
+> print('Rotation2D | Rotation2D:')
+> print(separability_matrix(comp2))
+> # Should be all True because rotation is not separable.
+> # Now test nested within larger model
+> cm = m.Linear1D(1) & m.Linear1D(2)
+> m3 = m.Pix2Sky_TAN() | cm  # Note: n_outputs of Pix2Sky_TAN is 2, n_inputs of cm is 2? Wait Pix2Sky_TAN outputs 2, cm inputs 2. Yes.
+> print('Pix2Sky_TAN | (Linear1D & Linear1D):')
+> print(separability_matrix(m3))
+> EOF
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python test_cdot_nested.py 2>&1
+Nested composition (Linear1D & Linear1D) | (Scale & Scale):
+[[ True False]
+ [False  True]]
+Rotation2D | Rotation2D:
+[[ True  True]
+ [ True  True]]
+Pix2Sky_TAN | (Linear1D & Linear1D):
+[[ True  True]
+ [ True  True]]
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

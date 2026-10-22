@@ -1,0 +1,37 @@
+New Terminal Output:
+ue]]
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python -m pytest astropy/modeling/tests/test_compound.py -xvs -k 'not test_simple_two_model_compos
+e_2d' 2>&1 | tail -30
+astropy/modeling/core.py:3241: in _evaluate
+    return self.right(*leftval, **kw)
+astropy/modeling/core.py:398: in __call__
+    new_call = make_function_with_signature(
+astropy/modeling/core.py:377: in __call__
+    return super(cls, self).__call__(*inputs, **kwargs)
+astropy/modeling/core.py:1080: in __call__
+    outputs = self._generic_evaluate(evaluate, inputs,
+astropy/modeling/core.py:1044: in _generic_evaluate
+    outputs = evaluate(_inputs)
+astropy/modeling/core.py:940: in evaluate
+    return self.evaluate(*chain(_inputs, parameters))
+astropy/modeling/rotations.py:504: in evaluate
+    result = np.dot(cls._compute_matrix(angle), inarr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+angle = array([1.57079633])
+
+    @staticmethod
+    def _compute_matrix(angle):
+>       return np.array([[math.cos(angle), -math.sin(angle)],
+                         [math.sin(angle), math.cos(angle)]],
+                        dtype=np.float64)
+E       DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from y
+our array before performing this operation. (Deprecated NumPy 1.25.)
+
+astropy/modeling/rotations.py:513: DeprecationWarning
+=========================== short test summary info ============================
+FAILED astropy/modeling/tests/test_compound.py::test_basic_compound_inverse
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+================== 1 failed, 18 passed, 1 deselected in 0.37s ==================
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

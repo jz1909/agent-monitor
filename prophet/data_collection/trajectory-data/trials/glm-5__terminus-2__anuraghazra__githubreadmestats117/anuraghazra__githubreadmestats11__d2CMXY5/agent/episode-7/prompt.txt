@@ -1,0 +1,204 @@
+New Terminal Output:
+
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# git log --oneline -20
+9fb28c9 (HEAD) docs: added themes preview (#115)
+8fc85c6 docs(translation): Update & Improvements on Existing Simplified Chinese Translation of README (#109)
+dd2c7ed fix: proper apostrophe in stats card's header
+9a7ed8f docs: added themes screenshot
+71c63ab Merge pull request #106 from hi120ki/fix-style-collapses-on-stats-card
+30da011 fix style collapses on stats card by css font config
+2c26329 feat: added inbuilt themes (#105)
+b4a9bd4 Merge pull request #102 from JalenChuh/master
+f5cd85f Merge pull request #103 from colmugx/patch-1
+c436ed1 docs: README.md
+f6c901b :pencil: add Chinese translation
+e9dc353 Merge pull request #100 from anuraghazra/refactor-flex
+253eb39 refactor: added FlexLayout for flex layouts
+06f0021 chore: Hide star and fork stats in repo card if count of equals to zero (#97)
+f27daeb Merge pull request #99 from anuraghazra/feat/archive-badge
+b6aa462 design: make badge look good on different colors
+be79fe4 feat: show archive badge if repo is archive
+b039fa1 Merge pull request #86 from edisonlee55/master
+61442cb fix: fixed CSS scale() issue on WebKit by wrap up text in g tag
+431f2a0 docs: update options table
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Most commands optionally preceded by integer argument k.  Defaults in brackets.
+Star (*) indicates argument becomes new default.
+-------------------------------------------------------------------------------
+<space>                 Display next k lines of text [current screen size]
+z                       Display next k lines of text [current screen size]*
+<return>                Display next k lines of text [1]*
+d or ctrl-D             Scroll k lines [current scroll size, initially 11]*
+q or Q or <interrupt>   Exit from more
+s                       Skip forward k lines of text [1]
+f                       Skip forward k screenfuls of text [1]
+b or ctrl-B             Skip backwards k screenfuls of text [1]
+'                       Go to place where previous search started
+=                       Display current line number
+/<regular expression>   Search for kth occurrence of regular expression [1]
+n                       Search for kth occurrence of last r.e [1]
+!<cmd> or :!<cmd>       Execute <cmd> in a subshell
+v                       Start up '/usr/bin/vi' at current line
+ctrl-L                  Redraw screen
+:n                      Go to kth next file [1]
+:p                      Go to kth previous file [1]
+:f                      Display current file name and line number
+.                       Repeat previous command
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(END)

@@ -1,0 +1,43 @@
+New Terminal Output:
+
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# node repro.js
+Testing /api/index with cache_seconds=3600
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=3600
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+PAT_6 Failed
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+
+Testing /api/pin with cache_seconds=3600
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=3600
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+PAT_6 Failed
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

@@ -1,0 +1,12 @@
+New Terminal Output:
+
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# grep -rnE "86400|3600" . --exclude-dir=node_modules
+./tests/api.test.js:142:        cache_seconds: "3600",
+./tests/api.test.js:153:    expect(res.setHeader).toBeCalledWith("Cache-Control", "public, max-age=3600");
+./tests/pin.test.js:133:        cache_seconds: "3600",
+./tests/pin.test.js:144:    expect(res.setHeader).toBeCalledWith("Cache-Control", "public, max-age=3600");
+./repro.js:10:  console.log("Testing /api/index with cache_seconds=3600");
+./repro.js:11:  await api({ query: { username: "anuraghazra", cache_seconds: "3600" } }, res);
+./repro.js:16:  console.log("\nTesting /api/pin with cache_seconds=3600");
+./repro.js:17:  await pin({ query: { username: "anuraghazra", repo: "repo", cache_seconds: "3600" } }, res);
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

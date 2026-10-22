@@ -1,0 +1,109 @@
+Previous response had warnings:
+WARNINGS: - Extra text detected after JSON object
+
+New Terminal Output:
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/home/github-readme-stats# cd /workspace/github-readme-stats
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# pwd
+/workspace/github-readme-stats
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# git status --short
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# git rev-parse --short HEAD
+9fb28c9
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# ls -la
+total 340
+drwxr-xr-x   1 root root     26 Mar 18  2025 .
+drwxr-xr-x   1 root root     41 Mar 18  2025 ..
+drwxr-xr-x   1 root root     27 Apr 20 07:27 .git
+drwxr-xr-x   1 root root    150 Mar 18  2025 .github
+-rw-r--r--   1 root root     43 Mar 18  2025 .gitignore
+-rw-r--r--   1 root root     22 Mar 18  2025 .vercelignore
+-rw-r--r--   1 root root   1069 Mar 18  2025 LICENSE
+drwxr-xr-x   1 root root    132 Mar 18  2025 api
+-rw-r--r--   1 root root     42 Mar 18  2025 jest.config.js
+drwxr-xr-x 377 root root  12288 Mar 18  2025 node_modules
+-rw-r--r--   1 root root 276403 Mar 18  2025 package-lock.json
+-rw-r--r--   1 root root    545 Mar 18  2025 package.json
+-rw-r--r--   1 root root   9800 Mar 18  2025 readme.md
+-rw-r--r--   1 root root   9617 Mar 18  2025 readme_cn.md
+drwxr-xr-x   1 root root   4096 Mar 18  2025 src
+drwxr-xr-x   1 root root   4096 Mar 18  2025 tests
+drwxr-xr-x   1 root root     51 Mar 18  2025 themes
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# cat package.json
+{
+  "name": "github-readme-stats",
+  "version": "1.0.0",
+  "description": "Dynamically generate stats for your github readmes",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "author": "Anurag Hazra",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/dom": "^7.20.0",
+    "@testing-library/jest-dom": "^5.11.0",
+    "axios": "^0.19.2",
+    "axios-mock-adapter": "^1.18.1",
+    "css-to-object": "^1.1.0",
+    "jest": "^26.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# grep -RIn "cache" . --exclude-dir=node_modules
+./.git/hooks/pre-commit.sample:31:      test $(git diff --cached --name-only --diff-filter=A -z $against |
+./.git/hooks/pre-commit.sample:49:exec git diff-index --check --cached $against --
+./.git/hooks/prepare-commit-msg.sample:32:#       print "\n" . `git diff --cached --name-status -r`
+./.git/hooks/push-to-checkout.sample:70:if ! git diff-index --quiet --cached --ignore-submodules $head --
+./.git/packed-refs:15:dd21012ea5f9e8e236bf76e9a66ccbd78c9aee48 refs/remotes/origin/ci_prs_cache_clean_remove_redundant_checkout_step
+./.github/workflows/test.yml:24:        uses: actions/cache@v2
+./.github/workflows/test.yml:26:          cache-name: cache-node-modules
+./.github/workflows/test.yml:29:          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+./.github/workflows/test.yml:31:            ${{ runner.os }}-npm-cache-
+./package-lock.json:159:        "lru-cache": "^5.1.1",
+./package-lock.json:1883:        "cache-base": "^1.0.1",
+./package-lock.json:1989:    "node_modules/cache-base": {
+./package-lock.json:1991:      "resolved": "https://registry.npmjs.org/cache-base/-/cache-base-1.0.1.tgz",
+./package-lock.json:2852:        "fragment-cache": "^0.2.1",
+./package-lock.json:2987:    "node_modules/fragment-cache": {
+./package-lock.json:2989:      "resolved": "https://registry.npmjs.org/fragment-cache/-/fragment-cache-0.2.1.tgz",
+./package-lock.json:2994:        "map-cache": "^0.2.2"
+./package-lock.json:3487:      "deprecated": "This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested w
+ay to coalesce async requests by a key value, which is much more comprehensive and powerful.",
+./package-lock.json:5232:    "node_modules/lru-cache": {
+./package-lock.json:5234:      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz",
+./package-lock.json:5291:    "node_modules/map-cache": {
+./package-lock.json:5293:      "resolved": "https://registry.npmjs.org/map-cache/-/map-cache-0.2.2.tgz",
+./package-lock.json:5443:        "fragment-cache": "^0.2.1",
+./package-lock.json:6407:        "fragment-cache": "^0.2.1",
+./package-lock.json:6650:        "map-cache": "^0.2.2",
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# grep -RIn "cache_seconds\|Cache-Control\|cache-control\|setHeader\|res.set" api src .
+--exclude-dir=node_modules
+api/index.js:23:  res.setHeader("Cache-Control", "public, max-age=1800");
+api/index.js:24:  res.setHeader("Content-Type", "image/svg+xml");
+api/pin.js:20:  res.setHeader("Cache-Control", "public, max-age=1800");
+api/pin.js:21:  res.setHeader("Content-Type", "image/svg+xml");
+./api/index.js:23:  res.setHeader("Cache-Control", "public, max-age=1800");
+./api/index.js:24:  res.setHeader("Content-Type", "image/svg+xml");
+./api/pin.js:20:  res.setHeader("Cache-Control", "public, max-age=1800");
+./api/pin.js:21:  res.setHeader("Content-Type", "image/svg+xml");
+./tests/api.test.js:70:      setHeader: jest.fn(),
+./tests/api.test.js:77:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/api.test.js:88:      setHeader: jest.fn(),
+./tests/api.test.js:95:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/api.test.js:114:      setHeader: jest.fn(),
+./tests/api.test.js:121:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:45:      setHeader: jest.fn(),
+./tests/pin.test.js:52:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:69:      setHeader: jest.fn(),
+./tests/pin.test.js:76:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:90:      setHeader: jest.fn(),
+./tests/pin.test.js:99:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:111:      setHeader: jest.fn(),
+./tests/pin.test.js:120:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# ls -R tests __tests__ 2>/dev/null || true
+tests:
+api.test.js            fetchRepo.test.js   pin.test.js             renderStatsCard.test.js  utils.test.js
+calculateRank.test.js  fetchStats.test.js  renderRepoCard.test.js  retryer.test.js
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats#

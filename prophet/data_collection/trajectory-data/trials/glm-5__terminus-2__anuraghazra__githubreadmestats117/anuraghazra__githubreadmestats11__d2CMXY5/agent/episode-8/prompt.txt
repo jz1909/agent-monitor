@@ -1,0 +1,44 @@
+Previous response had warnings:
+WARNINGS: - Command 1 should end with newline when followed by another command. Otherwise the two commands will be concatenated together on the same line.
+
+Current Terminal Screen:
+./node_modules/@babel/core/lib/config/caching.js:function* getCachedValue(cache, arg, data) {
+./node_modules/@babel/core/lib/config/caching.js:function* getCachedValueOrWait(asyncContext, callCache, futureCache, arg, data) {
+./node_modules/@babel/core/lib/config/caching.js:  const cached = yield* getCachedValue(callCache, arg, data);
+./node_modules/@babel/core/lib/config/caching.js:    const cached = yield* getCachedValue(futureCache, arg, data);
+./node_modules/@babel/core/lib/config/caching.js:function setupAsyncLocks(config, futureCache, arg) {
+./node_modules/@babel/core/lib/config/caching.js:  updateFunctionCache(futureCache, config, arg, finishLock);
+./node_modules/@babel/core/lib/config/caching.js:function updateFunctionCache(cache, config, arg, value) {
+./node_modules/@babel/core/lib/config/caching.js:class CacheConfigurator {
+./node_modules/@babel/core/lib/config/caching.js:    throw new Error("Cache keys must be either string, boolean, number, null, or undefined.");
+./node_modules/@babel/core/lib/config/config-chain.js:const loadPresetDescriptors = (0, _caching.makeWeakCacheSync)(preset => buildRootDescriptors(preset, prese
+t.alias, _configDescriptors.createUncachedDescriptors));
+./node_modules/@babel/core/lib/config/config-chain.js:const loadPresetEnvDescriptors = (0, _caching.makeWeakCacheSync)(preset => (0, _caching.makeStrongCacheSyn
+c)(envName => buildEnvDescriptors(preset, preset.alias, _configDescriptors.createUncachedDescriptors, envName)));
+./node_modules/@babel/core/lib/config/config-chain.js:const loadPresetOverridesDescriptors = (0, _caching.makeWeakCacheSync)(preset => (0, _caching.makeStrongCa
+cheSync)(index => buildOverrideDescriptors(preset, preset.alias, _configDescriptors.createUncachedDescriptors, index)));
+./node_modules/@babel/core/lib/config/config-chain.js:const loadPresetOverridesEnvDescriptors = (0, _caching.makeWeakCacheSync)(preset => (0, _caching.makeStron
+gCacheSync)(index => (0, _caching.makeStrongCacheSync)(envName => buildOverrideEnvDescriptors(preset, preset.alias, _configDescriptors.createUncachedDescriptors
+, index, envName))));
+./node_modules/@babel/core/lib/config/config-chain.js:const validateConfigFile = (0, _caching.makeWeakCacheSync)(file => ({
+./node_modules/@babel/core/lib/config/config-chain.js:const validateBabelrcFile = (0, _caching.makeWeakCacheSync)(file => ({
+./node_modules/@babel/core/lib/config/config-chain.js:const validateExtendFile = (0, _caching.makeWeakCacheSync)(file => ({
+./node_modules/@babel/core/lib/config/config-chain.js:  root: input => buildRootDescriptors(input, "base", _configDescriptors.createCachedDescriptors),
+./node_modules/@babel/core/lib/config/config-chain.js:  env: (input, envName) => buildEnvDescriptors(input, "base", _configDescriptors.createCachedDescriptors,
+envName),
+./node_modules/@babel/core/lib/config/config-chain.js:  overrides: (input, index) => buildOverrideDescriptors(input, "base", _configDescriptors.createCachedDesc
+riptors, index),
+./node_modules/@babel/core/lib/config/config-chain.js:  overridesEnv: (input, index, envName) => buildOverrideEnvDescriptors(input, "base", _configDescriptors.c
+reateCachedDescriptors, index, envName),
+./node_modules/@babel/core/lib/config/config-chain.js:const loadFileDescriptors = (0, _caching.makeWeakCacheSync)(file => buildRootDescriptors(file, file.filepa
+th, _configDescriptors.createUncachedDescriptors));
+./node_modules/@babel/core/lib/config/config-chain.js:const loadFileEnvDescriptors = (0, _caching.makeWeakCacheSync)(file => (0, _caching.makeStrongCacheSync)(e
+nvName => buildEnvDescriptors(file, file.filepath, _configDescriptors.createUncachedDescriptors, envName)));
+./node_modules/@babel/core/lib/config/config-chain.js:const loadFileOverridesDescriptors = (0, _caching.makeWeakCacheSync)(file => (0, _caching.makeStrongCacheS
+ync)(index => buildOverrideDescriptors(file, file.filepath, _configDescriptors.createUncachedDescriptors, index)));
+./node_modules/@babel/core/lib/config/config-chain.js:const loadFileOverridesEnvDescriptors = (0, _caching.makeWeakCacheSync)(file => (0, _caching.makeStrongCac
+heSync)(index => (0, _caching.makeStrongCacheSync)(envName => buildOverrideEnvDescriptors(file, file.filepath, _configDescriptors.createUncachedDescriptors, ind
+ex, envName))));
+./node_modules/@babel/core/lib/config/config-descriptors.js:exports.createCachedDescriptors = createCachedDescriptors;
+./node_modules/@babel/core/lib/config/config-descriptors.js:function createCachedDescriptors(dirname, options, alias) {
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

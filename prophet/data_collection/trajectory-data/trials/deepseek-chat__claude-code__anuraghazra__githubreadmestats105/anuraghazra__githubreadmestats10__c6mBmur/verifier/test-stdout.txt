@@ -1,0 +1,479 @@
+
+> github-readme-stats@1.0.0 test
+> jest --verbose
+
+PASS tests/utils.test.js
+  Test utils.js
+    ✓ should test kFormatter (1 ms)
+    ✓ should test encodeHTML (1 ms)
+    ✓ should test renderError (5 ms)
+    ✓ should test FlexLayout
+    ✓ getCardColors: should return expected values (1 ms)
+    ✓ getCardColors: should fallback to default colors if color is invalid
+    ✓ getCardColors: should fallback to specified theme colors if is not defined
+
+PASS tests/calculateRank.test.js
+  Test calculateRank
+    ✓ should calculate rank correctly (1 ms)
+
+PASS tests/pin.test.js
+  Test /api/pin
+    ✓ should test the request (98 ms)
+    ✓ should get the query options (2 ms)
+    ✓ should render error card if user repo not found (3 ms)
+    ✓ should render error card if org repo not found (2 ms)
+
+PASS tests/retryer.test.js
+  Test Retryer
+    ✓ retryer should return value and have zero retries on first try (93 ms)
+    ✓ retryer should return value and have 2 retries (2 ms)
+    ✓ retryer should throw error if maximum retries reached (9 ms)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    {} undefined
+
+      at tests/retryer.test.js:5:11
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_2 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_3
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_3 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Trying PAT_4
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_4 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_5
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_5 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Trying PAT_6
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_6 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Error: User Repository Not found
+        at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+        at processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+        at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Error: Organization Repository Not found
+        at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+        at processTicksAndRejections (node:internal/process/task_queues:95:5)
+        at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+        at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+  console.log
+    Trying PAT_7
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_7 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+  console.log
+    Trying PAT_8
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    PAT_8 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+PASS tests/api.test.js
+  Test /api/
+    ✓ should test the request (82 ms)
+    ✓ should render error card on error (3 ms)
+    ✓ should get the query options (1 ms)
+
+PASS tests/fetchRepo.test.js
+  Test fetchRepo
+    ✓ should fetch correct user repo (19 ms)
+    ✓ should fetch correct org repo (1 ms)
+    ✓ should throw error if user is found but repo is null (2 ms)
+    ✓ should throw error if org is found but repo is null (1 ms)
+    ✓ should throw error if both user & org data not found (1 ms)
+    ✓ should throw error if repository is private (1 ms)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    [
+      {
+        type: 'NOT_FOUND',
+        path: [ 'user' ],
+        locations: [],
+        message: 'Could not fetch user'
+      }
+    ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+PASS tests/fetchStats.test.js
+  Test fetchStats
+    ✓ should fetch correct stats (18 ms)
+    ✓ should throw error (3 ms)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    [
+      {
+        type: 'NOT_FOUND',
+        path: [ 'user' ],
+        locations: [],
+        message: "Could not resolve to a User with the login of 'noname'."
+      }
+    ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+FAIL tests/renderStatsCard.test.js
+  Test renderStatsCard
+    ✕ should render correctly (14 ms)
+    ✓ should hide individual stats (4 ms)
+    ✓ should hide_border (4 ms)
+    ✓ should hide_rank (2 ms)
+    ✕ should render default colors properly (6 ms)
+    ✕ should render custom colors properly (6 ms)
+    ✕ should render custom colors with themes (3 ms)
+    ✕ should render custom colors with themes and fallback to default colors if invalid (3 ms)
+    ✓ should hide the title (3 ms)
+    ✓ should not hide the title (2 ms)
+    ✓ should render icons correctly (2 ms)
+    ✓ should not have icons if show_icons is false (2 ms)
+
+  ● Test renderStatsCard › should render correctly
+
+    expect(received).toBeInTheDocument()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      36 |     expect(getByTestId(document.body, "prs").textContent).toBe("400");
+      37 |     expect(getByTestId(document.body, "contribs").textContent).toBe("500");
+    > 38 |     expect(queryByTestId(document.body, "card-bg")).toBeInTheDocument();
+         |                                                     ^
+      39 |     expect(queryByTestId(document.body, "rank-circle")).toBeInTheDocument();
+      40 |   });
+      41 |
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderStatsCard.test.js:38:53)
+
+  ● Test renderStatsCard › should render default colors properly
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      81 |     expect(statClassStyles.fill).toBe("#333");
+      82 |     expect(iconClassStyles.fill).toBe("#4c71f2");
+    > 83 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+         |                                                     ^
+      84 |       "fill",
+      85 |       "#FFFEFE"
+      86 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderStatsCard.test.js:83:53)
+
+  ● Test renderStatsCard › should render custom colors properly
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      107 |     expect(statClassStyles.fill).toBe(`#${customColors.text_color}`);
+      108 |     expect(iconClassStyles.fill).toBe(`#${customColors.icon_color}`);
+    > 109 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+          |                                                     ^
+      110 |       "fill",
+      111 |       "#252525"
+      112 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderStatsCard.test.js:109:53)
+
+  ● Test renderStatsCard › should render custom colors with themes
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      129 |     expect(statClassStyles.fill).toBe(`#${themes.radical.text_color}`);
+      130 |     expect(iconClassStyles.fill).toBe(`#${themes.radical.icon_color}`);
+    > 131 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+          |                                                     ^
+      132 |       "fill",
+      133 |       `#${themes.radical.bg_color}`
+      134 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderStatsCard.test.js:131:53)
+
+  ● Test renderStatsCard › should render custom colors with themes and fallback to default colors if invalid
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      152 |     expect(statClassStyles.fill).toBe(`#${themes.default.text_color}`);
+      153 |     expect(iconClassStyles.fill).toBe(`#${themes.radical.icon_color}`);
+    > 154 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+          |                                                     ^
+      155 |       "fill",
+      156 |       `#${themes.radical.bg_color}`
+      157 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderStatsCard.test.js:154:53)
+
+FAIL tests/renderRepoCard.test.js
+  Test renderRepoCard
+    ✓ should render correctly (12 ms)
+    ✓ should display username in title (full repo name) (3 ms)
+    ✓ should trim description (5 ms)
+    ✓ should shift the text position depending on language length (3 ms)
+    ✕ should render default colors properly (5 ms)
+    ✕ should render custom colors properly (3 ms)
+    ✕ should render custom colors with themes (2 ms)
+    ✕ should render custom colors with themes and fallback to default colors if invalid (5 ms)
+    ✓ should render archive badge if repo is archived (2 ms)
+    ✓ should not render star count or fork count if either of the are zero (4 ms)
+
+  ● Test renderRepoCard › should render default colors properly
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      116 |     expect(descClassStyles.fill).toBe("#333");
+      117 |     expect(iconClassStyles.fill).toBe("#586069");
+    > 118 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+          |                                                     ^
+      119 |       "fill",
+      120 |       "#FFFEFE"
+      121 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderRepoCard.test.js:118:53)
+
+  ● Test renderRepoCard › should render custom colors properly
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      144 |     expect(descClassStyles.fill).toBe(`#${customColors.text_color}`);
+      145 |     expect(iconClassStyles.fill).toBe(`#${customColors.icon_color}`);
+    > 146 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+          |                                                     ^
+      147 |       "fill",
+      148 |       "#252525"
+      149 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderRepoCard.test.js:146:53)
+
+  ● Test renderRepoCard › should render custom colors with themes
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      166 |     expect(descClassStyles.fill).toBe(`#${themes.radical.text_color}`);
+      167 |     expect(iconClassStyles.fill).toBe(`#${themes.radical.icon_color}`);
+    > 168 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+          |                                                     ^
+      169 |       "fill",
+      170 |       `#${themes.radical.bg_color}`
+      171 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderRepoCard.test.js:168:53)
+
+  ● Test renderRepoCard › should render custom colors with themes and fallback to default colors if invalid
+
+    expect(received).toHaveAttribute()
+
+    received value must be an HTMLElement or an SVGElement.
+    Received has value: null
+
+      189 |     expect(descClassStyles.fill).toBe(`#${themes.default.text_color}`);
+      190 |     expect(iconClassStyles.fill).toBe(`#${themes.radical.icon_color}`);
+    > 191 |     expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+          |                                                     ^
+      192 |       "fill",
+      193 |       `#${themes.radical.bg_color}`
+      194 |     );
+
+      at __EXTERNAL_MATCHER_TRAP__ (node_modules/jest-jasmine2/node_modules/expect/build/index.js:342:30)
+      at Object.<anonymous> (tests/renderRepoCard.test.js:191:53)
+
+Test Suites: 2 failed, 7 passed, 9 total
+Tests:       9 failed, 39 passed, 48 total
+Snapshots:   0 total
+Time:        3.688 s
+Ran all test suites.
+✗ Multi-SWE-bench validation failed: By comparing the test results before and after applying the fix patch, an anomalous pattern was detected. A brief summary is as follows: Test Result Summary:
+Stage Descriptions:
+  run  : Execute the test command without any patches applied.
+  test : Execute the test command after applying the test patch.
+  fix  : Execute the test command after applying both the test patch and the fix patch.
+Each stage is reported as (pass, fail, skip), representing the number of tests that passed, failed, or were skipped, respectively.
+
+Results:
+  run  = (50, 0, 0)
+  test = (29, 6, 0)
+  fix  = (46, 11, 0). `tests/renderStatsCard.test.js:should render correctly`: Test(run=<TestStatus.PASS: 'PASS'>, test=<TestStatus.NONE: 'NONE'>, fix=<TestStatus.FAIL: 'FAIL'>)

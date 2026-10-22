@@ -1,0 +1,15 @@
+{
+  "analysis": "The git diff command syntax is different. Let me exit the pager and use a proper command.",
+  "plan": "Exit the pager and use git diff with proper options.",
+  "commands": [
+    {
+      "keystrokes": "q",
+      "duration": 0.1
+    },
+    {
+      "keystrokes": "git --no-pager diff\n",
+      "duration": 0.5
+    }
+  ],
+  "task_complete": false
+}

@@ -1,0 +1,42 @@
+Previous response had warnings:
+WARNINGS: - Extra text detected before JSON object
+- Extra text detected after JSON object
+
+New Terminal Output:
+
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat << 'EOF' > patch.js
+> const fs = require('fs');
+>
+> // 1. Update src/utils.js
+> let utils = fs.readFileSync('src/utils.js', 'utf8');
+> if (!utils.includes('clampValue')) {
+>   const clampValueFunc = `\nfunction clampValue(number, min, max) {\n  if (Number.isNaN(parseInt(number))) return min;\n  if (number < min) return min;\n  if
+(number > max) return max;\n  return number;\n}\n`;
+>   utils = utils.replace('module.exports = {', clampValueFunc + '\nmodule.exports = {\n  clampValue,');
+>   fs.writeFileSync('src/utils.js', utils);
+> }
+>
+> // 2. Update api/index.js
+> let apiIndex = fs.readFileSync('api/index.js', 'utf8');
+> if (!apiIndex.includes('cache_seconds')) {
+>   apiIndex = apiIndex.replace('const { renderError, parseBoolean } = require("../src/utils");', 'const { renderError, parseBoolean, clampValue } = require("..
+/src/utils");');
+>   apiIndex = apiIndex.replace('    theme,\n  } = req.query;', '    theme,\n    cache_seconds,\n  } = req.query;');
+>   apiIndex = apiIndex.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10),
+ 1800, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+>   fs.writeFileSync('api/index.js', apiIndex);
+> }
+>
+> // 3. Update api/pin.js
+> let apiPin = fs.readFileSync('api/pin.js', 'utf8');
+> if (!apiPin.includes('cache_seconds')) {
+>   apiPin = apiPin.replace('const { renderError, parseBoolean } = require("../src/utils");', 'const { renderError, parseBoolean, clampValue } = require("../src
+/utils");');
+>   apiPin = apiPin.replace('    theme,\n    show_owner,\n  } = req.query;', '    theme,\n    show_owner,\n    cache_seconds,\n  } = req.query;');
+>   apiPin = apiPin.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 180
+0, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+>   fs.writeFileSync('api/pin.js', apiPin);
+> }
+> EOF
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# node patch.js
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats#

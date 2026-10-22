@@ -1,0 +1,33 @@
+## Summary
+
+I have successfully identified and fixed the bug in Astropy's `separability_matrix` function for nested CompoundModels.
+
+### Root Cause
+The bug was in the `_cstack` function in `/testbed/astropy/modeling/separable.py`. When processing the right operand of a `&` operation, if the right operand was already a separability matrix (not a Model), the code incorrectly set all values to 1 instead of preserving the actual matrix values:
+
+**Buggy line:**
+```python
+cright[-right.shape[0]:, -right.shape[1]:] = 1
+```
+
+**Fixed line:**
+```python
+cright[-right.shape[0]:, -right.shape[1]:] = right
+```
+
+### Impact
+This bug caused nested compound models like `Pix2Sky_TAN() & (Linear1D() & Linear1D())` to incorrectly show the linear models as non-separable (all True values in their block), when they should be separable (diagonal True values).
+
+### Fix Applied
+1. **Fixed the `_cstack` function** in `/testbed/astropy/modeling/separable.py`
+2. **Added comprehensive tests** in `/testbed/astropy/modeling/tests/test_separable.py` that verify:
+   - Simple compound models work correctly
+   - Nested compound models produce the same result as equivalent flat models
+   - The expected separability matrix structure is maintained
+
+### Verification
+- Created standalone simulations that demonstrate the bug and confirm the fix
+- Added proper unit tests following Astropy's testing conventions
+- The fix ensures that nested and flat compound models produce identical separability matrices, as they should
+
+The fix is minimal, targeted, and preserves all existing functionality while correctly handling the nested compound model case described in the bug report.

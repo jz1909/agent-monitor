@@ -1,0 +1,125 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python -m pytest astropy/modeling/tests/test_compound.py -xvs 2>&1 | head -200
+<frozen importlib._bootstrap>:228: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 80 from C header, got 96 from PyObj
+ect
+Internet access disabled
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.4.0, pluggy-1.3.0 -- /opt/miniconda3/envs/testbed/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True
+
+Running tests with Astropy version 5.1.dev623+gd16bfe05a.d20250910.
+Running tests in astropy/modeling/tests/test_compound.py.
+
+Date: 2026-04-12T00:16:18
+
+Platform: Linux-6.8.0-100-generic-x86_64-with-glibc2.35
+
+Executable: /opt/miniconda3/envs/testbed/bin/python
+
+Full Python Version:
+3.9.20 (main, Oct  3 2024, 07:27:41)
+[GCC 11.2.0]
+
+encodings: sys: utf-8, locale: UTF-8, filesystem: utf-8
+byteorder: little
+float info: dig: 15, mant_dig: 15
+
+Package versions:
+Numpy: 1.25.2
+Scipy: not available
+Matplotlib: not available
+h5py: not available
+Pandas: not available
+PyERFA: 2.0.0.3
+Cython: not available
+Scikit-image: not available
+asdf: not available
+pyarrow: not available
+
+Using Astropy options: remote_data: none.
+
+ARCH_ON_CI: undefined
+IS_CRON: undefined
+
+rootdir: /testbed
+configfile: setup.cfg
+plugins: hypothesis-6.82.6, arraydiff-0.5.0, astropy-0.10.0, astropy-header-0.2.2, cov-4.1.0, doctestplus-1.0.0, filter-subpackage-0.1.2, mock-3.11.1, openfiles
+-0.5.0, remotedata-0.4.0, xdist-3.3.1
+collecting ... collected 69 items
+
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result0] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result1] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result2] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result3] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result4] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result0] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result1] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result2] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result3] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result4] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-5.0] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>--1.0] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-6.0] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-0.6666666666666666] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-8.0] PASSED
+astropy/modeling/tests/test_compound.py::test_simple_two_model_compose_1d PASSED
+astropy/modeling/tests/test_compound.py::test_simple_two_model_compose_2d FAILED
+
+=================================== FAILURES ===================================
+_______________________ test_simple_two_model_compose_2d _______________________
+
+    def test_simple_two_model_compose_2d():
+        """
+        A simple example consisting of two rotations.
+        """
+
+        r1 = Rotation2D(45) | Rotation2D(45)
+
+        assert isinstance(r1, CompoundModel)
+        assert r1.n_inputs == 2
+        assert r1.n_outputs == 2
+>       assert_allclose(r1(0, 1), (-1, 0), atol=1e-10)
+
+astropy/modeling/tests/test_compound.py:106:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+astropy/modeling/core.py:1080: in __call__
+    outputs = self._generic_evaluate(evaluate, inputs,
+astropy/modeling/core.py:1044: in _generic_evaluate
+    outputs = evaluate(_inputs)
+astropy/modeling/core.py:3200: in evaluate
+    return self._evaluate(*_inputs, **kwargs)
+astropy/modeling/core.py:3226: in _evaluate
+    leftval = self.left(*args, **kw)
+astropy/modeling/core.py:398: in __call__
+    new_call = make_function_with_signature(
+astropy/modeling/core.py:377: in __call__
+    return super(cls, self).__call__(*inputs, **kwargs)
+astropy/modeling/core.py:1080: in __call__
+    outputs = self._generic_evaluate(evaluate, inputs,
+astropy/modeling/core.py:1044: in _generic_evaluate
+    outputs = evaluate(_inputs)
+astropy/modeling/core.py:940: in evaluate
+    return self.evaluate(*chain(_inputs, parameters))
+astropy/modeling/rotations.py:504: in evaluate
+    result = np.dot(cls._compute_matrix(angle), inarr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+angle = array([0.78539816])
+
+    @staticmethod
+    def _compute_matrix(angle):
+>       return np.array([[math.cos(angle), -math.sin(angle)],
+                         [math.sin(angle), math.cos(angle)]],
+                        dtype=np.float64)
+E       DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from y
+our array before performing this operation. (Deprecated NumPy 1.25.)
+
+astropy/modeling/rotations.py:513: DeprecationWarning
+=========================== short test summary info ============================
+FAILED astropy/modeling/tests/test_compound.py::test_simple_two_model_compose_2d
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+========================= 1 failed, 16 passed in 0.46s =========================
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

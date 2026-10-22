@@ -1,0 +1,125 @@
+{
+    "id": "47fd9eef-0943-4fdc-a2a0-5ac59ca35056",
+    "task_name": "astropy__astropy-12907",
+    "trial_name": "astropy__astropy-12907__vgdqNJ7",
+    "trial_uri": "<REDACTED_PATH>",
+    "task_id": {
+        "path": "../harbor/datasets/swebench-verified/astropy__astropy-12907"
+    },
+    "source": "adapter-experiments-batch1-phase4",
+    "task_checksum": "253d2893d4f6302be1cb372acfb708b00171c691ff613e388aacbecb47b88e87",
+    "config": {
+        "task": {
+            "path": "../harbor/datasets/swebench-verified/astropy__astropy-12907",
+            "git_url": null,
+            "git_commit_id": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "adapter-experiments-batch1-phase4"
+        },
+        "trial_name": "astropy__astropy-12907__vgdqNJ7",
+        "trials_dir": "jobs/swebench-verified__terminus-2__deepseek-reasoner__batch1__phase4",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2",
+            "import_path": null,
+            "model_name": "deepseek/deepseek-reasoner",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "daytona",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "95a688b2-bf86-4392-b70c-843e6aae2e58"
+    },
+    "agent_info": {
+        "name": "terminus-2",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "deepseek-reasoner",
+            "provider": "deepseek"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 390807,
+        "n_cache_tokens": 358464,
+        "n_output_tokens": 19057,
+        "cost_usd": 0.027096972000000004,
+        "rollout_details": [],
+        "metadata": {
+            "n_episodes": 21,
+            "api_request_times_msec": [
+                16716.983795166016,
+                23260.112047195435,
+                48018.75042915344,
+                42247.49135971069,
+                16715.18325805664,
+                7935.1770877838135,
+                27639.58764076233,
+                48669.87729072571,
+                35460.15739440918,
+                32639.54997062683,
+                12833.529710769653,
+                19190.000295639038,
+                11284.286499023438,
+                40457.075357437134,
+                30722.704648971558,
+                16266.618490219116,
+                28965.742349624634,
+                12656.816244125366,
+                28324.17941093445,
+                6771.326065063477,
+                6336.772918701172
+            ],
+            "summarization_count": 0
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-04-12T00:08:02.712504Z",
+    "finished_at": "2026-04-12T00:19:15.521246Z",
+    "environment_setup": {
+        "started_at": "2026-04-12T00:08:02.756312Z",
+        "finished_at": "2026-04-12T00:08:03.827095Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-04-12T00:08:03.827120Z",
+        "finished_at": "2026-04-12T00:08:14.090825Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-04-12T00:08:14.090951Z",
+        "finished_at": "2026-04-12T00:18:18.000644Z"
+    },
+    "verifier": {
+        "started_at": "2026-04-12T00:18:18.290226Z",
+        "finished_at": "2026-04-12T00:19:15.354281Z"
+    }
+}

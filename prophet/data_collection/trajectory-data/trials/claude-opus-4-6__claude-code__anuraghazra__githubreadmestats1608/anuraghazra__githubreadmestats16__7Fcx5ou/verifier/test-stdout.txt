@@ -1,0 +1,290 @@
+
+> github-readme-stats@1.0.0 test
+> jest --coverage --verbose
+
+PASS tests/fetchTopLanguages.test.js
+  FetchTopLanguages
+    ✓ should fetch correct language data (11 ms)
+    ✓ should fetch correct language data while excluding the 'test-repo-1' repository (5 ms)
+    ✓ should throw error (46 ms)
+
+PASS tests/pin.test.js
+  Test /api/pin
+    ✓ should test the request (9 ms)
+    ✓ should get the query options (2 ms)
+    ✓ should render error card if user repo not found (2 ms)
+    ✓ should render error card if org repo not found (1 ms)
+
+PASS tests/top-langs.test.js
+  Test /api/top-langs
+    ✓ should test the request (80 ms)
+    ✓ should work with the query options (6 ms)
+    ✓ should render error card on error (6 ms)
+
+PASS tests/fetchStats.test.js
+  Test fetchStats
+    ✓ should fetch correct stats (5 ms)
+    ✓ should throw error (11 ms)
+    ✓ should fetch and add private contributions (3 ms)
+    ✓ should fetch total commits (9 ms)
+
+PASS tests/api.test.js
+  Test /api/
+    ✓ should test the request (80 ms)
+    ✓ should render error card on error (6 ms)
+    ✓ should get the query options (32 ms)
+    ✓ should have proper cache (12 ms)
+    ✓ should set proper cache (42 ms)
+    ✓ should set proper cache with clamped values (30 ms)
+    ✓ should add private contributions (10 ms)
+
+PASS tests/flexLayout.test.js
+  flexLayout
+    ✓ should work with row & col layouts (16 ms)
+    ✓ should work with sizes
+
+PASS tests/calculateRank.test.js
+  Test calculateRank
+    ✓ should calculate rank correctly (2 ms)
+
+FAIL tests/fetchWakatime.test.js (5.841 s)
+  Wakatime fetcher
+    ✓ should fetch correct wakatime data (16 ms)
+    ✕ should throw error (60 ms)
+
+  ● Wakatime fetcher › should throw error
+
+    expect(received).rejects.toThrow(expected)
+
+    Expected substring: "Missing params \"username\" make sure you pass the parameters in URL"
+    Received message:   "Wakatime user not found, make sure you have a wakatime profile"
+
+          16 |   } catch (err) {
+          17 |     if (err.response.status < 200 || err.response.status > 299) {
+        > 18 |       throw new Error(
+             |             ^
+          19 |         "Wakatime user not found, make sure you have a wakatime profile",
+          20 |       );
+          21 |     }
+
+      at fetchWakatimeStats (src/fetchers/wakatime-fetcher.js:18:13)
+      at Object.<anonymous> (tests/fetchWakatime.test.js:209:5)
+      at Object.<anonymous> (tests/fetchWakatime.test.js:209:55)
+
+PASS tests/fetchRepo.test.js (5.616 s)
+  Test fetchRepo
+    ✓ should fetch correct user repo (18 ms)
+    ✓ should fetch correct org repo (1 ms)
+    ✓ should throw error if user is found but repo is null (32 ms)
+    ✓ should throw error if org is found but repo is null (4 ms)
+    ✓ should throw error if both user & org data not found (1 ms)
+    ✓ should throw error if repository is private (6 ms)
+
+PASS tests/retryer.test.js
+  Test Retryer
+    ✓ retryer should return value and have zero retries on first try (4 ms)
+    ✓ retryer should return value and have 2 retries (2 ms)
+    ✓ retryer should throw error if maximum retries reached (5 ms)
+
+PASS tests/card.test.js (5.925 s)
+  Card
+    ✓ should hide border (18 ms)
+    ✓ should not hide border (6 ms)
+    ✓ should have a custom title (5 ms)
+    ✓ should hide title (3 ms)
+    ✓ should not hide title (4 ms)
+    ✓ title should have prefix icon (4 ms)
+    ✓ title should not have prefix icon (3 ms)
+    ✓ should have proper height, width (3 ms)
+    ✓ should have less height after title is hidden (3 ms)
+    ✓ main-card-body should have proper when title is visible (3 ms)
+    ✓ main-card-body should have proper position after title is hidden (7 ms)
+    ✓ should render with correct colors (17 ms)
+    ✓ should render gradient backgrounds (26 ms)
+
+PASS tests/utils.test.js (6.447 s)
+  Test utils.js
+    ✓ should test kFormatter (3 ms)
+    ✓ should test encodeHTML (6 ms)
+    ✓ should test renderError (243 ms)
+    ✓ getCardColors: should return expected values (2 ms)
+    ✓ getCardColors: should fallback to default colors if color is invalid (1 ms)
+    ✓ getCardColors: should fallback to specified theme colors if is not defined (1 ms)
+  wrapTextMultiline
+    ✓ should not wrap small texts (3 ms)
+    ✓ should wrap large texts (2 ms)
+    ✓ should wrap large texts and limit max lines (1 ms)
+    ✓ should wrap chinese by punctuation (1 ms)
+
+  console.warn
+    Warning: toBeEmpty has been deprecated and will be removed in future updates. Please use instead toBeEmptyDOMElement for finding empty nodes in the DOM.
+
+      33 |       queryByTestId(document.body, "message").children[0],
+      34 |     ).toHaveTextContent(/Something went wrong/gim);
+    > 35 |     expect(queryByTestId(document.body, "message").children[1]).toBeEmpty(2);
+         |                                                                 ^
+      36 |
+      37 |     // Secondary message
+      38 |     document.body.innerHTML = renderError(
+
+      at deprecate (node_modules/@testing-library/jest-dom/dist/utils.js:130:11)
+      at Object.toBeEmpty (node_modules/@testing-library/jest-dom/dist/to-be-empty.js:9:24)
+      at Object.<anonymous> (tests/utils.test.js:35:65)
+
+FAIL tests/renderWakatimeCard.test.js (6.199 s)
+  Wakatime fetcher
+    ✓ should fetch correct wakatime data (9 ms)
+    ✕ should throw error (43 ms)
+  Test Render Wakatime Card
+    ✓ should render correctly (3 ms)
+    ✓ should render correctly with compact layout (2 ms)
+    ✓ should hide languages when hide is passed (29 ms)
+    ✓ should render translations (20 ms)
+    ✓ should render without rounding (19 ms)
+    ✓ should show "no coding activitiy this week" message when there hasn not been activity (5 ms)
+
+  ● Wakatime fetcher › should throw error
+
+    expect(received).rejects.toThrow(expected)
+
+    Expected substring: "Missing params \"username\" make sure you pass the parameters in URL"
+    Received message:   "Wakatime user not found, make sure you have a wakatime profile"
+
+          16 |   } catch (err) {
+          17 |     if (err.response.status < 200 || err.response.status > 299) {
+        > 18 |       throw new Error(
+             |             ^
+          19 |         "Wakatime user not found, make sure you have a wakatime profile",
+          20 |       );
+          21 |     }
+
+      at fetchWakatimeStats (src/fetchers/wakatime-fetcher.js:18:13)
+      at Object.<anonymous> (tests/fetchWakatime.test.js:209:5)
+      at Object.<anonymous> (tests/fetchWakatime.test.js:209:55)
+
+PASS tests/renderRepoCard.test.js (6.945 s)
+  Test renderRepoCard
+    ✓ should render correctly (45 ms)
+    ✓ should display username in title (full repo name) (15 ms)
+    ✓ should trim header (17 ms)
+    ✓ should trim description (31 ms)
+    ✓ should render emojis (10 ms)
+    ✓ should hide language if primaryLanguage is null & fallback to correct values (14 ms)
+    ✓ should render default colors properly (11 ms)
+    ✓ should render custom colors properly (27 ms)
+    ✓ should render with all the themes (401 ms)
+    ✓ should render custom colors with themes (7 ms)
+    ✓ should render custom colors with themes and fallback to default colors if invalid (7 ms)
+    ✓ should not render star count or fork count if either of the are zero (12 ms)
+    ✓ should render badges (11 ms)
+    ✓ should not render template (5 ms)
+    ✓ should render translated badges (22 ms)
+    ✓ should render without rounding (9 ms)
+    ✓ should fallback to default description (47 ms)
+
+FAIL tests/renderStatsCard.test.js (6.944 s)
+  Test renderStatsCard
+    ✓ should render correctly (43 ms)
+    ✓ should have proper name apostrophe (26 ms)
+    ✓ should hide individual stats (25 ms)
+    ✓ should hide_rank (12 ms)
+    ✓ should render default colors properly (13 ms)
+    ✓ should render custom colors properly (13 ms)
+    ✓ should render custom colors with themes (16 ms)
+    ✓ should render with all the themes (626 ms)
+    ✓ should render custom colors with themes and fallback to default colors if invalid (8 ms)
+    ✓ should render icons correctly (8 ms)
+    ✓ should not have icons if show_icons is false (12 ms)
+    ✓ should auto resize if hide_rank is true (6 ms)
+    ✓ should auto resize if hide_rank is true & custom_title is set (5 ms)
+    ✕ should render translations (18 ms)
+    ✓ should render without rounding (12 ms)
+
+  ● Test renderStatsCard › should render translations
+
+    expect(received).toMatchInlineSnapshot(snapshot)
+
+    Snapshot name: `Test renderStatsCard should render translations 2`
+
+    Snapshot: "累计提交数（commit） (2022):"
+    Received: "累计提交数（commit） (2026):"
+
+      250 |         'g[transform="translate(0, 25)"]>.stagger>.stat.bold',
+      251 |       ).textContent,
+    > 252 |     ).toMatchInlineSnapshot(`"累计提交数（commit） (2022):"`);
+          |       ^
+      253 |     expect(
+      254 |       document.querySelector(
+      255 |         'g[transform="translate(0, 50)"]>.stagger>.stat.bold',
+
+      at Object.<anonymous> (tests/renderStatsCard.test.js:252:7)
+
+ › 1 snapshot failed.
+PASS tests/renderTopLanguages.test.js (7.268 s)
+  Test renderTopLanguages
+    ✓ should render correctly (34 ms)
+    ✓ should hide languages when hide is passed (15 ms)
+    ✓ should resize the height correctly depending on langs (25 ms)
+    ✓ should render with custom width set (11 ms)
+    ✓ should render default colors properly (7 ms)
+    ✓ should render custom colors properly (6 ms)
+    ✓ should render custom colors with themes (11 ms)
+    ✓ should render with all the themes (542 ms)
+    ✓ should render with layout compact (7 ms)
+    ✓ should render a translated title (9 ms)
+    ✓ should render without rounding (11 ms)
+    ✓ should render langs with specified langs_count (8 ms)
+    ✓ should render langs with specified langs_count even when hide is set (8 ms)
+
+---------------------------|---------|----------|---------|---------|--------------------
+File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s  
+---------------------------|---------|----------|---------|---------|--------------------
+All files                  |   93.24 |    81.01 |   95.53 |   94.23 |                    
+ api                       |   88.88 |     64.1 |     100 |   88.88 |                    
+  index.js                 |   89.47 |       60 |     100 |   89.47 | 40,44              
+  pin.js                   |      88 |    68.42 |     100 |      88 | 33,37,59           
+  top-langs.js             |   89.47 |       60 |     100 |   89.47 | 37,41              
+ src                       |   78.78 |    57.14 |      50 |   81.25 |                    
+  calculateRank.js         |   90.24 |       65 |     100 |   90.24 | 69,75,81,87        
+  getStyles.js             |      40 |     37.5 |      25 |   46.15 | 6-12,21,34         
+  translations.js          |      90 |      100 |      50 |      90 | 335                
+ src/cards                 |   99.57 |    88.69 |     100 |     100 |                    
+  repo-card.js             |     100 |      100 |     100 |     100 |                    
+  stats-card.js            |    97.5 |    86.48 |     100 |     100 | 55,117-167,187,240 
+  top-languages-card.js    |     100 |       75 |     100 |     100 | 66-159             
+  wakatime-card.js         |     100 |     90.9 |     100 |     100 | 98-145             
+ src/common                |   92.15 |    85.18 |    97.5 |   93.19 |                    
+  Card.js                  |   96.87 |    92.59 |      90 |   96.77 | 79                 
+  I18n.js                  |   77.77 |       75 |     100 |   77.77 | 10,14              
+  blacklist.js             |     100 |      100 |     100 |     100 |                    
+  createProgressNode.js    |     100 |      100 |     100 |     100 |                    
+  icons.js                 |     100 |      100 |     100 |     100 |                    
+  retryer.js               |   72.22 |    63.63 |     100 |   72.22 | 32-38              
+  utils.js                 |   95.29 |    87.09 |     100 |    97.5 | 68,70              
+ src/fetchers              |    92.3 |    80.95 |     100 |   94.11 |                    
+  repo-fetcher.js          |   95.23 |    91.66 |     100 |   95.23 | 58                 
+  stats-fetcher.js         |   88.09 |    72.22 |     100 |   90.24 | 65-66,88-91        
+  top-languages-fetcher.js |   96.87 |    76.92 |     100 |     100 | 48,54-62           
+  wakatime-fetcher.js      |   88.88 |       75 |     100 |   88.88 | 22                 
+ themes                    |     100 |      100 |     100 |     100 |                    
+  index.js                 |     100 |      100 |     100 |     100 |                    
+---------------------------|---------|----------|---------|---------|--------------------
+Snapshot Summary
+ › 1 snapshot failed from 1 test suite. Inspect your code changes or run `npm test -- -u` to update them.
+
+Test Suites: 3 failed, 13 passed, 16 total
+Tests:       3 failed, 108 passed, 111 total
+Snapshots:   1 failed, 8 passed, 9 total
+Time:        11.989 s, estimated 15 s
+Ran all test suites.
+✗ Multi-SWE-bench validation failed: After applying the fix patch, no test cases transitioned from failed to passed. A brief summary is as follows: Test Result Summary:
+Stage Descriptions:
+  run  : Execute the test command without any patches applied.
+  test : Execute the test command after applying the test patch.
+  fix  : Execute the test command after applying both the test patch and the fix patch.
+Each stage is reported as (pass, fail, skip), representing the number of tests that passed, failed, or were skipped, respectively.
+
+Results:
+  run  = (125, 2, 0)
+  test = (121, 6, 0)
+  fix  = (121, 6, 0)

@@ -1,0 +1,6 @@
+{
+  "analysis": "The changes look good and follow the requirements. I've added the `cache_seconds` query parameter and used it to set the `Cache-Control` header, with appropriate defaults and clamping. I've also verified that existing tests still pass.",
+  "plan": "I will submit the changes.",
+  "commands": [],
+  "task_complete": true
+}

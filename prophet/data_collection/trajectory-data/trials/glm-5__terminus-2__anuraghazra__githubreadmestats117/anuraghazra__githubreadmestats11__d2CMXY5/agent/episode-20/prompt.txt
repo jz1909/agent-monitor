@@ -1,0 +1,102 @@
+New Terminal Output:
+;
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat > api/pin.js << 'EOF'
+> require("dotenv").config();
+> const { renderError, parseBoolean, clampValue } = require("../src/utils");
+> const fetchRepo = require("../src/fetchRepo");
+> const renderRepoCard = require("../src/renderRepoCard");
+>
+> module.exports = async (req, res) => {
+>   const {
+>     username,
+>     repo,
+>     title_color,
+>     icon_color,
+>     text_color,
+>     bg_color,
+>     theme,
+>     show_owner,
+>     cache_seconds,
+>   } = req.query;
+>
+>   let repoData;
+>
+>   res.setHeader("Content-Type", "image/svg+xml");
+>
+>   try {
+>     repoData = await fetchRepo(username, repo);
+>   } catch (err) {
+>     console.log(err);
+>     return res.send(renderError(err.message));
+>   }
+>
+>   const cacheSeconds = clampValue(
+>     parseInt(cache_seconds) || 1800,
+>     0,
+>     86400
+>   );
+>
+>   res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+>
+>   res.send(
+>     renderRepoCard(repoData, {
+>       title_color,
+>       icon_color,
+>       text_color,
+>       bg_color,
+>       theme,
+>       show_owner: parseBoolean(show_owner),
+>     })
+>   );
+> };
+> EOF
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat api/pin.js
+require("dotenv").config();
+const { renderError, parseBoolean, clampValue } = require("../src/utils");
+const fetchRepo = require("../src/fetchRepo");
+const renderRepoCard = require("../src/renderRepoCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    repo,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    show_owner,
+    cache_seconds,
+  } = req.query;
+
+  let repoData;
+
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    repoData = await fetchRepo(username, repo);
+  } catch (err) {
+    console.log(err);
+    return res.send(renderError(err.message));
+  }
+
+  const cacheSeconds = clampValue(
+    parseInt(cache_seconds) || 1800,
+    0,
+    86400
+  );
+
+  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+
+  res.send(
+    renderRepoCard(repoData, {
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      show_owner: parseBoolean(show_owner),
+    })
+  );
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

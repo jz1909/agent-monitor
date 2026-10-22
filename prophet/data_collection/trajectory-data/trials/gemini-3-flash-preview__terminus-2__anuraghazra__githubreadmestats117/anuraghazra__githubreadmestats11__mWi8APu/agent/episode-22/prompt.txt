@@ -1,0 +1,82 @@
+New Terminal Output:
+
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# cat <<EOF > repro.js
+> const api = require("./api/index");
+> const pin = require("./api/pin");
+>
+> async function test() {
+>   const req = {
+>     query: {
+>       username: "anuraghazra",
+>       cache_seconds: "3600"
+>     }
+>   };
+>   const res = {
+>     setHeader: (key, value) => console.log("Header: " + key + " = " + value),
+>     send: (data) => {}
+>   };
+>
+>   console.log("Testing /api/index with cache_seconds=3600");
+>   await api(req, res);
+>
+>   console.log("\\nTesting /api/pin with cache_seconds=3600");
+>   const reqPin = {
+>     query: {
+>       username: "anuraghazra",
+>       repo: "github-readme-stats",
+>       cache_seconds: "3600"
+>     }
+>   };
+>   await pin(reqPin, res);
+> }
+>
+> test();
+> EOF
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# node repro.js
+Testing /api/index with cache_seconds=3600
+Header: Cache-Control = public, max-age=1800
+Header: Content-Type = image/svg+xml
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+PAT_6 Failed
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+
+Testing /api/pin with cache_seconds=3600
+Header: Cache-Control = public, max-age=1800
+Header: Content-Type = image/svg+xml
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+PAT_6 Failed
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+Error: Maximum retries exceeded
+    at retryer (/home/<redacted>/src/retryer.js:3:11)
+    at retryer (/home/<redacted>/src/retryer.js:38:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async fetchRepo (/home/<redacted>/src/fetchRepo.js:50:13)
+    at async module.exports (/home/<redacted>/api/pin.js:24:16)
+    at async test (/home/<redacted>/repro.js:27:3)
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

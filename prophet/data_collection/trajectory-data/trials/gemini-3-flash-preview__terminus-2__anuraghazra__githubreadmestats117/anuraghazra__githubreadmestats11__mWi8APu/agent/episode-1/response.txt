@@ -1,0 +1,10 @@
+{
+  "analysis": "The repository has a standard structure with `api/`, `src/`, `tests/`, and `themes/` directories. I need to find where the caching logic is implemented.",
+  "plan": "I will search for 'cache' in the codebase to identify relevant files.",
+  "commands": [
+    {
+      "keystrokes": "grep -rn \"cache\" src/ api/ | head -n 20\n",
+      "duration": 1.0
+    }
+  ]
+}

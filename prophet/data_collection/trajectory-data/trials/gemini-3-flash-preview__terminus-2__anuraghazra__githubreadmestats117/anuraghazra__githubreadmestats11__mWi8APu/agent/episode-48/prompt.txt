@@ -1,0 +1,22 @@
+New Terminal Output:
+
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# grep -rnE "setHeader|Cache-Control" . --exclude-dir=node_modules
+./api/index.js:24:  res.setHeader("Content-Type", "image/svg+xml");
+./api/index.js:29:  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+./api/pin.js:21:  res.setHeader("Content-Type", "image/svg+xml");
+./api/pin.js:26:  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+./tests/api.test.js:70:      setHeader: jest.fn(),
+./tests/api.test.js:77:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/api.test.js:88:      setHeader: jest.fn(),
+./tests/api.test.js:95:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/api.test.js:114:      setHeader: jest.fn(),
+./tests/api.test.js:121:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:45:      setHeader: jest.fn(),
+./tests/pin.test.js:52:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:69:      setHeader: jest.fn(),
+./tests/pin.test.js:76:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:90:      setHeader: jest.fn(),
+./tests/pin.test.js:99:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+./tests/pin.test.js:111:      setHeader: jest.fn(),
+./tests/pin.test.js:120:    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

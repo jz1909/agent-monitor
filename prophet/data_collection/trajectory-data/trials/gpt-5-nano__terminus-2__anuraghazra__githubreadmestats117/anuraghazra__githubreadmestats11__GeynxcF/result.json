@@ -1,0 +1,112 @@
+{
+    "id": "6502aa3b-90ad-4dbb-94bd-12e8bdcd9e03",
+    "task_name": "anuraghazra__githubreadmestats117",
+    "trial_name": "anuraghazra__githubreadmestats11__GeynxcF",
+    "trial_uri": "<REDACTED_PATH>",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "67f4793bb9fc934e02ffe665748acee9f81a8236",
+        "path": "datasets/multi-swe-bench/anuraghazra__githubreadmestats117"
+    },
+    "source": "adapter-experiments-batch2-phase3",
+    "task_checksum": "fbaf07e3296bcdd051f89b95d8b84362aa9816db5cf00a9fafc15dbc5de86918",
+    "config": {
+        "task": {
+            "path": "datasets/multi-swe-bench/anuraghazra__githubreadmestats117",
+            "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+            "git_commit_id": "67f4793bb9fc934e02ffe665748acee9f81a8236",
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "adapter-experiments-batch2-phase3"
+        },
+        "trial_name": "anuraghazra__githubreadmestats11__GeynxcF",
+        "trials_dir": "jobs/multi-swe-bench__terminus-2__gpt-5-nano__batch2__phase3",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2",
+            "import_path": null,
+            "model_name": "openai/gpt-5-nano",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "daytona",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "env": {},
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "d25bcdf5-e0de-4371-9c87-a5a66ec7e42e"
+    },
+    "agent_info": {
+        "name": "terminus-2",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "gpt-5-nano",
+            "provider": "openai"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 16255,
+        "n_cache_tokens": 8448,
+        "n_output_tokens": 8749,
+        "cost_usd": 0.0039321899999999995,
+        "rollout_details": [],
+        "metadata": {
+            "n_episodes": 3,
+            "api_request_times_msec": [
+                35517.89212226868,
+                13678.12204360962,
+                8728.740930557251
+            ],
+            "summarization_count": 0
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-04-20T07:26:04.023738Z",
+    "finished_at": "2026-04-20T07:31:15.242347Z",
+    "environment_setup": {
+        "started_at": "2026-04-20T07:26:04.024727Z",
+        "finished_at": "2026-04-20T07:26:10.870957Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-04-20T07:26:10.870971Z",
+        "finished_at": "2026-04-20T07:26:41.759276Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-04-20T07:26:41.759313Z",
+        "finished_at": "2026-04-20T07:30:27.111759Z"
+    },
+    "verifier": {
+        "started_at": "2026-04-20T07:30:49.299930Z",
+        "finished_at": "2026-04-20T07:31:13.800487Z"
+    }
+}

@@ -1,0 +1,268 @@
+Current terminal state:
+New Terminal Output:
+
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git config user.email "devnull@example.com"
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git config user.name "Github Actions"
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git add index.js src/cache.js
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git commit -m "feat: add customizable cache support (DefaultCache + getCache) and expo
+se from package entry"
+[feat/custom-cache a8ec907] feat: add customizable cache support (DefaultCache + getCache) and expose from package entry
+ 2 files changed, 60 insertions(+)
+ create mode 100644 index.js
+ create mode 100644 src/cache.js
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git status --porcelain
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# npm test --silent
+ PASS  tests/utils.test.js
+ PASS  tests/calculateRank.test.js
+ PASS  tests/retryer.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      {} undefined
+
+      at tests/retryer.test.js:5:11
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_2 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_3
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_3 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_4
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_4 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_5
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_5 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_6
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_6 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_7
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_7 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_8
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_8 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+ PASS  tests/fetchStats.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+ PASS  tests/api.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/fetchRepo.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/pin.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+ PASS  tests/renderRepoCard.test.js
+ PASS  tests/renderStatsCard.test.js
+
+Test Suites: 9 passed, 9 total
+Tests:       49 passed, 49 total
+Snapshots:   0 total
+Time:        3.221 s
+Ran all test suites.
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats#
+
+
+
+
+
+Are you sure you want to mark the task as complete? This will trigger your solution to be graded and you won't be able to make any further corrections. If so, include "task_complete": true in your JSON response again.

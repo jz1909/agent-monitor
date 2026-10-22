@@ -1,0 +1,14 @@
+debconf: delaying package configuration, since apt-utils is not installed
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 16631  100 16631    0     0   513k      0 --:--:-- --:--:-- --:--:--  523k
+Cloning into '/root/.nvm'...
+Downloading https://nodejs.org/dist/v22.22.2/node-v22.22.2-linux-x64.tar.xz...
+##                                                                         2.9%########################################                                  56.8%#######################################################################   99.7%######################################################################## 100.0%
+Computing checksum with sha256sum
+Checksums matched!
+npm notice
+npm notice New major version of npm available! 10.9.7 -> 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice

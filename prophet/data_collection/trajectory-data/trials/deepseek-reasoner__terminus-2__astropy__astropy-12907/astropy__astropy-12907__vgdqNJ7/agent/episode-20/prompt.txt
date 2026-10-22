@@ -1,0 +1,7 @@
+Current terminal state:
+New Terminal Output:
+sed!
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#
+
+
+Are you sure you want to mark the task as complete? This will trigger your solution to be graded and you won't be able to make any further corrections. If so, include "task_complete": true in your JSON response again.

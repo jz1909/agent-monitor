@@ -1,0 +1,127 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed/astropy/modeling
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n '_calculate_separability_matrix' -A 20 core.py
+808:    def _calculate_separability_matrix(self):
+809-        """
+810-        This is a hook which customises the behavior of modeling.separable.
+811-
+812-        This allows complex subclasses to customise the separability matrix.
+813-        If it returns `NotImplemented` the default behavior is used.
+814-        """
+815-        return NotImplemented
+816-
+817-    def _initialize_unit_support(self):
+818-        """
+819-        Convert self._input_units_strict and
+820-        self.input_units_allow_dimensionless to dictionaries
+821-        mapping input name to a boolean value.
+822-        """
+823-        if isinstance(self._input_units_strict, bool):
+824-            self._input_units_strict = {key: self._input_units_strict for
+825-                                        key in self.inputs}
+826-
+827-        if isinstance(self._input_units_allow_dimensionless, bool):
+828-            self._input_units_allow_dimensionless = {key: self._input_units_allow_dimensionless
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cat > /testbed/debug2.py << 'EOF'
+> import sys
+> sys.path.insert(0, '.')
+> from astropy.modeling import models as m
+> from astropy.modeling.separable import _separable, _coord_matrix, _cstack
+> import numpy as np
+>
+> cm = m.Linear1D(10) & m.Linear1D(5)
+> print('cm separability matrix via separability_matrix:')
+> from astropy.modeling.separable import separability_matrix
+> print(separability_matrix(cm))
+> print('\nNow compute via _separable:')
+> sep_cm = _separable(cm)
+> print(sep_cm)
+> print('\nNow Pix2Sky_TAN:')
+> left = m.Pix2Sky_TAN()
+> sep_left = _separable(left)
+> print('sep_left:')
+> print(sep_left)
+> print('\nNow compute via _separable for Pix2Sky_TAN & cm:')
+> m3 = left & cm
+> sep_m3 = _separable(m3)
+> print(sep_m3)
+> print('\nNow manually call _cstack with sep_left and sep_cm:')
+> manual = _cstack(sep_left, sep_cm)
+> print('manual:')
+> print(manual)
+> print('\nAre they equal?', np.array_equal(sep_m3, manual))
+> print('\nNow check what _separable returns for left and right when inside _separable(m3)')
+> # We need to patch to see. Let's monkey patch.
+> original_separable = _separable
+> def logging_separable(transform):
+>     print('  _separable called with:', transform)
+>     if isinstance(transform, m.CompoundModel):
+>         print('    op:', transform.op)
+>         print('    left:', transform.left)
+>         print('    right:', transform.right)
+>     result = original_separable(transform)
+>     print('  result shape:', result.shape if hasattr(result, 'shape') else result)
+>     return result
+> import astropy.modeling.separable
+> astropy.modeling.separable._separable = logging_separable
+> from astropy.modeling.separable import separability_matrix as sm
+> print('\nRecalculating separability matrix for m3:')
+> print(sm(m3))
+> EOF
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed && python debug2.py 2>&1
+cm separability matrix via separability_matrix:
+[[ True False]
+ [False  True]]
+
+Now compute via _separable:
+[[1. 0.]
+ [0. 1.]]
+
+Now Pix2Sky_TAN:
+sep_left:
+[[1. 1.]
+ [1. 1.]]
+
+Now compute via _separable for Pix2Sky_TAN & cm:
+[[1. 1. 0. 0.]
+ [1. 1. 0. 0.]
+ [0. 0. 1. 1.]
+ [0. 0. 1. 1.]]
+
+Now manually call _cstack with sep_left and sep_cm:
+manual:
+[[1. 1. 0. 0.]
+ [1. 1. 0. 0.]
+ [0. 0. 1. 1.]
+ [0. 0. 1. 1.]]
+
+Are they equal? True
+
+Now check what _separable returns for left and right when inside _separable(m3)
+
+Recalculating separability matrix for m3:
+  _separable called with: Model: CompoundModel
+Inputs: ('x', 'y', 'x0', 'x1')
+Outputs: ('phi', 'theta', 'y0', 'y1')
+Model set size: 1
+Expression: [0] & [1] & [2]
+Components:
+    [0]: <Pix2Sky_Gnomonic()>
+
+    [1]: <Linear1D(slope=10., intercept=0.)>
+
+    [2]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_1 intercept_1 slope_2 intercept_2
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+Traceback (most recent call last):
+  File "/testbed/debug2.py", line 44, in <module>
+    print(sm(m3))
+  File "/testbed/./astropy/modeling/separable.py", line 100, in separability_matrix
+    separable_matrix = _separable(transform)
+  File "/testbed/debug2.py", line 33, in logging_separable
+    if isinstance(transform, m.CompoundModel):
+AttributeError: module 'astropy.modeling.models' has no attribute 'CompoundModel'
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

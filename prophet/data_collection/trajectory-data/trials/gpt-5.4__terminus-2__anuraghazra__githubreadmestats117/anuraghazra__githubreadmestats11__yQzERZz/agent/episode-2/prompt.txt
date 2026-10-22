@@ -1,0 +1,403 @@
+New Terminal Output:
+
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# sed -n '1,220p' api/index.js
+require("dotenv").config();
+const { renderError, parseBoolean } = require("../src/utils");
+const fetchStats = require("../src/fetchStats");
+const renderStatsCard = require("../src/renderStatsCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    hide,
+    hide_title,
+    hide_border,
+    hide_rank,
+    show_icons,
+    line_height,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+  } = req.query;
+  let stats;
+
+  res.setHeader("Cache-Control", "public, max-age=1800");
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    stats = await fetchStats(username);
+  } catch (err) {
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderStatsCard(stats, {
+      hide: JSON.parse(hide || "[]"),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+    })
+  );
+};
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# sed -n '1,220p' api/pin.js
+require("dotenv").config();
+const { renderError, parseBoolean } = require("../src/utils");
+const fetchRepo = require("../src/fetchRepo");
+const renderRepoCard = require("../src/renderRepoCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    repo,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    show_owner,
+  } = req.query;
+
+  let repoData;
+
+  res.setHeader("Cache-Control", "public, max-age=1800");
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    repoData = await fetchRepo(username, repo);
+  } catch (err) {
+    console.log(err);
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderRepoCard(repoData, {
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      show_owner: parseBoolean(show_owner),
+    })
+  );
+};
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# sed -n '1,220p' tests/api.test.js
+require("@testing-library/jest-dom");
+const axios = require("axios");
+const MockAdapter = require("axios-mock-adapter");
+const api = require("../api/index");
+const renderStatsCard = require("../src/renderStatsCard");
+const { renderError } = require("../src/utils");
+const calculateRank = require("../src/calculateRank");
+
+const stats = {
+  name: "Anurag Hazra",
+  totalStars: 100,
+  totalCommits: 200,
+  totalIssues: 300,
+  totalPRs: 400,
+  contributedTo: 500,
+  rank: null,
+};
+stats.rank = calculateRank({
+  totalCommits: stats.totalCommits,
+  totalRepos: 1,
+  followers: 0,
+  contributions: stats.contributedTo,
+  stargazers: stats.totalStars,
+  prs: stats.totalPRs,
+  issues: stats.totalIssues,
+});
+
+const data = {
+  data: {
+    user: {
+      name: stats.name,
+      repositoriesContributedTo: { totalCount: stats.contributedTo },
+      contributionsCollection: { totalCommitContributions: stats.totalCommits },
+      pullRequests: { totalCount: stats.totalPRs },
+      issues: { totalCount: stats.totalIssues },
+      followers: { totalCount: 0 },
+      repositories: {
+        totalCount: 1,
+        nodes: [{ stargazers: { totalCount: 100 } }],
+      },
+    },
+  },
+};
+
+const error = {
+  errors: [
+    {
+      type: "NOT_FOUND",
+      path: ["user"],
+      locations: [],
+      message: "Could not fetch user",
+    },
+  ],
+};
+
+const mock = new MockAdapter(axios);
+
+afterEach(() => {
+  mock.reset();
+});
+
+describe("Test /api/", () => {
+  it("should test the request", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock.onPost("https://api.github.com/graphql").reply(200, data);
+
+    await api(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(renderStatsCard(stats, { ...req.query }));
+  });
+
+  it("should render error card on error", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock.onPost("https://api.github.com/graphql").reply(200, error);
+
+    await api(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(renderError(error.errors[0].message));
+  });
+
+  it("should get the query options", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+        hide: `["issues","prs","contribs"]`,
+        show_icons: true,
+        hide_border: true,
+        line_height: 100,
+        title_color: "fff",
+        icon_color: "fff",
+        text_color: "fff",
+        bg_color: "fff",
+      },
+    };
+    const res = {
+      setHeader: jes
+[... output limited to 10000 bytes; 69 interior bytes omitted ...]
+ text_color: "fff",
+        bg_color: "fff",
+      })
+    );
+  });
+});
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# sed -n '1,220p' tests/pin.test.js
+require("@testing-library/jest-dom");
+const axios = require("axios");
+const MockAdapter = require("axios-mock-adapter");
+const pin = require("../api/pin");
+const renderRepoCard = require("../src/renderRepoCard");
+const { renderError } = require("../src/utils");
+
+const data_repo = {
+  repository: {
+    username: "anuraghazra",
+    name: "convoychat",
+    stargazers: { totalCount: 38000 },
+    description: "Help us take over the world! React + TS + GraphQL Chat App",
+    primaryLanguage: {
+      color: "#2b7489",
+      id: "MDg6TGFuZ3VhZ2UyODc=",
+      name: "TypeScript",
+    },
+    forkCount: 100,
+  },
+};
+
+const data_user = {
+  data: {
+    user: { repository: data_repo.repository },
+    organization: null,
+  },
+};
+
+const mock = new MockAdapter(axios);
+
+afterEach(() => {
+  mock.reset();
+});
+
+describe("Test /api/pin", () => {
+  it("should test the request", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+        repo: "convoychat",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock.onPost("https://api.github.com/graphql").reply(200, data_user);
+
+    await pin(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(renderRepoCard(data_repo.repository));
+  });
+
+  it("should get the query options", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+        repo: "convoychat",
+        title_color: "fff",
+        icon_color: "fff",
+        text_color: "fff",
+        bg_color: "fff",
+        full_name: "1",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock.onPost("https://api.github.com/graphql").reply(200, data_user);
+
+    await pin(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(
+      renderRepoCard(data_repo.repository, { ...req.query })
+    );
+  });
+
+  it("should render error card if user repo not found", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+        repo: "convoychat",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock
+      .onPost("https://api.github.com/graphql")
+      .reply(200, { data: { user: { repository: null }, organization: null } });
+
+    await pin(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(renderError("User Repository Not found"));
+  });
+
+  it("should render error card if org repo not found", async () => {
+    const req = {
+      query: {
+        username: "anuraghazra",
+        repo: "convoychat",
+      },
+    };
+    const res = {
+      setHeader: jest.fn(),
+      send: jest.fn(),
+    };
+    mock
+      .onPost("https://api.github.com/graphql")
+      .reply(200, { data: { user: null, organization: { repository: null } } });
+
+    await pin(req, res);
+
+    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
+    expect(res.send).toBeCalledWith(
+      renderError("Organization Repository Not found")
+    );
+  });
+});
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# grep -RIn "cache_seconds\|max-age=1800\|Cache-Control" readme.md readme_cn.md api src
+tests
+api/index.js:23:  res.setHeader("Cache-Control", "public, max-age=1800");
+api/pin.js:20:  res.setHeader("Cache-Control", "public, max-age=1800");
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# cat > reproduce-cache.js <<'EOF'
+> const api = require('./api');
+> const pin = require('./api/pin');
+>
+> function makeRes(label) {
+>   return {
+>     headers: {},
+>     setHeader(key, value) {
+>       this.headers[key] = value;
+>     },
+>     send(body) {
+>       console.log(label, this.headers, typeof body === 'string' ? body.slice(0, 40) : body);
+>     },
+>   };
+> }
+>
+> (async () => {
+>   const res1 = makeRes('api');
+>   await api({ query: { username: 'anuraghazra', cache_seconds: '7200' } }, res1);
+>
+>   const res2 = makeRes('pin');
+>   await pin({ query: { username: 'anuraghazra', repo: 'github-readme-stats', cache_seconds: '7200' } }, res2);
+> })();
+> EOF
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# node reproduce-cache.js
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+PAT_6 Failed
+Trying PAT_7
+PAT_7 Failed
+Trying PAT_8
+PAT_8 Failed
+api {
+  'Cache-Control': 'public, max-age=1800',
+  'Content-Type': 'image/svg+xml'
+}
+    <svg width="495" height="100" viewB
+Trying PAT_1
+PAT_1 Failed
+Trying PAT_2
+PAT_2 Failed
+Trying PAT_3
+PAT_3 Failed
+Trying PAT_4
+PAT_4 Failed
+Trying PAT_5
+PAT_5 Failed
+Trying PAT_6
+PAT_6 Failed
+Trying PAT_7
+

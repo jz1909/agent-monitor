@@ -1,0 +1,248 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed/astropy/modeling
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '2894,3400p' core.py
+class CompoundModel(Model):
+    '''
+    Base class for compound models.
+
+    While it can be used directly, the recommended way
+    to combine models is through the model operators.
+    '''
+
+    def __init__(self, op, left, right, name=None):
+        self.__dict__['_param_names'] = None
+        self._n_submodels = None
+        self.op = op
+        self.left = left
+        self.right = right
+        self._bounding_box = None
+        self._user_bounding_box = None
+        self._leaflist = None
+        self._tdict = None
+        self._parameters = None
+        self._parameters_ = None
+        self._param_metrics = None
+
+        if op != 'fix_inputs' and len(left) != len(right):
+            raise ValueError(
+                'Both operands must have equal values for n_models')
+        self._n_models = len(left)
+
+        if op != 'fix_inputs' and ((left.model_set_axis != right.model_set_axis)
+                                   or left.model_set_axis):  # not False and not 0
+            raise ValueError("model_set_axis must be False or 0 and consistent for operands")
+        self._model_set_axis = left.model_set_axis
+
+        if op in ['+', '-', '*', '/', '**'] or op in SPECIAL_OPERATORS:
+            if (left.n_inputs != right.n_inputs) or \
+               (left.n_outputs != right.n_outputs):
+                raise ModelDefinitionError(
+                    'Both operands must match numbers of inputs and outputs')
+            self.n_inputs = left.n_inputs
+            self.n_outputs = left.n_outputs
+            self.inputs = left.inputs
+            self.outputs = left.outputs
+        elif op == '&':
+            self.n_inputs = left.n_inputs + right.n_inputs
+            self.n_outputs = left.n_outputs + right.n_outputs
+            self.inputs = combine_labels(left.inputs, right.inputs)
+            self.outputs = combine_labels(left.outputs, right.outputs)
+        elif op == '|':
+            if left.n_outputs != right.n_inputs:
+                raise ModelDefinitionError(
+                    "Unsupported operands for |: {0} (n_inputs={1}, "
+                    "n_outputs={2}) and {3} (n_inputs={4}, n_outputs={5}); "
+                    "n_outputs for the left-hand model must match n_inputs "
+                    "for the right-hand model.".format(
+                        left.name, left.n_inputs, left.n_outputs, right.name,
+                        right.n_inputs, right.n_outputs))
+
+            self.n_inputs = left.n_inputs
+            self.n_outputs = right.n_outputs
+            self.inputs = left.inputs
+            self.outputs = right.outputs
+        elif op == 'fix_inputs':
+            if not isinstance(left, Model):
+                raise ValueError('First argument to "fix_inputs" must be an instance of an astropy Model.')
+            if not isinstance(right, dict):
+                raise ValueError('Expected a dictionary for second argument of "fix_inputs".')
+
+            # Dict keys must match either possible indices
+            # for model on left side, or names for inputs.
+            self.n_inputs = left.n_inputs - len(right)
+            # Assign directly to the private attribute (instead of using the setter)
+            # to avoid asserting the new number of outputs matches the old one.
+            self._outputs = left.outputs
+            self.n_outputs = left.n_outputs
+            newinputs = list(left.inputs)
+            keys = right.keys()
+            input_ind = []
+            for key in keys:
+                if np.issubdtype(type(key), np.integer):
+                    if key >= left.n_inputs or key < 0:
+                        raise ValueError(
+                            'Substitution key integer value '
+                            'not among possible input choices.')
+                    if key in input_ind:
+                        raise ValueError("Duplicate specification of "
+                                         "same input (index/name).")
+                    input_ind.append(key)
+                elif isinstance(key, str):
+                    if key not in left.inputs:
+                        raise ValueError(
+                            'Substitution key string not among possible '
+                            'input choices.')
+                    # Check to see it doesn't match positional
+                    # specification.
+                    ind = left.inputs.index(key)
+                    if ind in input_ind:
+                        raise ValueError("Duplicate specification of "
+                                         "same input (index/name).")
+                    input_ind.append(ind)
+            # Remove substituted inputs
+            input_ind.sort()
+            input_ind.reverse()
+            for ind in input_ind:
+                del newinputs[ind]
+         
+[... output limited to 10000 bytes; 70 interior bytes omitted ...]
+ind = self.inputs.index(kwkey)
+                    if ind < len(args):
+                        raise ValueError("Keyword argument duplicates "
+                                         "positional value supplied.")
+                    kwind.append(ind)
+                    kwval.append(kw[kwkey])
+                    del kw[kwkey]
+            # Build new argument list
+            # Append keyword specified args first
+            if kwind:
+                kwargs = list(zip(kwind, kwval))
+                kwargs.sort()
+                kwindsorted, kwvalsorted = list(zip(*kwargs))
+                newargs = newargs + list(kwvalsorted)
+            if subinds:
+                subargs = list(zip(subinds, subvals))
+                subargs.sort()
+                # subindsorted, subvalsorted = list(zip(*subargs))
+                # The substitutions must be inserted in order
+                for ind, val in subargs:
+                    newargs.insert(ind, val)
+            return self.left(*newargs, **kw)
+
+    @property
+    def param_names(self):
+        """ An ordered list of parameter names."""
+        return self._param_names
+
+    def _make_leaflist(self):
+        tdict = {}
+        leaflist = []
+        make_subtree_dict(self, '', tdict, leaflist)
+        self._leaflist = leaflist
+        self._tdict = tdict
+
+    def __getattr__(self, name):
+        """
+        If someone accesses an attribute not already defined, map the
+        parameters, and then see if the requested attribute is one of
+        the parameters
+        """
+        # The following test is needed to avoid infinite recursion
+        # caused by deepcopy. There may be other such cases discovered.
+        if name == '__setstate__':
+            raise AttributeError
+        if name in self._param_names:
+            return self.__dict__[name]
+        else:
+            raise AttributeError(f'Attribute "{name}" not found')
+
+    def __getitem__(self, index):
+        if self._leaflist is None:
+            self._make_leaflist()
+        leaflist = self._leaflist
+        tdict = self._tdict
+        if isinstance(index, slice):
+            if index.step:
+                raise ValueError('Steps in slices not supported '
+                                 'for compound models')
+            if index.start is not None:
+                if isinstance(index.start, str):
+                    start = self._str_index_to_int(index.start)
+                else:
+                    start = index.start
+            else:
+                start = 0
+            if index.stop is not None:
+                if isinstance(index.stop, str):
+                    stop = self._str_index_to_int(index.stop)
+                else:
+                    stop = index.stop - 1
+            else:
+                stop = len(leaflist) - 1
+            if index.stop == 0:
+                raise ValueError("Slice endpoint cannot be 0")
+            if start < 0:
+                start = len(leaflist) + start
+            if stop < 0:
+                stop = len(leaflist) + stop
+            # now search for matching node:
+            if stop == start:  # only single value, get leaf instead in code below
+                index = start
+            else:
+                for key in tdict:
+                    node, leftind, rightind = tdict[key]
+                    if leftind == start and rightind == stop:
+                        return node
+                raise IndexError("No appropriate subtree matches slice")
+        if isinstance(index, type(0)):
+            return leaflist[index]
+        elif isinstance(index, type('')):
+            return leaflist[self._str_index_to_int(index)]
+        else:
+            raise TypeError('index must be integer, slice, or model name string')
+
+    def _str_index_to_int(self, str_index):
+        # Search through leaflist for item with that name
+        found = []
+        for nleaf, leaf in enumerate(self._leaflist):
+            if getattr(leaf, 'name', None) == str_index:
+                found.append(nleaf)
+        if len(found) == 0:
+            raise IndexError(f"No component with name '{str_index}' found")
+        if len(found) > 1:
+            raise IndexError("Multiple components found using '{}' as name\n"
+                             "at indices {}".format(str_index, found))
+        return found[0]
+
+    @property
+    def n_inputs(self):
+        """ The number of inputs of a model."""
+        return self._n_inputs
+
+    @n_inputs.setter
+    def n_inputs(self, value):
+        self._n_inputs = value
+
+    @property
+    def n_outputs(self):
+        """ The number of outputs of a model."""
+        return self._n_outputs
+
+    @n_outputs.setter
+    def n_outputs(self, value):
+        self._n_outputs = value
+
+    @property
+    def eqcons(self):
+        return self._eqcons
+
+    @eqcons.setter
+    def eqcons(self, value):
+        self._eqcons = value
+
+    @property
+    def ineqcons(self):
+        return self._eqcons
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling#

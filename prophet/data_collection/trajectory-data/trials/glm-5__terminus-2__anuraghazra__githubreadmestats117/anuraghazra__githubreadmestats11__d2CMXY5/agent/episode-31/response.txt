@@ -1,0 +1,11 @@
+{
+  "analysis": "Let me verify the implementation one more time before confirming the task is complete.",
+  "plan": "Run a quick verification to ensure all tests pass and the implementation is correct.",
+  "commands": [
+    {
+      "keystrokes": "npm test 2>&1 | grep -E '(PASS|FAIL|Test Suites|Tests:)'\n",
+      "duration": 30
+    }
+  ],
+  "task_complete": false
+}

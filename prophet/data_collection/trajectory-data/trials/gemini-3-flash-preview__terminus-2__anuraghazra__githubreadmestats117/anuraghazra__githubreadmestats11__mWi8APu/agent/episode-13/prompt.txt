@@ -1,0 +1,41 @@
+Current Terminal Screen:
+./node_modules/yargs/build/lib/usage.d.ts:    clearCachedHelpMessage(): void;
+./node_modules/yargs/build/lib/usage.js:        if (cachedHelpMessage)
+./node_modules/yargs/build/lib/usage.js:            return cachedHelpMessage;
+./node_modules/yargs/build/lib/usage.js:    let cachedHelpMessage;
+./node_modules/yargs/build/lib/usage.js:    self.cacheHelpMessage = function () {
+./node_modules/yargs/build/lib/usage.js:        cachedHelpMessage = this.help();
+./node_modules/yargs/build/lib/usage.js:    self.clearCachedHelpMessage = function () {
+./node_modules/yargs/build/lib/usage.js:        cachedHelpMessage = undefined;
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# grep -ri "cache" . --exclude-dir=node_modules
+./.git/hooks/pre-commit.sample: test $(git diff --cached --name-only --diff-filter=A -z $against |
+./.git/hooks/pre-commit.sample:exec git diff-index --check --cached $against --
+./.git/hooks/prepare-commit-msg.sample:#       print "\n" . `git diff --cached --name-status -r`
+./.git/hooks/push-to-checkout.sample:if ! git diff-index --quiet --cached --ignore-submodules $head --
+grep: ./.git/objects/pack/pack-e58a15fb4b8d650dfe81e2012adb392ebeb693d4.pack: binary file matches
+./.git/packed-refs:dd21012ea5f9e8e236bf76e9a66ccbd78c9aee48 refs/remotes/origin/ci_prs_cache_clean_remove_redundant_checkout_step
+./.github/workflows/test.yml:      - name: Cache node modules
+./.github/workflows/test.yml:        uses: actions/cache@v2
+./.github/workflows/test.yml:          cache-name: cache-node-modules
+./.github/workflows/test.yml:          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+./.github/workflows/test.yml:            ${{ runner.os }}-npm-cache-
+./api/index.js:  res.setHeader("Cache-Control", "public, max-age=1800");
+./api/pin.js:  res.setHeader("Cache-Control", "public, max-age=1800");
+./package-lock.json:        "lru-cache": "^5.1.1",
+./package-lock.json:        "cache-base": "^1.0.1",
+./package-lock.json:    "node_modules/cache-base": {
+./package-lock.json:      "resolved": "https://registry.npmjs.org/cache-base/-/cache-base-1.0.1.tgz",
+./package-lock.json:        "fragment-cache": "^0.2.1",
+./package-lock.json:    "node_modules/fragment-cache": {
+./package-lock.json:      "resolved": "https://registry.npmjs.org/fragment-cache/-/fragment-cache-0.2.1.tgz",
+./package-lock.json:        "map-cache": "^0.2.2"
+./package-lock.json:      "deprecated": "This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to
+ coalesce async requests by a key value, which is much more comprehensive and powerful.",
+./package-lock.json:    "node_modules/lru-cache": {
+./package-lock.json:      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz",
+./package-lock.json:    "node_modules/map-cache": {
+./package-lock.json:      "resolved": "https://registry.npmjs.org/map-cache/-/map-cache-0.2.2.tgz",
+./package-lock.json:        "fragment-cache": "^0.2.1",
+./package-lock.json:        "fragment-cache": "^0.2.1",
+./package-lock.json:        "map-cache": "^0.2.2",
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

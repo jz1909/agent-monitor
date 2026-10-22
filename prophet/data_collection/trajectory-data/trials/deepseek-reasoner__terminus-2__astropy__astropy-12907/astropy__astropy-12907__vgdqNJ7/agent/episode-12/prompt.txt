@@ -1,0 +1,74 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed/astropy/modeling
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cp separable.py separable.py.backup
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -i '245s/ = 1$/ = right/' separable.py
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# head -n 250 separable.py | tail -n 10
+    if isinstance(right, Model):
+        cright = _coord_matrix(right, 'right', noutp)
+    else:
+        cright = np.zeros((noutp, right.shape[1]))
+        cright[-right.shape[0]:, -right.shape[1]:] = right
+
+    return np.hstack([cleft, cright])
+
+
+def _cdot(left, right):
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python reproduce.py
+Test 1: Linear1D & Linear1D
+[[ True False]
+ [False  True]]
+Expected diagonal
+
+Test 2: Pix2Sky_TAN & Linear1D & Linear1D
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+Expected block diagonal
+
+Test 3: Pix2Sky_TAN & cm
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+Expected same as test 2 but with extra nesting
+
+cm: Model: CompoundModel
+Inputs: ('x0', 'x1')
+Outputs: ('y0', 'y1')
+Model set size: 1
+Expression: [0] & [1]
+Components:
+    [0]: <Linear1D(slope=10., intercept=0.)>
+
+    [1]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_0 intercept_0 slope_1 intercept_1
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+cm.n_submodels: 2
+cm.__class__: <class 'astropy.modeling.core.CompoundModel'>
+Name: CompoundModel
+N_inputs: <property object at 0x74229cc58270>
+N_outputs: <property object at 0x74229cc582c0>
+Fittable parameters: <property object at 0x74229cc58180>
+
+m3: Model: CompoundModel
+Inputs: ('x', 'y', 'x0', 'x1')
+Outputs: ('phi', 'theta', 'y0', 'y1')
+Model set size: 1
+Expression: [0] & [1] & [2]
+Components:
+    [0]: <Pix2Sky_Gnomonic()>
+
+    [1]: <Linear1D(slope=10., intercept=0.)>
+
+    [2]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_1 intercept_1 slope_2 intercept_2
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+m3.n_submodels: 3
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

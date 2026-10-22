@@ -1,0 +1,131 @@
+New Terminal Output:
+
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat api/index.js
+require("dotenv").config();
+const { renderError, parseBoolean, clampValue } = require("../src/utils");
+const fetchStats = require("../src/fetchStats");
+const renderStatsCard = require("../src/renderStatsCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    hide,
+    hide_title,
+    hide_border,
+    hide_rank,
+    show_icons,
+    line_height,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    cache_seconds,
+  } = req.query;
+  let stats;
+
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    stats = await fetchStats(username);
+  } catch (err) {
+    return res.send(renderError(err.message));
+  }
+
+  const cacheSeconds = clampValue(
+    parseInt(cache_seconds) || 1800,
+    0,
+    86400
+  );
+
+  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+
+  res.send(
+    renderStatsCard(stats, {
+      hide: JSON.parse(hide || "[]"),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+    })
+  );
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat api/pin.js
+require("dotenv").config();
+const { renderError, parseBoolean, clampValue } = require("../src/utils");
+const fetchRepo = require("../src/fetchRepo");
+const renderRepoCard = require("../src/renderRepoCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    repo,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    show_owner,
+    cache_seconds,
+  } = req.query;
+
+  let repoData;
+
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    repoData = await fetchRepo(username, repo);
+  } catch (err) {
+    console.log(err);
+    return res.send(renderError(err.message));
+  }
+
+  const cacheSeconds = clampValue(
+    parseInt(cache_seconds) || 1800,
+    0,
+    86400
+  );
+
+  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+
+  res.send(
+    renderRepoCard(repoData, {
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      show_owner: parseBoolean(show_owner),
+    })
+  );
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# grep -A 20 "clampValue" src/utils.js
+function clampValue(value, min, max) {
+  if (value < min) {
+    return min;
+  }
+  if (value > max) {
+    return max;
+  }
+  return value;
+}
+
+module.exports = {
+  renderError,
+  kFormatter,
+  encodeHTML,
+  isValidHexColor,
+  request,
+  parseBoolean,
+  fallbackColor,
+  FlexLayout,
+  getCardColors,
+  clampValue,
+};
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

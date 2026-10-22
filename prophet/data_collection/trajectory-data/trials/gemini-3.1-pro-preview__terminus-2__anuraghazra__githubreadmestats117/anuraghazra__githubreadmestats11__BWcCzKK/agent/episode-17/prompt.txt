@@ -1,0 +1,33 @@
+Previous response had warnings:
+WARNINGS: - Extra text detected before JSON object
+- Extra text detected after JSON object
+
+New Terminal Output:
+
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat src/utils.js | tail -n 25
+  );
+
+  return { titleColor, iconColor, textColor, bgColor };
+}
+
+
+function clampValue(number, min, max) {
+  if (Number.isNaN(parseInt(number))) return min;
+  if (number < min) return min;
+  if (number > max) return max;
+  return number;
+}
+
+module.exports = {
+  clampValue,
+  renderError,
+  kFormatter,
+  encodeHTML,
+  isValidHexColor,
+  request,
+  parseBoolean,
+  fallbackColor,
+  FlexLayout,
+  getCardColors,
+};
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats#

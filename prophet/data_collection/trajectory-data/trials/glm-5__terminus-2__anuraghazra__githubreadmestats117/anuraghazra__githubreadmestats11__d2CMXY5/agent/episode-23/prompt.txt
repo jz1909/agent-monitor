@@ -1,0 +1,41 @@
+Current Terminal Screen:
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/renderRepoCard.test.js
+ PASS  tests/renderStatsCard.test.js
+
+Test Suites: 9 passed, 9 total
+Tests:       49 passed, 49 total
+Snapshots:   0 total
+Time:        3.314 s
+Ran all test suites.
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#
+
+
+

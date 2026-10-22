@@ -1,0 +1,323 @@
+New Terminal Output:
+
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# sed -n '1,200p' package.json
+{
+  "name": "github-readme-stats",
+  "version": "1.0.0",
+  "description": "Dynamically generate stats for your github readmes",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "author": "Anurag Hazra",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/dom": "^7.20.0",
+    "@testing-library/jest-dom": "^5.11.0",
+    "axios": "^0.19.2",
+    "axios-mock-adapter": "^1.18.1",
+    "css-to-object": "^1.1.0",
+    "jest": "^26.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# ls -la
+total 336
+drwxr-xr-x   1 root root     41 Mar 18  2025 .
+drwxr-xr-x   1 root root     41 Mar 18  2025 ..
+drwxr-xr-x   1 root root     94 Apr 20 07:29 .git
+drwxr-xr-x   1 root root    150 Mar 18  2025 .github
+-rw-r--r--   1 root root     43 Mar 18  2025 .gitignore
+-rw-r--r--   1 root root     22 Mar 18  2025 .vercelignore
+-rw-r--r--   1 root root   1069 Mar 18  2025 LICENSE
+drwxr-xr-x   1 root root    132 Mar 18  2025 api
+-rw-r--r--   1 root root     42 Mar 18  2025 jest.config.js
+drwxr-xr-x 377 root root  12288 Mar 18  2025 node_modules
+-rw-r--r--   1 root root 276403 Mar 18  2025 package-lock.json
+-rw-r--r--   1 root root    545 Mar 18  2025 package.json
+-rw-r--r--   1 root root   9800 Mar 18  2025 readme.md
+-rw-r--r--   1 root root   9617 Mar 18  2025 readme_cn.md
+drwxr-xr-x   1 root root     30 Apr 20 07:28 src
+drwxr-xr-x   1 root root   4096 Mar 18  2025 tests
+drwxr-xr-x   1 root root     51 Mar 18  2025 themes
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# sed -n '1,200p' index.js || true
+sed: can't read index.js: No such file or directory
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# node -e "console.log('node version', process.version)"
+node version v20.19.0
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git status --porcelain
+A  src/cache.js
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# cat > index.js << 'EOF'
+> // Re-export library public APIs and expose cache utilities
+> module.exports = require('./src/renderStatsCard');
+> const { getCache, DefaultCache } = require('./src/cache');
+> module.exports.getCache = getCache;
+> module.exports.DefaultCache = DefaultCache;
+> EOF
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git add index.js src/cache.js && git commit -m "feat: add customizable cache support (
+DefaultCache + getCache) and expose from package entry" || true
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'root@f6b1e4c1-9be1-4592-84af-719f970476f1.(none)')
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# npm test --silent
+ PASS  tests/utils.test.js
+ PASS  tests/retryer.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      {} undefined
+
+      at tests/retryer.test.js:5:11
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_2 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_3
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_3 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_4
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_4 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_5
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_5 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_6
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_6 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_7
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_7 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_8
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_8 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+ PASS  tests/fetchStats.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+ PASS  tests/fetchRepo.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/calculateRank.test.js
+ PASS  tests/pin.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+ PASS  tests/api.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/renderStatsCard.test.js
+ PASS  tests/renderRepoCard.test.js
+
+Test Suites: 9 passed, 9 total
+Tests:       49 passed, 49 total
+Snapshots:   0 total
+Time:        3.306 s
+Ran all test suites.
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats#
+

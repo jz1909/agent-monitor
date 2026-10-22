@@ -1,0 +1,41 @@
+Current Terminal Screen:
+./node_modules/v8-to-istanbul/node_modules/source-map/lib/wasm.js:  return cachedWasm;
+./node_modules/whatwg-url/dist/utils.js:const sameObjectCaches = Symbol("SameObject caches");
+./node_modules/whatwg-url/dist/utils.js:  if (!wrapper[sameObjectCaches]) {
+./node_modules/whatwg-url/dist/utils.js:    wrapper[sameObjectCaches] = Object.create(null);
+./node_modules/whatwg-url/dist/utils.js:  if (prop in wrapper[sameObjectCaches]) {
+./node_modules/whatwg-url/dist/utils.js:    return wrapper[sameObjectCaches][prop];
+./node_modules/whatwg-url/dist/utils.js:  wrapper[sameObjectCaches][prop] = creator();
+./node_modules/whatwg-url/dist/utils.js:  return wrapper[sameObjectCaches][prop];
+./node_modules/which/README.md:environment variable.  Does not cache the results, so `hash -r` is not
+./node_modules/which-module/README.md:Find the `module` object in `require.cache` for something that was `require()`d
+./node_modules/which-module/README.md:if any, that represents the given argument in the `require.cache`.
+./node_modules/which-module/README.md:If `exported` did not come from the `exports` of a `module` in `require.cache`,
+./node_modules/which-module/index.js:  for (var i = 0, files = Object.keys(require.cache), mod; i < files.length; i++) {
+./node_modules/which-module/index.js:    mod = require.cache[files[i]]
+./node_modules/y18n/index.js:  this.cache = Object.create(null)
+./node_modules/y18n/index.js:  if (!this.cache[this.locale]) this._readLocaleFile()
+./node_modules/y18n/index.js:  if (!this.cache[this.locale][str] && this.updateFiles) {
+./node_modules/y18n/index.js:    this.cache[this.locale][str] = str
+./node_modules/y18n/index.js:  return util.format.apply(util, [this.cache[this.locale][str] || str].concat(args))
+./node_modules/y18n/index.js:  var serializedLocale = JSON.stringify(this.cache[locale], null, 2)
+./node_modules/y18n/index.js:  this.cache[this.locale] = localeLookup
+./node_modules/y18n/index.js:  if (!this.cache[this.locale]) this._readLocaleFile()
+./node_modules/y18n/index.js:  if (this.cache[this.locale][singular]) {
+./node_modules/y18n/index.js:    str = this.cache[this.locale][singular][quantity === 1 ? 'one' : 'other']
+./node_modules/y18n/index.js:  if (!this.cache[this.locale][singular] && this.updateFiles) {
+./node_modules/y18n/index.js:    this.cache[this.locale][singular] = {
+./node_modules/y18n/index.js:  if (!this.cache[this.locale]) this._readLocaleFile()
+./node_modules/y18n/index.js:    this.cache[this.locale][key] = obj[key]
+./node_modules/yargs/build/lib/command.js:                yargs.getUsageInstance().cacheHelpMessage();
+./node_modules/yargs/build/lib/command.js:                    yargs.getUsageInstance().clearCachedHelpMessage();
+./node_modules/yargs/build/lib/usage.d.ts:    cacheHelpMessage(): void;
+./node_modules/yargs/build/lib/usage.d.ts:    clearCachedHelpMessage(): void;
+./node_modules/yargs/build/lib/usage.js:        if (cachedHelpMessage)
+./node_modules/yargs/build/lib/usage.js:            return cachedHelpMessage;
+./node_modules/yargs/build/lib/usage.js:    let cachedHelpMessage;
+./node_modules/yargs/build/lib/usage.js:    self.cacheHelpMessage = function () {
+./node_modules/yargs/build/lib/usage.js:        cachedHelpMessage = this.help();
+./node_modules/yargs/build/lib/usage.js:    self.clearCachedHelpMessage = function () {
+./node_modules/yargs/build/lib/usage.js:        cachedHelpMessage = undefined;
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

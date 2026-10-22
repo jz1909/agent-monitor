@@ -1,0 +1,10 @@
+{
+  "analysis": "Wait, I accidentally added `cache_seconds` to the destructuring of `require(\"../src/utils\")` as well because of the `sed` command. I need to fix that. Also, I should use a more robust way to set the cache header.",
+  "plan": "I will fix `api/index.js` and then implement the cache logic properly.",
+  "commands": [
+    {
+      "keystrokes": "cat <<EOF > api/index.js\nrequire(\"dotenv\").config();\nconst { renderError, parseBoolean } = require(\"../src/utils\");\nconst fetchStats = require(\"../src/fetchStats\");\nconst renderStatsCard = require(\"../src/renderStatsCard\");\n\nmodule.exports = async (req, res) => {\n  const {\n    username,\n    hide,\n    hide_title,\n    hide_border,\n    hide_rank,\n    show_icons,\n    line_height,\n    title_color,\n    icon_color,\n    text_color,\n    bg_color,\n    theme,\n    cache_seconds,\n  } = req.query;\n  let stats;\n\n  res.setHeader(\"Content-Type\", \"image/svg+xml\");\n\n  try {\n    stats = await fetchStats(username);\n  } catch (err) {\n    return res.send(renderError(err.message));\n  }\n\n  const cacheSeconds = parseInt(cache_seconds) || 1800;\n  res.setHeader(\"Cache-Control\", \\`public, max-age=\\${cacheSeconds}\\`);\n\n  res.send(\n    renderStatsCard(stats, {\n      hide: JSON.parse(hide || \"[]\"),\n      show_icons: parseBoolean(show_icons),\n      hide_title: parseBoolean(hide_title),\n      hide_border: parseBoolean(hide_border),\n      hide_rank: parseBoolean(hide_rank),\n      line_height,\n      title_color,\n      icon_color,\n      text_color,\n      bg_color,\n      theme,\n    })\n  );\n};\nEOF\n",
+      "duration": 0.5
+    }
+  ]
+}

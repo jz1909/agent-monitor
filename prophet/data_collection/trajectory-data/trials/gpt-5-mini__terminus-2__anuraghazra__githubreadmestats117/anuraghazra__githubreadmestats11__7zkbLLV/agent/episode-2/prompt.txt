@@ -1,0 +1,434 @@
+New Terminal Output:
+
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# cd /workspace/github-readme-stats
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# ls -la src api
+api:
+total 12
+drwxr-xr-x 1 root root  132 Mar 18  2025 .
+drwxr-xr-x 1 root root 4096 Mar 18  2025 ..
+-rw-r--r-- 1 root root 1059 Mar 18  2025 index.js
+-rw-r--r-- 1 root root  837 Mar 18  2025 pin.js
+
+src:
+total 48
+drwxr-xr-x 1 root root 4096 Mar 18  2025 .
+drwxr-xr-x 1 root root 4096 Mar 18  2025 ..
+-rw-r--r-- 1 root root 2132 Mar 18  2025 calculateRank.js
+-rw-r--r-- 1 root root 1711 Mar 18  2025 fetchRepo.js
+-rw-r--r-- 1 root root 2374 Mar 18  2025 fetchStats.js
+-rw-r--r-- 1 root root 2062 Mar 18  2025 getStyles.js
+-rw-r--r-- 1 root root 2713 Mar 18  2025 icons.js
+-rw-r--r-- 1 root root 3449 Mar 18  2025 renderRepoCard.js
+-rw-r--r-- 1 root root 4762 Mar 18  2025 renderStatsCard.js
+-rw-r--r-- 1 root root 1318 Mar 18  2025 retryer.js
+-rw-r--r-- 1 root root 3271 Mar 18  2025 utils.js
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# sed -n '1,200p' src/index.js
+sed: can't read src/index.js: No such file or directory
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# sed -n '1,200p' src/fetchStats.js
+const { request } = require("./utils");
+const retryer = require("./retryer");
+const calculateRank = require("./calculateRank");
+require("dotenv").config();
+
+const fetcher = (variables, token) => {
+  return request(
+    {
+      query: `
+      query userInfo($login: String!) {
+        user(login: $login) {
+          name
+          login
+          contributionsCollection {
+            totalCommitContributions
+          }
+          repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) {
+            totalCount
+          }
+          pullRequests(first: 1) {
+            totalCount
+          }
+          issues(first: 1) {
+            totalCount
+          }
+          followers {
+            totalCount
+          }
+          repositories(first: 100, ownerAffiliations: OWNER, isFork: false, orderBy: {direction: DESC, field: STARGAZERS}) {
+            totalCount
+            nodes {
+              stargazers {
+                totalCount
+              }
+            }
+          }
+        }
+      }
+      `,
+      variables,
+    },
+    {
+      Authorization: `bearer ${token}`,
+    }
+  );
+};
+
+async function fetchStats(username) {
+  if (!username) throw Error("Invalid username");
+
+  const stats = {
+    name: "",
+    totalPRs: 0,
+    totalCommits: 0,
+    totalIssues: 0,
+    totalStars: 0,
+    contributedTo: 0,
+    rank: { level: "C", score: 0 },
+  };
+
+  let res = await retryer(fetcher, { login: username });
+
+  if (res.data.errors) {
+    console.log(res.data.errors);
+    throw Error(res.data.errors[0].message || "Could not fetch user");
+  }
+
+  const user = res.data.data.user;
+
+  stats.name = user.name || user.login;
+  stats.totalIssues = user.issues.totalCount;
+  stats.totalCommits = user.contributionsCollection.totalCommitContributions;
+  stats.totalPRs = user.pullRequests.totalCount;
+  stats.contributedTo = user.repositoriesContributedTo.totalCount;
+
+  stats.totalStars = user.repositories.nodes.reduce((prev, curr) => {
+    return prev + curr.stargazers.totalCount;
+  }, 0);
+
+  stats.rank = calculateRank({
+    totalCommits: stats.totalCommits,
+    totalRepos: user.repositories.totalCount,
+    followers: user.followers.totalCount,
+    contributions: stats.contributedTo,
+    stargazers: stats.totalStars,
+    prs: stats.totalPRs,
+    issues: stats.totalIssues,
+  });
+
+  return stats;
+}
+
+module.exports = fetchStats;
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# sed -n '1,200p' src/fetchRepo.js
+const { request } = require("./utils");
+const retryer = require("./retryer");
+
+const fetcher = (variables, token) => {
+  return request(
+    {
+      query: `
+      fragment RepoInfo on Repository {
+        name
+        nameWithOwner
+        isPrivate
+        isArchived
+        stargazers {
+          totalCount
+        }
+        description
+        primaryLanguage {
+          color
+          id
+          name
+        }
+        forkCount
+      }
+      query getRepo($login: String!, $repo: String!) {
+        user(login: $login) {
+          repository(name: $repo) {
+            ...RepoInfo
+          }
+        }
+        organization(login: $login) {
+          repository(name: $repo) {
+            ...RepoInfo
+          }
+        }
+      }
+    `,
+      variables,
+    },
+    {
+      Authorization: `bearer ${token}`,
+    }
+  );
+};
+
+async function fetchRepo(username, reponame) {
+  if (!username || !reponame) {
+    throw new Error("Invalid username or reponame");
+  }
+
+  let res = await retryer(fetcher, { login: username, repo: reponame });
+
+  const data = res.data.data;
+
+  if (!data.user && !data.organization) {
+    throw new Error("Not found");
+  }
+
+  const isUser = data.organization === null && data.user;
+  const isOrg = data.use
+[... output limited to 10000 bytes; 70 interior bytes omitted ...]
+-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# git add src/index.js && git commit -m "chore: expose getCache and DefaultCache from mo
+dule entry" || true
+fatal: pathspec 'src/index.js' did not match any files
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats# npm test --silent
+ PASS  tests/calculateRank.test.js
+ PASS  tests/pin.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:24:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:26:13)
+
+ PASS  tests/fetchStats.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: "Could not resolve to a User with the login of 'noname'."
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+ PASS  tests/api.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      [
+        {
+          type: 'NOT_FOUND',
+          path: [ 'user' ],
+          locations: [],
+          message: 'Could not fetch user'
+        }
+      ]
+
+      at fetchStats (src/fetchStats.js:64:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/utils.test.js
+ PASS  tests/fetchRepo.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+ PASS  tests/retryer.test.js
+  ● Console
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      {} undefined
+
+      at tests/retryer.test.js:5:11
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_1 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_2
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_2 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_3
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_3 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_4
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_4 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_5
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_5 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_6
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_6 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_7
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_7 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+    console.log
+      Trying PAT_8
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      PAT_8 Failed
+
+      at retryer (src/retryer.js:21:15)
+
+ PASS  tests/renderRepoCard.test.js
+ PASS  tests/renderStatsCard.test.js
+
+Test Suites: 9 passed, 9 total
+Tests:       49 passed, 49 total
+Snapshots:   0 total
+Time:        3.208 s
+Ran all test suites.
+root@f6b1e4c1-9be1-4592-84af-719f970476f1:/workspace/github-readme-stats#
+

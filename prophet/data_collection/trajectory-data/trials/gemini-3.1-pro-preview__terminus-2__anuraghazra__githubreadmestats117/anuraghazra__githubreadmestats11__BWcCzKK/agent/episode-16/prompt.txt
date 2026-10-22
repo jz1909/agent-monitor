@@ -1,0 +1,100 @@
+Previous response had warnings:
+WARNINGS: - Extra text detected before JSON object
+- Extra text detected after JSON object
+
+New Terminal Output:
+
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat api/index.js
+require("dotenv").config();
+const { renderError, parseBoolean, clampValue } = require("../src/utils");
+const fetchStats = require("../src/fetchStats");
+const renderStatsCard = require("../src/renderStatsCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    hide,
+    hide_title,
+    hide_border,
+    hide_rank,
+    show_icons,
+    line_height,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    cache_seconds,
+  } = req.query;
+  let stats;
+
+  const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);
+  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    stats = await fetchStats(username);
+  } catch (err) {
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderStatsCard(stats, {
+      hide: JSON.parse(hide || "[]"),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+    })
+  );
+};
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# cat api/pin.js
+require("dotenv").config();
+const { renderError, parseBoolean, clampValue } = require("../src/utils");
+const fetchRepo = require("../src/fetchRepo");
+const renderRepoCard = require("../src/renderRepoCard");
+
+module.exports = async (req, res) => {
+  const {
+    username,
+    repo,
+    title_color,
+    icon_color,
+    text_color,
+    bg_color,
+    theme,
+    show_owner,
+    cache_seconds,
+  } = req.query;
+
+  let repoData;
+
+  const cacheSeconds = clampValue(parseInt(cache_seconds || 1800, 10), 1800, 86400);
+  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  try {
+    repoData = await fetchRepo(username, repo);
+  } catch (err) {
+    console.log(err);
+    return res.send(renderError(err.message));
+  }
+
+  res.send(
+    renderRepoCard(repoData, {
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      show_owner: parseBoolean(show_owner),
+    })
+  );
+};
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats#

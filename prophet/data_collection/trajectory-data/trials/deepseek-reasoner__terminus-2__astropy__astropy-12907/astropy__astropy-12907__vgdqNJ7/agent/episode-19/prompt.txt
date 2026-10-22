@@ -1,0 +1,57 @@
+New Terminal Output:
+====
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python -m pytest astropy/modeling/tests/test_separable.py -q 2>&1
+<frozen importlib._bootstrap>:228: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 80 from C header, got 96 from PyObj
+ect
+Internet access disabled
+...........                                                                                                                                              [100%]
+11 passed in 0.15s
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > final_verification.py << 'EOF'
+> import sys
+> sys.path.insert(0, '.')
+> from astropy.modeling import models as m
+> from astropy.modeling.separable import separability_matrix
+> import numpy as np
+>
+> cm = m.Linear1D(10) & m.Linear1D(5)
+> print('Test 1: separability_matrix(cm)')
+> print(separability_matrix(cm))
+> assert np.array_equal(separability_matrix(cm), [[True, False], [False, True]])
+>
+> m2 = m.Pix2Sky_TAN() & m.Linear1D(10) & m.Linear1D(5)
+> print('\nTest 2: separability_matrix(Pix2Sky_TAN & Linear1D & Linear1D)')
+> print(separability_matrix(m2))
+> expected2 = np.array([[True, True, False, False],
+>                        [True, True, False, False],
+>                        [False, False, True, False],
+>                        [False, False, False, True]])
+> assert np.array_equal(separability_matrix(m2), expected2)
+>
+> m3 = m.Pix2Sky_TAN() & cm
+> print('\nTest 3: separability_matrix(Pix2Sky_TAN & cm)')
+> print(separability_matrix(m3))
+> # Should be same as test 2
+> assert np.array_equal(separability_matrix(m3), expected2)
+>
+> print('\nAll tests passed!')
+> EOF
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python final_verification.py 2>&1
+Test 1: separability_matrix(cm)
+[[ True False]
+ [False  True]]
+
+Test 2: separability_matrix(Pix2Sky_TAN & Linear1D & Linear1D)
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+
+Test 3: separability_matrix(Pix2Sky_TAN & cm)
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+
+All tests passed!
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed#

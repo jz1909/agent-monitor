@@ -1,0 +1,14 @@
+Previous response had warnings:
+WARNINGS: - Extra text detected before JSON object
+- Extra text detected after JSON object
+
+New Terminal Output:
+
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats# grep -rn 'Cache-Control' .
+./api/index.js:25:  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+./api/pin.js:22:  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
+./patch.js:16:  apiIndex = apiIndex.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds |
+| 1800, 10), 1800, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+./patch.js:25:  apiPin = apiPin.replace('res.setHeader("Cache-Control", "public, max-age=1800");', 'const cacheSeconds = clampValue(parseInt(cache_seconds || 18
+00, 10), 1800, 86400);\n  res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);');
+root@8fe87bfd-25ab-47e4-bb81-256c58505896:/workspace/github-readme-stats#

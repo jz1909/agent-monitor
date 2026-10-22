@@ -1,0 +1,10 @@
+{
+  "analysis": "I seem to be stuck in a pager. I will send 'q' to exit.",
+  "plan": "I will send 'q' to exit the pager.",
+  "commands": [
+    {
+      "keystrokes": "q",
+      "duration": 0.1
+    }
+  ]
+}

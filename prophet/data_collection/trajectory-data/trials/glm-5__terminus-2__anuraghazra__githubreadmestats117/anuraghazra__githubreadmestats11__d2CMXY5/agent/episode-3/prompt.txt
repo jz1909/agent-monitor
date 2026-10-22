@@ -1,0 +1,234 @@
+New Terminal Output:
+
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# ls -la tests/
+total 52
+drwxr-xr-x 1 root root 4096 Mar 18  2025 .
+drwxr-xr-x 1 root root 4096 Mar 18  2025 ..
+-rw-r--r-- 1 root root 3303 Mar 18  2025 api.test.js
+-rw-r--r-- 1 root root  463 Mar 18  2025 calculateRank.test.js
+-rw-r--r-- 1 root root 2636 Mar 18  2025 fetchRepo.test.js
+-rw-r--r-- 1 root root 1980 Mar 18  2025 fetchStats.test.js
+-rw-r--r-- 1 root root 3165 Mar 18  2025 pin.test.js
+-rw-r--r-- 1 root root 7598 Mar 18  2025 renderRepoCard.test.js
+-rw-r--r-- 1 root root 7656 Mar 18  2025 renderStatsCard.test.js
+-rw-r--r-- 1 root root 1412 Mar 18  2025 retryer.test.js
+-rw-r--r-- 1 root root 2555 Mar 18  2025 utils.test.js
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat src/fetchStats.js
+const { request } = require("./utils");
+const retryer = require("./retryer");
+const calculateRank = require("./calculateRank");
+require("dotenv").config();
+
+const fetcher = (variables, token) => {
+  return request(
+    {
+      query: `
+      query userInfo($login: String!) {
+        user(login: $login) {
+          name
+          login
+          contributionsCollection {
+            totalCommitContributions
+          }
+          repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) {
+            totalCount
+          }
+          pullRequests(first: 1) {
+            totalCount
+          }
+          issues(first: 1) {
+            totalCount
+          }
+          followers {
+            totalCount
+          }
+          repositories(first: 100, ownerAffiliations: OWNER, isFork: false, orderBy: {direction: DESC, field: STARGAZERS}) {
+            totalCount
+            nodes {
+              stargazers {
+                totalCount
+              }
+            }
+          }
+        }
+      }
+      `,
+      variables,
+    },
+    {
+      Authorization: `bearer ${token}`,
+    }
+  );
+};
+
+async function fetchStats(username) {
+  if (!username) throw Error("Invalid username");
+
+  const stats = {
+    name: "",
+    totalPRs: 0,
+    totalCommits: 0,
+    totalIssues: 0,
+    totalStars: 0,
+    contributedTo: 0,
+    rank: { level: "C", score: 0 },
+  };
+
+  let res = await retryer(fetcher, { login: username });
+
+  if (res.data.errors) {
+    console.log(res.data.errors);
+    throw Error(res.data.errors[0].message || "Could not fetch user");
+  }
+
+  const user = res.data.data.user;
+
+  stats.name = user.name || user.login;
+  stats.totalIssues = user.issues.totalCount;
+  stats.totalCommits = user.contributionsCollection.totalCommitContributions;
+  stats.totalPRs = user.pullRequests.totalCount;
+  stats.contributedTo = user.repositoriesContributedTo.totalCount;
+
+  stats.totalStars = user.repositories.nodes.reduce((prev, curr) => {
+    return prev + curr.stargazers.totalCount;
+  }, 0);
+
+  stats.rank = calculateRank({
+    totalCommits: stats.totalCommits,
+    totalRepos: user.repositories.totalCount,
+    followers: user.followers.totalCount,
+    contributions: stats.contributedTo,
+    stargazers: stats.totalStars,
+    prs: stats.totalPRs,
+    issues: stats.totalIssues,
+  });
+
+  return stats;
+}
+
+module.exports = fetchStats;
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat src/fetchRepo.js
+const { request } = require("./utils");
+const retryer = require("./retryer");
+
+const fetcher = (variables, token) => {
+  return request(
+    {
+      query: `
+      fragment RepoInfo on Repository {
+        name
+        nameWithOwner
+        isPrivate
+        isArchived
+        stargazers {
+          totalCount
+        }
+        description
+        primaryLanguage {
+          color
+          id
+          name
+        }
+        forkCount
+      }
+      query getRepo($login: String!, $repo: String!) {
+        user(login: $login) {
+          repository(name: $repo) {
+            ...RepoInfo
+          }
+        }
+        organization(login: $login) {
+          repository(name: $repo) {
+            ...RepoInfo
+          }
+        }
+      }
+    `,
+      variables,
+    },
+    {
+      Authorization: `bearer ${token}`,
+    }
+  );
+};
+
+async function fetchRepo(username, reponame) {
+  if (!username || !reponame) {
+    throw new Error("Invalid username or reponame");
+  }
+
+  let res = await retryer(fetcher, { login: username, repo: reponame });
+
+  const data = res.data.data;
+
+  if (!data.user && !data.organization) {
+    throw new Error("Not found");
+  }
+
+  const isUser = data.organization === null && data.user;
+  const isOrg = data.user === null && data.organization;
+
+  if (isUser) {
+    if (!data.user.repository || data.user.repository.isPrivate) {
+      throw new Error("User Repository Not found");
+    }
+    return data.user.repository;
+  }
+
+  if (isOrg) {
+    if (
+      !data.organization.repository ||
+      data.organization.repository.isPrivate
+    ) {
+      throw new Error("Organization Repository Not found");
+    }
+    return data.organization.repository;
+  }
+}
+
+module.exports = fetchRepo;
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# cat src/retryer.js
+const retryer = async (fetcher, variables, retries = 0) => {
+  if (retries > 7) {
+    throw new Error("Maximum retries exceeded");
+  }
+  try {
+    console.log(`Trying PAT_${retries + 1}`);
+
+    // try to fetch with the first token since RETRIES is 0 index i'm adding +1
+    let response = await fetcher(
+      variables,
+      process.env[`PAT_${retries + 1}`],
+      retries
+    );
+
+    // prettier-ignore
+    const isRateExceeded = response.data.errors && response.data.errors[0].type === "RATE_LIMITED";
+
+    // if rate limit is hit increase the RETRIES and recursively call the retryer
+    // with username, and current RETRIES
+    if (isRateExceeded) {
+      console.log(`PAT_${retries + 1} Failed`);
+      retries++;
+      // directly return from the function
+      return retryer(fetcher, variables, retries);
+    }
+
+    // finally return the response
+    return response;
+  } catch (err) {
+    // prettier-ignore
+    // also checking for bad credentials if any tokens gets invalidated
+    const isBadCredential = err.response.data && err.response.data.message === "Bad credentials";
+
+    if (isBadCredential) {
+      console.log(`PAT_${retries + 1} Failed`);
+      retries++;
+      // directly return from the function
+      return retryer(fetcher, variables, retries);
+    }
+  }
+};
+
+module.exports = retryer;
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

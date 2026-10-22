@@ -1,0 +1,233 @@
+New Terminal Output:
+
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n 'class CompoundModel' core.py
+2894:class CompoundModel(Model):
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '2360,2600p' core.py
+        Return the number of components in a single model, which is
+        obviously 1.
+        """
+        return 1
+
+    def _initialize_constraints(self, kwargs):
+        """
+        Pop parameter constraint values off the keyword arguments passed to
+        `Model.__init__` and store them in private instance attributes.
+        """
+
+        # Pop any constraints off the keyword arguments
+        for constraint in self.parameter_constraints:
+            values = kwargs.pop(constraint, {})
+            for ckey, cvalue in values.items():
+                param = getattr(self, ckey)
+                setattr(param, constraint, cvalue)
+        self._mconstraints = {}
+        for constraint in self.model_constraints:
+            values = kwargs.pop(constraint, [])
+            self._mconstraints[constraint] = values
+
+    def _initialize_parameters(self, args, kwargs):
+        """
+        Initialize the _parameters array that stores raw parameter values for
+        all parameter sets for use with vectorized fitting algorithms; on
+        FittableModels the _param_name attributes actually just reference
+        slices of this array.
+        """
+        n_models = kwargs.pop('n_models', None)
+
+        if not (n_models is None or
+                (isinstance(n_models, (int, np.integer)) and n_models >= 1)):
+            raise ValueError(
+                "n_models must be either None (in which case it is "
+                "determined from the model_set_axis of the parameter initial "
+                "values) or it must be a positive integer "
+                "(got {0!r})".format(n_models))
+
+        model_set_axis = kwargs.pop('model_set_axis', None)
+        if model_set_axis is None:
+            if n_models is not None and n_models > 1:
+                # Default to zero
+                model_set_axis = 0
+            else:
+                # Otherwise disable
+                model_set_axis = False
+        else:
+            if not (model_set_axis is False or
+                    np.issubdtype(type(model_set_axis), np.integer)):
+                raise ValueError(
+                    "model_set_axis must be either False or an integer "
+                    "specifying the parameter array axis to map to each "
+                    "model in a set of models (got {0!r}).".format(
+                        model_set_axis))
+
+        # Process positional arguments by matching them up with the
+        # corresponding parameters in self.param_names--if any also appear as
+        # keyword arguments this presents a conflict
+        params = set()
+        if len(args) > len(self.param_names):
+            raise TypeError(
+                "{0}.__init__() takes at most {1} positional arguments ({2} "
+                "given)".format(self.__class__.__name__, len(self.param_names),
+                                len(args)))
+
+        self._model_set_axis = model_set_axis
+        self._param_metrics = defaultdict(dict)
+
+        for idx, arg in enumerate(args):
+            if arg is None:
+                # A value of None implies using the default value, if exists
+                continue
+            # We use quantity_asanyarray here instead of np.asanyarray because
+            # if any of the arguments are quantities, we need to return a
+            # Quantity object not a plain Numpy array.
+            param_name = self.param_names[idx]
+            params.add(param_name)
+            if not isinstance(arg, Parameter):
+                value = quantity_asanyarray(arg, dtype=float)
+            else:
+                value = arg
+            self._initialize_parameter_value(param_name, value)
+
+        # At this point the only remaining keyword arguments should be
+        # parameter names; any others are in error.
+        for param_name in self.param_names:
+            if param_name in kwargs:
+                if param_name in params:
+                    raise TypeError(
+                        "{0}.__init__() got multiple values for parameter "
+                        "{1!r}".format(self.__class__.__name__, param_name))
+                value = kwargs.pop(param_name)
+                if value is None:
+                    continue
+                # We use quantity_asanyarray here instead of np.asanyarray
+                # because if any of the arguments are quantities, we need
+                # to return a Quantity object not a plain Numpy array.
+                value = quantity_asanyarray(value, dtype=float)
+                params.add(param_name)
+                self._initialize_parameter_value(param_name, value)
+        # Now deal with case where param_name is not supplied by args or kwargs
+        for param_name in self.param_names:
+            if param_name not in params:
+      
+[... output limited to 10000 bytes; 69 interior bytes omitted ...]
+sed
+        if model_set_axis is not False and n_models != 1 and params:
+            max_ndim = 0
+            if model_set_axis < 0:
+                min_ndim = abs(model_set_axis)
+            else:
+                min_ndim = model_set_axis + 1
+
+            for name in self.param_names:
+                value = getattr(self, name)
+                param_ndim = np.ndim(value)
+                if param_ndim < min_ndim:
+                    raise InputParameterError(
+                        "All parameter values must be arrays of dimension "
+                        "at least {0} for model_set_axis={1} (the value "
+                        "given for {2!r} is only {3}-dimensional)".format(
+                            min_ndim, model_set_axis, name, param_ndim))
+
+                max_ndim = max(max_ndim, param_ndim)
+
+                if n_models is None:
+                    # Use the dimensions of the first parameter to determine
+                    # the number of model sets
+                    n_models = value.shape[model_set_axis]
+                elif value.shape[model_set_axis] != n_models:
+                    raise InputParameterError(
+                        "Inconsistent dimensions for parameter {0!r} for "
+                        "{1} model sets.  The length of axis {2} must be the "
+                        "same for all input parameter values".format(
+                            name, n_models, model_set_axis))
+
+            self._check_param_broadcast(max_ndim)
+        else:
+            if n_models is None:
+                n_models = 1
+
+            self._check_param_broadcast(None)
+
+        self._n_models = n_models
+        # now validate parameters
+        for name in params:
+            param = getattr(self, name)
+            if param._validator is not None:
+                param._validator(self, param.value)
+
+    def _initialize_parameter_value(self, param_name, value):
+        """Mostly deals with consistency checks and determining unit issues."""
+        if isinstance(value, Parameter):
+            self.__dict__[param_name] = value
+            return
+        param = getattr(self, param_name)
+        # Use default if value is not provided
+        if value is None:
+            default = param.default
+            if default is None:
+                # No value was supplied for the parameter and the
+                # parameter does not have a default, therefore the model
+                # is underspecified
+                raise TypeError("{0}.__init__() requires a value for parameter "
+                                "{1!r}".format(self.__class__.__name__, param_name))
+            value = default
+            unit = param.unit
+        else:
+            if isinstance(value, Quantity):
+                unit = value.unit
+                value = value.value
+            else:
+                unit = None
+        if unit is None and param.unit is not None:
+            raise InputParameterError(
+                "{0}.__init__() requires a Quantity for parameter "
+                "{1!r}".format(self.__class__.__name__, param_name))
+        param._unit = unit
+        param.internal_unit = None
+        if param._setter is not None:
+            if unit is not None:
+                _val = param._setter(value * unit)
+            else:
+                _val = param._setter(value)
+            if isinstance(_val, Quantity):
+                param.internal_unit = _val.unit
+                param._internal_value = np.array(_val.value)
+            else:
+                param.internal_unit = None
+                param._internal_value = np.array(_val)
+        else:
+            param._value = np.array(value)
+
+    def _initialize_slices(self):
+
+        param_metrics = self._param_metrics
+        total_size = 0
+
+        for name in self.param_names:
+            param = getattr(self, name)
+            value = param.value
+            param_size = np.size(value)
+            param_shape = np.shape(value)
+            param_slice = slice(total_size, total_size + param_size)
+            param_metrics[name]['slice'] = param_slice
+            param_metrics[name]['shape'] = param_shape
+            param_metrics[name]['size'] = param_size
+            total_size += param_size
+        self._parameters = np.empty(total_size, dtype=np.float64)
+
+    def _parameters_to_array(self):
+        # Now set the parameter values (this will also fill
+        # self._parameters)
+        param_metrics = self._param_metrics
+        for name in self.param_names:
+            param = getattr(self, name)
+            value = param.value
+            if not isinstance(value, np.ndarray):
+                value = np.array([value])
+            self._parameters[param_metrics[name]['slice']] = value.ravel()
+
+        # Finally validate all the parameters; we do this last so that
+        # validators that depend on one of the other parameters' values will
+        # work
+
+    def _array_to_parameters(self):
+(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling#

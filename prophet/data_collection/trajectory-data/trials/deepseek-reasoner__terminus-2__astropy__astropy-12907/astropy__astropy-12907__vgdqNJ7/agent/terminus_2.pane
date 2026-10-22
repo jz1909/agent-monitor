@@ -1,0 +1,2147 @@
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# clear
+[?2004l[H[J[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# ls -la
+[?2004ltotal 644
+drwxrwxrwx  1 root root   4096 Sep 10  2025 .
+drwxr-xr-x  1 root root    117 Apr 12 00:08 ..
+-rw-r--r--  1 root root      0 Sep 10  2025 .astropy-root
+drwxrwxrwx  2 root root     32 Sep 10  2025 .circleci
+drwxrwxrwx  8 root root   4096 Sep 10  2025 .git
+-rw-r--r--  1 root root     16 Sep 10  2025 .gitattributes
+drwxrwxrwx  4 root root    116 Sep 10  2025 .github
+-rw-r--r--  1 root root   1218 Sep 10  2025 .gitignore
+-rw-r--r--  1 root root  19309 Sep 10  2025 .mailmap
+-rw-r--r--  1 root root   2056 Sep 10  2025 .pep8speaks.yml
+-rw-r--r--  1 root root   2788 Sep 10  2025 .pre-commit-config.yaml
+drwxrwxrwx  3 root root     59 Sep 10  2025 .pyinstaller
+-rw-r--r--  1 root root    425 Sep 10  2025 .readthedocs.yml
+-rw-r--r--  1 root root 504041 Sep 10  2025 CHANGES.rst
+-rw-r--r--  1 root root     66 Sep 10  2025 CITATION
+-rw-r--r--  1 root root    139 Sep 10  2025 CODE_OF_CONDUCT.md
+-rw-r--r--  1 root root   9569 Sep 10  2025 CONTRIBUTING.md
+-rw-r--r--  1 root root    129 Sep 10  2025 GOVERNANCE.md
+-rw-r--r--  1 root root   1496 Sep 10  2025 LICENSE.rst
+-rw-r--r--  1 root root    703 Sep 10  2025 MANIFEST.in
+-rw-r--r--  1 root root   4558 Sep 10  2025 README.rst
+drwxrwxrwx 24 root root   4096 Sep 10  2025 astropy
+drwxr-xr-x  2 root root    186 Sep 10  2025 astropy.egg-info
+-rw-r--r--  1 root root   4140 Sep 10  2025 azure-pipelines.yml
+drwxrwxrwx  5 root root    186 Sep 10  2025 cextern
+-rw-r--r--  1 root root     13 Sep 10  2025 codecov.yml
+-rw-r--r--  1 root root   2568 Sep 10  2025 conftest.py
+drwxrwxrwx 25 root root   4096 Sep 10  2025 docs
+drwxr-xr-x  5 root root     89 Sep 10  2025 examples
+drwxrwxrwx  2 root root   4096 Sep 10  2025 licenses
+-rw-r--r--  1 root root    268 Sep 10  2025 pip-requirements
+-rw-r--r--  1 root root   4494 Sep 10  2025 pyproject.toml
+-rw-r--r--  1 root root   6251 Sep 10  2025 setup.cfg
+-rwxr-xr-x  1 root root   1634 Sep 10  2025 setup.py
+-rw-r--r--  1 root root   5721 Sep 10  2025 tox.ini
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# find . -name 'separable.py' -type f 2>/dev/null | head -20
+[?2004l./astropy/modeling/separable.py
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > reproduce.py << 'EOF'
+[?2004l[?2004h> import sys
+[?2004l[?2004h> sys.path.insert(0, '.')
+[?2004l[?2004h> from astropy.modeling import models as m
+[?2004l[?2004h> from astropy.modeling.separable import separability_matrix
+[?2004l[?2004h> 
+[?2004l[?2004h> print('Test 1: Linear1D & Linear1D')
+[?2004l[?2004h> cm = m.Linear1D(10) & m.Linear1D(5)
+[?2004l[?2004h> print(separability_matrix(cm))
+[?2004l[?2004h> print('Expected diagonal')
+[?2004l[?2004h> 
+[?2004l[?2004h> print('\nTest 2: Pix2Sky_TAN & Linear1D & Linear1D')
+[?2004l[?2004h> m2 = m.Pix2Sky_TAN() & m.Linear1D(10) & m.Linear1D(5)
+[?2004l[?2004h> print(separability_matrix(m2))
+[?2004l[?2004h> print('Expected block diagonal')
+[?2004l[?2004h> 
+[?2004l[?2004h> print('\nTest 3: Pix2Sky_TAN & cm')
+[?2004l[?2004h> m3 = m.Pix2Sky_TAN() & cm
+[?2004l[?2004h> print(separability_matrix(m3))
+[?2004l[?2004h> print('Expected same as test 2 but with extra nesting')
+[?2004l[?2004h> 
+[?2004l[?2004h> # Let's also examine the structure of cm and m3
+[?2004l[?2004h> print('\ncm:', cm)
+[?2004l[?2004h> print('cm.n_submodels:', cm.n_submodels if hasattr(cm, 'n_submodels') else 'N/A')
+[?2004l[?2004h> print('cm.__class__:', cm.__class__)
+[?2004l[?2004h> print('\nm3:', m3)
+[?2004l[?2004h> print('m3.n_submodels:', m3.n_submodels if hasattr(m3, 'n_submodels') else 'N/A')
+[?2004l[?2004h> EOF
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python reproduce.py
+[?2004lTest 1: Linear1D & Linear1D
+[[ True False]
+ [False  True]]
+Expected diagonal
+
+Test 2: Pix2Sky_TAN & Linear1D & Linear1D
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+Expected block diagonal
+
+Test 3: Pix2Sky_TAN & cm
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True  True]
+ [False False  True  True]]
+Expected same as test 2 but with extra nesting
+
+cm: Model: CompoundModel
+Inputs: ('x0', 'x1')
+Outputs: ('y0', 'y1')
+Model set size: 1
+Expression: [0] & [1]
+Components: 
+    [0]: <Linear1D(slope=10., intercept=0.)>
+
+    [1]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_0 intercept_0 slope_1 intercept_1
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+cm.n_submodels: 2
+cm.__class__: <class 'astropy.modeling.core.CompoundModel'>
+Name: CompoundModel
+N_inputs: <property object at 0x702d8975c540>
+N_outputs: <property object at 0x702d8975c5e0>
+Fittable parameters: <property object at 0x702d8975c310>
+
+m3: Model: CompoundModel
+Inputs: ('x', 'y', 'x0', 'x1')
+Outputs: ('phi', 'theta', 'y0', 'y1')
+Model set size: 1
+Expression: [0] & [1] & [2]
+Components: 
+    [0]: <Pix2Sky_Gnomonic()>
+
+    [1]: <Linear1D(slope=10., intercept=0.)>
+
+    [2]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_1 intercept_1 slope_2 intercept_2
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+m3.n_submodels: 3
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cat separable.py
+[?2004l# Licensed under a 3-clause BSD style license - see LICENSE.rst
+
+"""
+Functions to determine if a model is separable, i.e.
+if the model outputs are independent.
+
+It analyzes ``n_inputs``, ``n_outputs`` and the operators
+in a compound model by stepping through the transforms
+and creating a ``coord_matrix`` of shape (``n_outputs``, ``n_inputs``).
+
+
+Each modeling operator is represented by a function which
+takes two simple models (or two ``coord_matrix`` arrays) and
+returns an array of shape (``n_outputs``, ``n_inputs``).
+
+"""
+
+import numpy as np
+
+from .core import Model, ModelDefinitionError, CompoundModel
+from .mappings import Mapping
+
+
+__all__ = ["is_separable", "separability_matrix"]
+
+
+def is_separable(transform):
+    """
+    A separability test for the outputs of a transform.
+
+    Parameters
+    ----------
+    transform : `~astropy.modeling.core.Model`
+        A (compound) model.
+
+    Returns
+    -------
+    is_separable : ndarray
+        A boolean array with size ``transform.n_outputs`` where
+        each element indicates whether the output is independent
+        and the result of a separable transform.
+
+    Examples
+    --------
+    >>> from astropy.modeling.models import Shift, Scale, Rotation2D, Polynomial2D
+    >>> is_separable(Shift(1) & Shift(2) | Scale(1) & Scale(2))
+        array([ True,  True]...)
+    >>> is_separable(Shift(1) & Shift(2) | Rotation2D(2))
+        array([False, False]...)
+    >>> is_separable(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]) | \
+        Polynomial2D(1) & Polynomial2D(2))
+        array([False, False]...)
+    >>> is_separable(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]))
+        array([ True,  True,  True,  True]...)
+
+    """
+    if transform.n_inputs == 1 and transform.n_outputs > 1:
+        is_separable = np.array([False] * transform.n_outputs).T
+        return is_separable
+    separable_matrix = _separable(transform)
+    is_separable = separable_matrix.sum(1)
+    is_separable = np.where(is_separable != 1, False, True)
+    return is_separable
+
+
+def separability_matrix(transform):
+    """
+    Compute the correlation between outputs and inputs.
+
+    Parameters
+    ----------
+    transform : `~astropy.modeling.core.Model`
+        A (compound) model.
+
+    Returns
+    -------
+    separable_matrix : ndarray
+        A boolean correlation matrix of shape (n_outputs, n_inputs).
+        Indicates the dependence of outputs on inputs. For completely
+        independent outputs, the diagonal elements are True and
+        off-diagonal elements are False.
+
+    Examples
+    --------
+    >>> from astropy.modeling.models import Shift, Scale, Rotation2D, Polynomial2D
+    >>> separability_matrix(Shift(1) & Shift(2) | Scale(1) & Scale(2))
+        array([[ True, False], [False,  True]]...)
+    >>> separability_matrix(Shift(1) & Shift(2) | Rotation2D(2))
+        array([[ True,  True], [ True,  True]]...)
+    >>> separability_matrix(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]) | \
+        Polynomial2D(1) & Polynomial2D(2))
+        array([[ True,  True], [ True,  True]]...)
+    >>> separability_matrix(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]))
+        array([[ True, False], [False,  True], [ True, False], [False,  True]]...)
+
+    """
+    if transform.n_inputs == 1 and transform.n_outputs > 1:
+        return np.ones((transform.n_outputs, transform.n_inputs),
+                       dtype=np.bool_)
+    separable_matrix = _separable(transform)
+    separable_matrix = np.where(separable_matrix != 0, True, False)
+    return separable_matrix
+
+
+def _compute_n_outputs(left, right):
+    """
+    Compute the number of outputs of two models.
+
+    The two models are the left and right model to an operation in
+    the expression tree of a compound model.
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    """
+    if isinstance(left, Model):
+        lnout = left.n_outputs
+    else:
+        lnout = left.shape[0]
+    if isinstance(right, Model):
+        rnout = right.n_outputs
+    else:
+        rnout = right.shape[0]
+    noutp = lnout + rnout
+    return noutp
+
+
+def _arith_oper(left, right):
+    """
+    Function corresponding to one of the arithmetic operators
+    ['+', '-'. '*', '/', '**'].
+
+    This always returns a nonseparable output.
+
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    Returns
+    -------
+    result : ndarray
+        Result from this operation.
+    """
+    # models have the same number of inputs and outputs
+    def _n_inputs_outputs(input):
+        if isinstance(input, Model):
+            n_outputs, n_inputs = input.n_outputs, input.n_inputs
+        else:
+            n_outputs, n_inputs = input.shape
+        return n_inputs, n_outputs
+
+    left_inputs, left_outputs = _n_inputs_outputs(left)
+    right_inputs, right_outputs = _n_inputs_outputs(right)
+
+    if left_inputs != right_inputs or left_outputs != right_outputs:
+        raise ModelDefinitionError(
+            "Unsupported operands for arithmetic operator: left (n_inputs={}, "
+            "n_outputs={}) and right (n_inputs={}, n_outputs={}); "
+            "models must have the same n_inputs and the same "
+            "n_outputs for this operator.".format(
+                left_inputs, left_outputs, right_inputs, right_outputs))
+
+    result = np.ones((left_outputs, left_inputs))
+    return result
+
+
+def _coord_matrix(model, pos, noutp):
+    """
+    Create an array representing inputs and outputs of a simple model.
+
+    The array has a shape (noutp, model.n_inputs).
+
+    Parameters
+    ----------
+    model : `astropy.modeling.Model`
+        model
+    pos : str
+        Position of this model in the expression tree.
+        One of ['left', 'right'].
+    noutp : int
+        Number of outputs of the compound model of which the input model
+        is a left or right child.
+
+    """
+    if isinstance(model, Mapping):
+        axes = []
+        for i in model.mapping:
+            axis = np.zeros((model.n_inputs,))
+            axis[i] = 1
+            axes.append(axis)
+        m = np.vstack(axes)
+        mat = np.zeros((noutp, model.n_inputs))
+        if pos == 'left':
+            mat[: model.n_outputs, :model.n_inputs] = m
+        else:
+            mat[-model.n_outputs:, -model.n_inputs:] = m
+        return mat
+    if not model.separable:
+        # this does not work for more than 2 coordinates
+        mat = np.zeros((noutp, model.n_inputs))
+        if pos == 'left':
+            mat[:model.n_outputs, : model.n_inputs] = 1
+        else:
+            mat[-model.n_outputs:, -model.n_inputs:] = 1
+    else:
+        mat = np.zeros((noutp, model.n_inputs))
+
+        for i in range(model.n_inputs):
+            mat[i, i] = 1
+        if pos == 'right':
+            mat = np.roll(mat, (noutp - model.n_outputs))
+    return mat
+
+
+def _cstack(left, right):
+    """
+    Function corresponding to '&' operation.
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    Returns
+    -------
+    result : ndarray
+        Result from this operation.
+
+    """
+    noutp = _compute_n_outputs(left, right)
+
+    if isinstance(left, Model):
+        cleft = _coord_matrix(left, 'left', noutp)
+    else:
+        cleft = np.zeros((noutp, left.shape[1]))
+        cleft[: left.shape[0], : left.shape[1]] = left
+    if isinstance(right, Model):
+        cright = _coord_matrix(right, 'right', noutp)
+    else:
+        cright = np.zeros((noutp, right.shape[1]))
+        cright[-right.shape[0]:, -right.shape[1]:] = 1
+
+    return np.hstack([cleft, cright])
+
+
+def _cdot(left, right):
+    """
+    Function corresponding to "|" operation.
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    Returns
+    -------
+    result : ndarray
+        Result from this operation.
+    """
+
+    left, right = right, left
+
+    def _n_inputs_outputs(input, position):
+        """
+        Return ``n_inputs``, ``n_outputs`` for a model or coord_matrix.
+        """
+        if isinstance(input, Model):
+            coords = _coord_matrix(input, position, input.n_outputs)
+        else:
+            coords = input
+        return coords
+
+    cleft = _n_inputs_outputs(left, 'left')
+    cright = _n_inputs_outputs(right, 'right')
+
+    try:
+        result = np.dot(cleft, cright)
+    except ValueError:
+        raise ModelDefinitionError(
+            'Models cannot be combined with the "|" operator; '
+            'left coord_matrix is {}, right coord_matrix is {}'.format(
+                cright, cleft))
+    return result
+
+
+def _separable(transform):
+    """
+    Calculate the separability of outputs.
+
+    Parameters
+    ----------
+    transform : `astropy.modeling.Model`
+        A transform (usually a compound model).
+
+    Returns :
+    is_separable : ndarray of dtype np.bool
+        An array of shape (transform.n_outputs,) of boolean type
+        Each element represents the separablity of the corresponding output.
+    """
+    if (transform_matrix := transform._calculate_separability_matrix()) is not NotImplemented:
+        return transform_matrix
+    elif isinstance(transform, CompoundModel):
+        sepleft = _separable(transform.left)
+        sepright = _separable(transform.right)
+        return _operators[transform.op](sepleft, sepright)
+    elif isinstance(transform, Model):
+        return _coord_matrix(transform, 'left', transform.n_outputs)
+
+
+# Maps modeling operators to a function computing and represents the
+# relationship of axes as an array of 0-es and 1-s
+_operators = {'&': _cstack, '|': _cdot, '+': _arith_oper, '-': _arith_oper,
+              '*': _arith_oper, '/': _arith_oper, '**': _arith_oper}
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n 'separable' core.py | head -30
+[?2004l655:    _separable = None
+656:    """ A boolean flag to indicate whether a model is separable."""
+810:        This is a hook which customises the behavior of modeling.separable.
+1532:    def separable(self):
+1533:        """ A flag indicating whether a model is separable."""
+1535:        if self._separable is not None:
+1536:            return self._separable
+1538:            'The "separable" property is not defined for '
+2826:    _separable = True
+4173:    The model is separable only if there is a single input.
+4353:    cls._separable = True if (len(inputs) == 1) else False
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n 'class CompoundModel' core.py
+[?2004l2894:class CompoundModel(Model):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '2360,2600p' core.py
+[?2004l        Return the number of components in a single model, which is
+        obviously 1.
+        """
+        return 1
+
+    def _initialize_constraints(self, kwargs):
+        """
+        Pop parameter constraint values off the keyword arguments passed to
+        `Model.__init__` and store them in private instance attributes.
+        """
+
+        # Pop any constraints off the keyword arguments
+        for constraint in self.parameter_constraints:
+            values = kwargs.pop(constraint, {})
+            for ckey, cvalue in values.items():
+                param = getattr(self, ckey)
+                setattr(param, constraint, cvalue)
+        self._mconstraints = {}
+        for constraint in self.model_constraints:
+            values = kwargs.pop(constraint, [])
+            self._mconstraints[constraint] = values
+
+    def _initialize_parameters(self, args, kwargs):
+        """
+        Initialize the _parameters array that stores raw parameter values for
+        all parameter sets for use with vectorized fitting algorithms; on
+        FittableModels the _param_name attributes actually just reference
+        slices of this array.
+        """
+        n_models = kwargs.pop('n_models', None)
+
+        if not (n_models is None or
+                (isinstance(n_models, (int, np.integer)) and n_models >= 1)):
+            raise ValueError(
+                "n_models must be either None (in which case it is "
+                "determined from the model_set_axis of the parameter initial "
+                "values) or it must be a positive integer "
+                "(got {0!r})".format(n_models))
+
+        model_set_axis = kwargs.pop('model_set_axis', None)
+        if model_set_axis is None:
+            if n_models is not None and n_models > 1:
+                # Default to zero
+                model_set_axis = 0
+            else:
+                # Otherwise disable
+                model_set_axis = False
+        else:
+            if not (model_set_axis is False or
+                    np.issubdtype(type(model_set_axis), np.integer)):
+                raise ValueError(
+                    "model_set_axis must be either False or an integer "
+                    "specifying the parameter array axis to map to each "
+                    "model in a set of models (got {0!r}).".format(
+                        model_set_axis))
+
+        # Process positional arguments by matching them up with the
+        # corresponding parameters in self.param_names--if any also appear as
+        # keyword arguments this presents a conflict
+        params = set()
+        if len(args) > len(self.param_names):
+            raise TypeError(
+                "{0}.__init__() takes at most {1} positional arguments ({2} "
+                "given)".format(self.__class__.__name__, len(self.param_names),
+                                len(args)))
+
+        self._model_set_axis = model_set_axis
+        self._param_metrics = defaultdict(dict)
+
+        for idx, arg in enumerate(args):
+            if arg is None:
+                # A value of None implies using the default value, if exists
+                continue
+            # We use quantity_asanyarray here instead of np.asanyarray because
+            # if any of the arguments are quantities, we need to return a
+            # Quantity object not a plain Numpy array.
+            param_name = self.param_names[idx]
+            params.add(param_name)
+            if not isinstance(arg, Parameter):
+                value = quantity_asanyarray(arg, dtype=float)
+            else:
+                value = arg
+            self._initialize_parameter_value(param_name, value)
+
+        # At this point the only remaining keyword arguments should be
+        # parameter names; any others are in error.
+        for param_name in self.param_names:
+            if param_name in kwargs:
+                if param_name in params:
+                    raise TypeError(
+                        "{0}.__init__() got multiple values for parameter "
+                        "{1!r}".format(self.__class__.__name__, param_name))
+                value = kwargs.pop(param_name)
+                if value is None:
+                    continue
+                # We use quantity_asanyarray here instead of np.asanyarray
+                # because if any of the arguments are quantities, we need
+                # to return a Quantity object not a plain Numpy array.
+                value = quantity_asanyarray(value, dtype=float)
+                params.add(param_name)
+                self._initialize_parameter_value(param_name, value)
+        # Now deal with case where param_name is not supplied by args or kwargs
+        for param_name in self.param_names:
+            if param_name not in params:
+                self._initialize_parameter_value(param_name, None)
+
+        if kwargs:
+            # If any keyword arguments were left over at this point they are
+            # invalid--the base class should only be passed the parameter
+            # values, constraints, and param_dim
+            for kwarg in kwargs:
+                # Just raise an error on the first unrecognized argument
+                raise TypeError(
+                    '{0}.__init__() got an unrecognized parameter '
+                    '{1!r}'.format(self.__class__.__name__, kwarg))
+
+        # Determine the number of model sets: If the model_set_axis is
+        # None then there is just one parameter set; otherwise it is determined
+        # by the size of that axis on the first parameter--if the other
+        # parameters don't have the right number of axes or the sizes of their
+        # model_set_axis don't match an error is raised
+        if model_set_axis is not False and n_models != 1 and params:
+            max_ndim = 0
+            if model_set_axis < 0:
+                min_ndim = abs(model_set_axis)
+            else:
+                min_ndim = model_set_axis + 1
+
+            for name in self.param_names:
+                value = getattr(self, name)
+                param_ndim = np.ndim(value)
+                if param_ndim < min_ndim:
+                    raise InputParameterError(
+                        "All parameter values must be arrays of dimension "
+                        "at least {0} for model_set_axis={1} (the value "
+                        "given for {2!r} is only {3}-dimensional)".format(
+                            min_ndim, model_set_axis, name, param_ndim))
+
+                max_ndim = max(max_ndim, param_ndim)
+
+                if n_models is None:
+                    # Use the dimensions of the first parameter to determine
+                    # the number of model sets
+                    n_models = value.shape[model_set_axis]
+                elif value.shape[model_set_axis] != n_models:
+                    raise InputParameterError(
+                        "Inconsistent dimensions for parameter {0!r} for "
+                        "{1} model sets.  The length of axis {2} must be the "
+                        "same for all input parameter values".format(
+                            name, n_models, model_set_axis))
+
+            self._check_param_broadcast(max_ndim)
+        else:
+            if n_models is None:
+                n_models = 1
+
+            self._check_param_broadcast(None)
+
+        self._n_models = n_models
+        # now validate parameters
+        for name in params:
+            param = getattr(self, name)
+            if param._validator is not None:
+                param._validator(self, param.value)
+
+    def _initialize_parameter_value(self, param_name, value):
+        """Mostly deals with consistency checks and determining unit issues."""
+        if isinstance(value, Parameter):
+            self.__dict__[param_name] = value
+            return
+        param = getattr(self, param_name)
+        # Use default if value is not provided
+        if value is None:
+            default = param.default
+            if default is None:
+                # No value was supplied for the parameter and the
+                # parameter does not have a default, therefore the model
+                # is underspecified
+                raise TypeError("{0}.__init__() requires a value for parameter "
+                                "{1!r}".format(self.__class__.__name__, param_name))
+            value = default
+            unit = param.unit
+        else:
+            if isinstance(value, Quantity):
+                unit = value.unit
+                value = value.value
+            else:
+                unit = None
+        if unit is None and param.unit is not None:
+            raise InputParameterError(
+                "{0}.__init__() requires a Quantity for parameter "
+                "{1!r}".format(self.__class__.__name__, param_name))
+        param._unit = unit
+        param.internal_unit = None
+        if param._setter is not None:
+            if unit is not None:
+                _val = param._setter(value * unit)
+            else:
+                _val = param._setter(value)
+            if isinstance(_val, Quantity):
+                param.internal_unit = _val.unit
+                param._internal_value = np.array(_val.value)
+            else:
+                param.internal_unit = None
+                param._internal_value = np.array(_val)
+        else:
+            param._value = np.array(value)
+
+    def _initialize_slices(self):
+
+        param_metrics = self._param_metrics
+        total_size = 0
+
+        for name in self.param_names:
+            param = getattr(self, name)
+            value = param.value
+            param_size = np.size(value)
+            param_shape = np.shape(value)
+            param_slice = slice(total_size, total_size + param_size)
+            param_metrics[name]['slice'] = param_slice
+            param_metrics[name]['shape'] = param_shape
+            param_metrics[name]['size'] = param_size
+            total_size += param_size
+        self._parameters = np.empty(total_size, dtype=np.float64)
+
+    def _parameters_to_array(self):
+        # Now set the parameter values (this will also fill
+        # self._parameters)
+        param_metrics = self._param_metrics
+        for name in self.param_names:
+            param = getattr(self, name)
+            value = param.value
+            if not isinstance(value, np.ndarray):
+                value = np.array([value])
+            self._parameters[param_metrics[name]['slice']] = value.ravel()
+
+        # Finally validate all the parameters; we do this last so that
+        # validators that depend on one of the other parameters' values will
+        # work
+
+    def _array_to_parameters(self):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '2894,3400p' core.py
+[?2004lclass CompoundModel(Model):
+    '''
+    Base class for compound models.
+
+    While it can be used directly, the recommended way
+    to combine models is through the model operators.
+    '''
+
+    def __init__(self, op, left, right, name=None):
+        self.__dict__['_param_names'] = None
+        self._n_submodels = None
+        self.op = op
+        self.left = left
+        self.right = right
+        self._bounding_box = None
+        self._user_bounding_box = None
+        self._leaflist = None
+        self._tdict = None
+        self._parameters = None
+        self._parameters_ = None
+        self._param_metrics = None
+
+        if op != 'fix_inputs' and len(left) != len(right):
+            raise ValueError(
+                'Both operands must have equal values for n_models')
+        self._n_models = len(left)
+
+        if op != 'fix_inputs' and ((left.model_set_axis != right.model_set_axis)
+                                   or left.model_set_axis):  # not False and not 0
+            raise ValueError("model_set_axis must be False or 0 and consistent for operands")
+        self._model_set_axis = left.model_set_axis
+
+        if op in ['+', '-', '*', '/', '**'] or op in SPECIAL_OPERATORS:
+            if (left.n_inputs != right.n_inputs) or \
+               (left.n_outputs != right.n_outputs):
+                raise ModelDefinitionError(
+                    'Both operands must match numbers of inputs and outputs')
+            self.n_inputs = left.n_inputs
+            self.n_outputs = left.n_outputs
+            self.inputs = left.inputs
+            self.outputs = left.outputs
+        elif op == '&':
+            self.n_inputs = left.n_inputs + right.n_inputs
+            self.n_outputs = left.n_outputs + right.n_outputs
+            self.inputs = combine_labels(left.inputs, right.inputs)
+            self.outputs = combine_labels(left.outputs, right.outputs)
+        elif op == '|':
+            if left.n_outputs != right.n_inputs:
+                raise ModelDefinitionError(
+                    "Unsupported operands for |: {0} (n_inputs={1}, "
+                    "n_outputs={2}) and {3} (n_inputs={4}, n_outputs={5}); "
+                    "n_outputs for the left-hand model must match n_inputs "
+                    "for the right-hand model.".format(
+                        left.name, left.n_inputs, left.n_outputs, right.name,
+                        right.n_inputs, right.n_outputs))
+
+            self.n_inputs = left.n_inputs
+            self.n_outputs = right.n_outputs
+            self.inputs = left.inputs
+            self.outputs = right.outputs
+        elif op == 'fix_inputs':
+            if not isinstance(left, Model):
+                raise ValueError('First argument to "fix_inputs" must be an instance of an astropy Model.')
+            if not isinstance(right, dict):
+                raise ValueError('Expected a dictionary for second argument of "fix_inputs".')
+
+            # Dict keys must match either possible indices
+            # for model on left side, or names for inputs.
+            self.n_inputs = left.n_inputs - len(right)
+            # Assign directly to the private attribute (instead of using the setter)
+            # to avoid asserting the new number of outputs matches the old one.
+            self._outputs = left.outputs
+            self.n_outputs = left.n_outputs
+            newinputs = list(left.inputs)
+            keys = right.keys()
+            input_ind = []
+            for key in keys:
+                if np.issubdtype(type(key), np.integer):
+                    if key >= left.n_inputs or key < 0:
+                        raise ValueError(
+                            'Substitution key integer value '
+                            'not among possible input choices.')
+                    if key in input_ind:
+                        raise ValueError("Duplicate specification of "
+                                         "same input (index/name).")
+                    input_ind.append(key)
+                elif isinstance(key, str):
+                    if key not in left.inputs:
+                        raise ValueError(
+                            'Substitution key string not among possible '
+                            'input choices.')
+                    # Check to see it doesn't match positional
+                    # specification.
+                    ind = left.inputs.index(key)
+                    if ind in input_ind:
+                        raise ValueError("Duplicate specification of "
+                                         "same input (index/name).")
+                    input_ind.append(ind)
+            # Remove substituted inputs
+            input_ind.sort()
+            input_ind.reverse()
+            for ind in input_ind:
+                del newinputs[ind]
+            self.inputs = tuple(newinputs)
+            # Now check to see if the input model has bounding_box defined.
+            # If so, remove the appropriate dimensions and set it for this
+            # instance.
+            try:
+                self.bounding_box = \
+                    self.left.bounding_box.fix_inputs(self, right)
+            except NotImplementedError:
+                pass
+
+        else:
+            raise ModelDefinitionError('Illegal operator: ', self.op)
+        self.name = name
+        self._fittable = None
+        self.fit_deriv = None
+        self.col_fit_deriv = None
+        if op in ('|', '+', '-'):
+            self.linear = left.linear and right.linear
+        else:
+            self.linear = False
+        self.eqcons = []
+        self.ineqcons = []
+        self.n_left_params = len(self.left.parameters)
+        self._map_parameters()
+
+    def _get_left_inputs_from_args(self, args):
+        return args[:self.left.n_inputs]
+
+    def _get_right_inputs_from_args(self, args):
+        op = self.op
+        if op == '&':
+            # Args expected to look like (*left inputs, *right inputs, *left params, *right params)
+            return args[self.left.n_inputs: self.left.n_inputs + self.right.n_inputs]
+        elif op == '|' or  op == 'fix_inputs':
+            return None
+        else:
+            return args[:self.left.n_inputs]
+
+    def _get_left_params_from_args(self, args):
+        op = self.op
+        if op == '&':
+            # Args expected to look like (*left inputs, *right inputs, *left params, *right params)
+            n_inputs = self.left.n_inputs + self.right.n_inputs
+            return args[n_inputs: n_inputs + self.n_left_params]
+        else:
+            return args[self.left.n_inputs: self.left.n_inputs + self.n_left_params]
+
+    def _get_right_params_from_args(self, args):
+        op = self.op
+        if op == 'fix_inputs':
+            return None
+        if op == '&':
+            # Args expected to look like (*left inputs, *right inputs, *left params, *right params)
+            return args[self.left.n_inputs + self.right.n_inputs + self.n_left_params:]
+        else:
+            return args[self.left.n_inputs + self.n_left_params:]
+
+    def _get_kwarg_model_parameters_as_positional(self, args, kwargs):
+        # could do it with inserts but rebuilding seems like simpilist way
+
+        #TODO: Check if any param names are in kwargs maybe as an intersection of sets?
+        if self.op == "&":
+            new_args = list(args[:self.left.n_inputs + self.right.n_inputs])
+            args_pos = self.left.n_inputs + self.right.n_inputs
+        else:
+            new_args = list(args[:self.left.n_inputs])
+            args_pos = self.left.n_inputs
+
+        for param_name in self.param_names:
+            kw_value = kwargs.pop(param_name, None)
+            if kw_value is not None:
+                value = kw_value
+            else:
+                try:
+                    value = args[args_pos]
+                except IndexError:
+                    raise IndexError("Missing parameter or input")
+
+                args_pos += 1
+            new_args.append(value)
+
+        return new_args, kwargs
+
+    def _apply_operators_to_value_lists(self, leftval, rightval, **kw):
+        op = self.op
+        if op == '+':
+            return binary_operation(operator.add, leftval, rightval)
+        elif op == '-':
+            return binary_operation(operator.sub, leftval, rightval)
+        elif op == '*':
+            return binary_operation(operator.mul, leftval, rightval)
+        elif op == '/':
+            return binary_operation(operator.truediv, leftval, rightval)
+        elif op == '**':
+            return binary_operation(operator.pow, leftval, rightval)
+        elif op == '&':
+            if not isinstance(leftval, tuple):
+                leftval = (leftval,)
+            if not isinstance(rightval, tuple):
+                rightval = (rightval,)
+            return leftval + rightval
+        elif op in SPECIAL_OPERATORS:
+            return binary_operation(SPECIAL_OPERATORS[op], leftval, rightval)
+        else:
+            raise ModelDefinitionError('Unrecognized operator {op}')
+
+    def evaluate(self, *args, **kw):
+        op = self.op
+        args, kw = self._get_kwarg_model_parameters_as_positional(args, kw)
+        left_inputs = self._get_left_inputs_from_args(args)
+        left_params = self._get_left_params_from_args(args)
+
+        if op == 'fix_inputs':
+            pos_index = dict(zip(self.left.inputs, range(self.left.n_inputs)))
+            fixed_inputs = {
+                key if np.issubdtype(type(key), np.integer) else pos_index[key]: value
+                for key, value in self.right.items()
+            }
+            left_inputs = [
+                fixed_inputs[ind] if ind in fixed_inputs.keys() else inp
+                for ind, inp in enumerate(left_inputs)
+            ]
+
+        leftval = self.left.evaluate(*itertools.chain(left_inputs, left_params))
+
+        if op == 'fix_inputs':
+            return leftval
+
+        right_inputs = self._get_right_inputs_from_args(args)
+        right_params = self._get_right_params_from_args(args)
+
+        if op == "|":
+            if isinstance(leftval, tuple):
+                return self.right.evaluate(*itertools.chain(leftval, right_params))
+            else:
+                return self.right.evaluate(leftval, *right_params)
+        else:
+            rightval = self.right.evaluate(*itertools.chain(right_inputs, right_params))
+
+        return self._apply_operators_to_value_lists(leftval, rightval, **kw)
+
+    @property
+    def n_submodels(self):
+        if self._leaflist is None:
+            self._make_leaflist()
+        return len(self._leaflist)
+
+    @property
+    def submodel_names(self):
+        """ Return the names of submodels in a ``CompoundModel``."""
+        if self._leaflist is None:
+            self._make_leaflist()
+        names = [item.name for item in self._leaflist]
+        nonecount = 0
+        newnames = []
+        for item in names:
+            if item is None:
+                newnames.append(f'None_{nonecount}')
+                nonecount += 1
+            else:
+                newnames.append(item)
+        return tuple(newnames)
+
+    def both_inverses_exist(self):
+        '''
+        if both members of this compound model have inverses return True
+        '''
+        warnings.warn(
+            "CompoundModel.both_inverses_exist is deprecated. "
+            "Use has_inverse instead.",
+            AstropyDeprecationWarning
+        )
+
+        try:
+            linv = self.left.inverse
+            rinv = self.right.inverse
+        except NotImplementedError:
+            return False
+
+        return True
+
+    def _pre_evaluate(self, *args, **kwargs):
+        """
+        CompoundModel specific input setup that needs to occur prior to
+            model evaluation.
+
+        Note
+        ----
+            All of the _pre_evaluate for each component model will be
+            performed at the time that the individual model is evaluated.
+        """
+
+        # If equivalencies are provided, necessary to map parameters and pass
+        # the leaflist as a keyword input for use by model evaluation so that
+        # the compound model input names can be matched to the model input
+        # names.
+        if 'equivalencies' in kwargs:
+            # Restructure to be useful for the individual model lookup
+            kwargs['inputs_map'] = [(value[0], (value[1], key)) for
+                                    key, value in self.inputs_map().items()]
+
+        # Setup actual model evaluation method
+        def evaluate(_inputs):
+            return self._evaluate(*_inputs, **kwargs)
+
+        return evaluate, args, None, kwargs
+
+    @property
+    def _argnames(self):
+        """No inputs should be used to determine input_shape when handling compound models"""
+        return ()
+
+    def _post_evaluate(self, inputs, outputs, broadcasted_shapes, with_bbox, **kwargs):
+        """
+        CompoundModel specific post evaluation processing of outputs
+
+        Note
+        ----
+            All of the _post_evaluate for each component model will be
+            performed at the time that the individual model is evaluated.
+        """
+        if self.get_bounding_box(with_bbox) is not None and self.n_outputs == 1:
+            return outputs[0]
+        return outputs
+
+    def _evaluate(self, *args, **kw):
+        op = self.op
+        if op != 'fix_inputs':
+            if op != '&':
+                leftval = self.left(*args, **kw)
+                if op != '|':
+                    rightval = self.right(*args, **kw)
+                else:
+                    rightval = None
+
+            else:
+                leftval = self.left(*(args[:self.left.n_inputs]), **kw)
+                rightval = self.right(*(args[self.left.n_inputs:]), **kw)
+
+            if op != "|":
+                return self._apply_operators_to_value_lists(leftval, rightval, **kw)
+
+            elif op == '|':
+                if isinstance(leftval, tuple):
+                    return self.right(*leftval, **kw)
+                else:
+                    return self.right(leftval, **kw)
+
+        else:
+            subs = self.right
+            newargs = list(args)
+            subinds = []
+            subvals = []
+            for key in subs.keys():
+                if np.issubdtype(type(key), np.integer):
+                    subinds.append(key)
+                elif isinstance(key, str):
+                    ind = self.left.inputs.index(key)
+                    subinds.append(ind)
+                subvals.append(subs[key])
+            # Turn inputs specified in kw into positional indices.
+            # Names for compound inputs do not propagate to sub models.
+            kwind = []
+            kwval = []
+            for kwkey in list(kw.keys()):
+                if kwkey in self.inputs:
+                    ind = self.inputs.index(kwkey)
+                    if ind < len(args):
+                        raise ValueError("Keyword argument duplicates "
+                                         "positional value supplied.")
+                    kwind.append(ind)
+                    kwval.append(kw[kwkey])
+                    del kw[kwkey]
+            # Build new argument list
+            # Append keyword specified args first
+            if kwind:
+                kwargs = list(zip(kwind, kwval))
+                kwargs.sort()
+                kwindsorted, kwvalsorted = list(zip(*kwargs))
+                newargs = newargs + list(kwvalsorted)
+            if subinds:
+                subargs = list(zip(subinds, subvals))
+                subargs.sort()
+                # subindsorted, subvalsorted = list(zip(*subargs))
+                # The substitutions must be inserted in order
+                for ind, val in subargs:
+                    newargs.insert(ind, val)
+            return self.left(*newargs, **kw)
+
+    @property
+    def param_names(self):
+        """ An ordered list of parameter names."""
+        return self._param_names
+
+    def _make_leaflist(self):
+        tdict = {}
+        leaflist = []
+        make_subtree_dict(self, '', tdict, leaflist)
+        self._leaflist = leaflist
+        self._tdict = tdict
+
+    def __getattr__(self, name):
+        """
+        If someone accesses an attribute not already defined, map the
+        parameters, and then see if the requested attribute is one of
+        the parameters
+        """
+        # The following test is needed to avoid infinite recursion
+        # caused by deepcopy. There may be other such cases discovered.
+        if name == '__setstate__':
+            raise AttributeError
+        if name in self._param_names:
+            return self.__dict__[name]
+        else:
+            raise AttributeError(f'Attribute "{name}" not found')
+
+    def __getitem__(self, index):
+        if self._leaflist is None:
+            self._make_leaflist()
+        leaflist = self._leaflist
+        tdict = self._tdict
+        if isinstance(index, slice):
+            if index.step:
+                raise ValueError('Steps in slices not supported '
+                                 'for compound models')
+            if index.start is not None:
+                if isinstance(index.start, str):
+                    start = self._str_index_to_int(index.start)
+                else:
+                    start = index.start
+            else:
+                start = 0
+            if index.stop is not None:
+                if isinstance(index.stop, str):
+                    stop = self._str_index_to_int(index.stop)
+                else:
+                    stop = index.stop - 1
+            else:
+                stop = len(leaflist) - 1
+            if index.stop == 0:
+                raise ValueError("Slice endpoint cannot be 0")
+            if start < 0:
+                start = len(leaflist) + start
+            if stop < 0:
+                stop = len(leaflist) + stop
+            # now search for matching node:
+            if stop == start:  # only single value, get leaf instead in code below
+                index = start
+            else:
+                for key in tdict:
+                    node, leftind, rightind = tdict[key]
+                    if leftind == start and rightind == stop:
+                        return node
+                raise IndexError("No appropriate subtree matches slice")
+        if isinstance(index, type(0)):
+            return leaflist[index]
+        elif isinstance(index, type('')):
+            return leaflist[self._str_index_to_int(index)]
+        else:
+            raise TypeError('index must be integer, slice, or model name string')
+
+    def _str_index_to_int(self, str_index):
+        # Search through leaflist for item with that name
+        found = []
+        for nleaf, leaf in enumerate(self._leaflist):
+            if getattr(leaf, 'name', None) == str_index:
+                found.append(nleaf)
+        if len(found) == 0:
+            raise IndexError(f"No component with name '{str_index}' found")
+        if len(found) > 1:
+            raise IndexError("Multiple components found using '{}' as name\n"
+                             "at indices {}".format(str_index, found))
+        return found[0]
+
+    @property
+    def n_inputs(self):
+        """ The number of inputs of a model."""
+        return self._n_inputs
+
+    @n_inputs.setter
+    def n_inputs(self, value):
+        self._n_inputs = value
+
+    @property
+    def n_outputs(self):
+        """ The number of outputs of a model."""
+        return self._n_outputs
+
+    @n_outputs.setter
+    def n_outputs(self, value):
+        self._n_outputs = value
+
+    @property
+    def eqcons(self):
+        return self._eqcons
+
+    @eqcons.setter
+    def eqcons(self, value):
+        self._eqcons = value
+
+    @property
+    def ineqcons(self):
+        return self._eqcons
+
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -r '_calculate_separability_matrix' /testbed/astropy/modeling/
+[?2004lgrep: /testbed/astropy/modeling/__pycache__/core.cpython-39.pyc: binary file matches
+grep: /testbed/astropy/modeling/__pycache__/separable.cpython-39.pyc: binary file matches
+/testbed/astropy/modeling/core.py:    def _calculate_separability_matrix(self):
+/testbed/astropy/modeling/separable.py:    if (transform_matrix := transform._calculate_separability_matrix()) is not NotImplemented:
+/testbed/astropy/modeling/tests/test_models.py:    def _calculate_separability_matrix(self):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -r '_separable' /testbed/astropy/modeling/core.py | head -10
+[?2004l    _separable = None
+        if self._separable is not None:
+            return self._separable
+    _separable = True
+    cls._separable = True if (len(inputs) == 1) else False
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > debug.py << 'EOF'
+[?2004l[?2004h> import sys
+[?2004l[?2004h> sys.path.insert(0, '.')
+[?2004l[?2004h> from astropy.modeling import models as m
+[?2004l[?2004h> from astropy.modeling.separable import _separable, _coord_matrix
+[?2004l[?2004h> from astropy.modeling.core import CompoundModel
+[?2004l[?2004h> 
+[?2004l[?2004h> cm = m.Linear1D(10) & m.Linear1D(5)
+[?2004l[?2004h> print('cm.separable:', cm.separable if hasattr(cm, 'separable') else 'No attr')
+[?2004l[?2004h> print('cm._separable:', cm._separable if hasattr(cm, '_separable') else 'No attr')
+[?2004l[?2004h> print('cm._calculate_separability_matrix:', cm._calculate_separability_matrix() if hasattr(cm, '_calculate_separability_matrix') else 'No')
+[?2004l[?2004h> print('\nNow compute separability matrix via _separable:')
+[?2004l[?2004h> sep = _separable(cm)
+[?2004l[?2004h> print('sep:', sep)
+[?2004l[?2004h> print('\nNow for Pix2Sky_TAN & cm:')
+[?2004l[?2004h> m3 = m.Pix2Sky_TAN() & cm
+[?2004l[?2004h> print('m3.n_inputs, n_outputs:', m3.n_inputs, m3.n_outputs)
+[?2004l[?2004h> print('m3.op:', m3.op)
+[?2004l[?2004h> print('m3.left:', m3.left)
+[?2004l[?2004h> print('m3.right:', m3.right)
+[?2004l[?2004h> sep2 = _separable(m3)
+[?2004l[?2004h> print('sep2:', sep2)
+[?2004l[?2004h> print('\nLet\'s manually compute for right (cm) as component:')
+[?2004l[?2004h> print('cm.n_inputs, n_outputs:', cm.n_inputs, cm.n_outputs)
+[?2004l[?2004h> print('cm.separable?', cm.separable if hasattr(cm, 'separable') else '?')
+[?2004l[?2004h> print('cm._separable?', cm._separable if hasattr(cm, '_separable') else '?')
+[?2004l[?2004h> # Simulate what _coord_matrix does for cm when pos='right' and noutp = ?
+[?2004l[?2004h> # We need to know noutp = total outputs of m3? Actually _cstack calls _coord_matrix with noutp = left.n_outputs + right.n_outputs
+[?2004l[?2004h> # Let's compute manually:
+[?2004l[?2004h> left = m.Pix2Sky_TAN()
+[?2004l[?2004h> right = cm
+[?2004l[?2004h> noutp = left.n_outputs + right.n_outputs
+[?2004l[?2004h> print('noutp:', noutp)
+[?2004l[?2004h> # Call _coord_matrix(right, 'right', noutp)
+[?2004l[?2004h> # We'll copy the function logic in Python
+[?2004l[?2004h> # But first let's check if right is separable via property
+[?2004l[?2004h> print('right.separable:', right.separable)
+[?2004l[?2004h> EOF
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python debug.py 2>&1
+[?2004lTraceback (most recent call last):
+  File "/testbed/debug.py", line 8, in <module>
+    print('cm.separable:', cm.separable if hasattr(cm, 'separable') else 'No attr')
+  File "/testbed/./astropy/modeling/core.py", line 1537, in separable
+    raise NotImplementedError(
+NotImplementedError: The "separable" property is not defined for model CompoundModel
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n '_calculate_separability_matrix' -A 20 core.py
+[?2004l808:    def _calculate_separability_matrix(self):
+809-        """
+810-        This is a hook which customises the behavior of modeling.separable.
+811-
+812-        This allows complex subclasses to customise the separability matrix.
+813-        If it returns `NotImplemented` the default behavior is used.
+814-        """
+815-        return NotImplemented
+816-
+817-    def _initialize_unit_support(self):
+818-        """
+819-        Convert self._input_units_strict and
+820-        self.input_units_allow_dimensionless to dictionaries
+821-        mapping input name to a boolean value.
+822-        """
+823-        if isinstance(self._input_units_strict, bool):
+824-            self._input_units_strict = {key: self._input_units_strict for
+825-                                        key in self.inputs}
+826-
+827-        if isinstance(self._input_units_allow_dimensionless, bool):
+828-            self._input_units_allow_dimensionless = {key: self._input_units_allow_dimensionless
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cat > /testbed/debug2.py << 'EOF'
+[?2004l[?2004h> import sys
+[?2004l[?2004h> sys.path.insert(0, '.')
+[?2004l[?2004h> from astropy.modeling import models as m
+[?2004l[?2004h> from astropy.modeling.separable import _separable, _coord_matrix, _cstack
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> cm = m.Linear1D(10) & m.Linear1D(5)
+[?2004l[?2004h> print('cm separability matrix via separability_matrix:')
+[?2004l[?2004h> from astropy.modeling.separable import separability_matrix
+[?2004l[?2004h> print(separability_matrix(cm))
+[?2004l[?2004h> print('\nNow compute via _separable:')
+[?2004l[?2004h> sep_cm = _separable(cm)
+[?2004l[?2004h> print(sep_cm)
+[?2004l[?2004h> print('\nNow Pix2Sky_TAN:')
+[?2004l[?2004h> left = m.Pix2Sky_TAN()
+[?2004l[?2004h> sep_left = _separable(left)
+[?2004l[?2004h> print('sep_left:')
+[?2004l[?2004h> print(sep_left)
+[?2004l[?2004h> print('\nNow compute via _separable for Pix2Sky_TAN & cm:')
+[?2004l[?2004h> m3 = left & cm
+[?2004l[?2004h> sep_m3 = _separable(m3)
+[?2004l[?2004h> print(sep_m3)
+[?2004l[?2004h> print('\nNow manually call _cstack with sep_left and sep_cm:')
+[?2004l[?2004h> manual = _cstack(sep_left, sep_cm)
+[?2004l[?2004h> print('manual:')
+[?2004l[?2004h> print(manual)
+[?2004l[?2004h> print('\nAre they equal?', np.array_equal(sep_m3, manual))
+[?2004l[?2004h> print('\nNow check what _separable returns for left and right when inside _separable(m3)')
+[?2004l[?2004h> # We need to patch to see. Let's monkey patch.
+[?2004l[?2004h> original_separable = _separable
+[?2004l[?2004h> def logging_separable(transform):
+[?2004l[?2004h>     print('  _separable called with:', transform)
+[?2004l[?2004h>     if isinstance(transform, m.CompoundModel):
+[?2004l[?2004h>         print('    op:', transform.op)
+[?2004l[?2004h>         print('    left:', transform.left)
+[?2004l[?2004h>         print('    right:', transform.right)
+[?2004l[?2004h>     result = original_separable(transform)
+[?2004l[?2004h>     print('  result shape:', result.shape if hasattr(result, 'shape') else result)
+[?2004l[?2004h>     return result
+[?2004l[?2004h> import astropy.modeling.separable
+[?2004l[?2004h> astropy.modeling.separable._separable = logging_separable
+[?2004l[?2004h> from astropy.modeling.separable import separability_matrix as sm
+[?2004l[?2004h> print('\nRecalculating separability matrix for m3:')
+[?2004l[?2004h> print(sm(m3))
+[?2004l[?2004h> EOF
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed && python debug2.py 2>&1
+[?2004lcm separability matrix via separability_matrix:
+[[ True False]
+ [False  True]]
+
+Now compute via _separable:
+[[1. 0.]
+ [0. 1.]]
+
+Now Pix2Sky_TAN:
+sep_left:
+[[1. 1.]
+ [1. 1.]]
+
+Now compute via _separable for Pix2Sky_TAN & cm:
+[[1. 1. 0. 0.]
+ [1. 1. 0. 0.]
+ [0. 0. 1. 1.]
+ [0. 0. 1. 1.]]
+
+Now manually call _cstack with sep_left and sep_cm:
+manual:
+[[1. 1. 0. 0.]
+ [1. 1. 0. 0.]
+ [0. 0. 1. 1.]
+ [0. 0. 1. 1.]]
+
+Are they equal? True
+
+Now check what _separable returns for left and right when inside _separable(m3)
+
+Recalculating separability matrix for m3:
+  _separable called with: Model: CompoundModel
+Inputs: ('x', 'y', 'x0', 'x1')
+Outputs: ('phi', 'theta', 'y0', 'y1')
+Model set size: 1
+Expression: [0] & [1] & [2]
+Components: 
+    [0]: <Pix2Sky_Gnomonic()>
+
+    [1]: <Linear1D(slope=10., intercept=0.)>
+
+    [2]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_1 intercept_1 slope_2 intercept_2
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+Traceback (most recent call last):
+  File "/testbed/debug2.py", line 44, in <module>
+    print(sm(m3))
+  File "/testbed/./astropy/modeling/separable.py", line 100, in separability_matrix
+    separable_matrix = _separable(transform)
+  File "/testbed/debug2.py", line 33, in logging_separable
+    if isinstance(transform, m.CompoundModel):
+AttributeError: module 'astropy.modeling.models' has no attribute 'CompoundModel'
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '/^def _cstack/,/^def _cdot/p' separable.py
+[?2004ldef _cstack(left, right):
+    """
+    Function corresponding to '&' operation.
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    Returns
+    -------
+    result : ndarray
+        Result from this operation.
+
+    """
+    noutp = _compute_n_outputs(left, right)
+
+    if isinstance(left, Model):
+        cleft = _coord_matrix(left, 'left', noutp)
+    else:
+        cleft = np.zeros((noutp, left.shape[1]))
+        cleft[: left.shape[0], : left.shape[1]] = left
+    if isinstance(right, Model):
+        cright = _coord_matrix(right, 'right', noutp)
+    else:
+        cright = np.zeros((noutp, right.shape[1]))
+        cright[-right.shape[0]:, -right.shape[1]:] = 1
+
+    return np.hstack([cleft, cright])
+
+
+def _cdot(left, right):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '/^def _cdot/,/^def _separable/p' separable.py
+[?2004ldef _cdot(left, right):
+    """
+    Function corresponding to "|" operation.
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    Returns
+    -------
+    result : ndarray
+        Result from this operation.
+    """
+
+    left, right = right, left
+
+    def _n_inputs_outputs(input, position):
+        """
+        Return ``n_inputs``, ``n_outputs`` for a model or coord_matrix.
+        """
+        if isinstance(input, Model):
+            coords = _coord_matrix(input, position, input.n_outputs)
+        else:
+            coords = input
+        return coords
+
+    cleft = _n_inputs_outputs(left, 'left')
+    cright = _n_inputs_outputs(right, 'right')
+
+    try:
+        result = np.dot(cleft, cright)
+    except ValueError:
+        raise ModelDefinitionError(
+            'Models cannot be combined with the "|" operator; '
+            'left coord_matrix is {}, right coord_matrix is {}'.format(
+                cright, cleft))
+    return result
+
+
+def _separable(transform):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cat -n separable.py | sed -n '140,180p'
+[?2004l   140	    left, right : `astropy.modeling.Model` or ndarray
+   141	        If input is of an array, it is the output of `coord_matrix`.
+   142	
+   143	    Returns
+   144	    -------
+   145	    result : ndarray
+   146	        Result from this operation.
+   147	    """
+   148	    # models have the same number of inputs and outputs
+   149	    def _n_inputs_outputs(input):
+   150	        if isinstance(input, Model):
+   151	            n_outputs, n_inputs = input.n_outputs, input.n_inputs
+   152	        else:
+   153	            n_outputs, n_inputs = input.shape
+   154	        return n_inputs, n_outputs
+   155	
+   156	    left_inputs, left_outputs = _n_inputs_outputs(left)
+   157	    right_inputs, right_outputs = _n_inputs_outputs(right)
+   158	
+   159	    if left_inputs != right_inputs or left_outputs != right_outputs:
+   160	        raise ModelDefinitionError(
+   161	            "Unsupported operands for arithmetic operator: left (n_inputs={}, "
+   162	            "n_outputs={}) and right (n_inputs={}, n_outputs={}); "
+   163	            "models must have the same n_inputs and the same "
+   164	            "n_outputs for this operator.".format(
+   165	                left_inputs, left_outputs, right_inputs, right_outputs))
+   166	
+   167	    result = np.ones((left_outputs, left_inputs))
+   168	    return result
+   169	
+   170	
+   171	def _coord_matrix(model, pos, noutp):
+   172	    """
+   173	    Create an array representing inputs and outputs of a simple model.
+   174	
+   175	    The array has a shape (noutp, model.n_inputs).
+   176	
+   177	    Parameters
+   178	    ----------
+   179	    model : `astropy.modeling.Model`
+   180	        model
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# # Let's also see the context before and after
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cat -n separable.py | sed -n '130,190p'
+[?2004l   130	def _arith_oper(left, right):
+   131	    """
+   132	    Function corresponding to one of the arithmetic operators
+   133	    ['+', '-'. '*', '/', '**'].
+   134	
+   135	    This always returns a nonseparable output.
+   136	
+   137	
+   138	    Parameters
+   139	    ----------
+   140	    left, right : `astropy.modeling.Model` or ndarray
+   141	        If input is of an array, it is the output of `coord_matrix`.
+   142	
+   143	    Returns
+   144	    -------
+   145	    result : ndarray
+   146	        Result from this operation.
+   147	    """
+   148	    # models have the same number of inputs and outputs
+   149	    def _n_inputs_outputs(input):
+   150	        if isinstance(input, Model):
+   151	            n_outputs, n_inputs = input.n_outputs, input.n_inputs
+   152	        else:
+   153	            n_outputs, n_inputs = input.shape
+   154	        return n_inputs, n_outputs
+   155	
+   156	    left_inputs, left_outputs = _n_inputs_outputs(left)
+   157	    right_inputs, right_outputs = _n_inputs_outputs(right)
+   158	
+   159	    if left_inputs != right_inputs or left_outputs != right_outputs:
+   160	        raise ModelDefinitionError(
+   161	            "Unsupported operands for arithmetic operator: left (n_inputs={}, "
+   162	            "n_outputs={}) and right (n_inputs={}, n_outputs={}); "
+   163	            "models must have the same n_inputs and the same "
+   164	            "n_outputs for this operator.".format(
+   165	                left_inputs, left_outputs, right_inputs, right_outputs))
+   166	
+   167	    result = np.ones((left_outputs, left_inputs))
+   168	    return result
+   169	
+   170	
+   171	def _coord_matrix(model, pos, noutp):
+   172	    """
+   173	    Create an array representing inputs and outputs of a simple model.
+   174	
+   175	    The array has a shape (noutp, model.n_inputs).
+   176	
+   177	    Parameters
+   178	    ----------
+   179	    model : `astropy.modeling.Model`
+   180	        model
+   181	    pos : str
+   182	        Position of this model in the expression tree.
+   183	        One of ['left', 'right'].
+   184	    noutp : int
+   185	        Number of outputs of the compound model of which the input model
+   186	        is a left or right child.
+   187	
+   188	    """
+   189	    if isinstance(model, Mapping):
+   190	        axes = []
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n 'def _cstack' separable.py
+[?2004l219:def _cstack(left, right):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# grep -n 'cright\[-right' separable.py
+[?2004l245:        cright[-right.shape[0]:, -right.shape[1]:] = 1
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '220,250p' separable.py
+[?2004l    """
+    Function corresponding to '&' operation.
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    Returns
+    -------
+    result : ndarray
+        Result from this operation.
+
+    """
+    noutp = _compute_n_outputs(left, right)
+
+    if isinstance(left, Model):
+        cleft = _coord_matrix(left, 'left', noutp)
+    else:
+        cleft = np.zeros((noutp, left.shape[1]))
+        cleft[: left.shape[0], : left.shape[1]] = left
+    if isinstance(right, Model):
+        cright = _coord_matrix(right, 'right', noutp)
+    else:
+        cright = np.zeros((noutp, right.shape[1]))
+        cright[-right.shape[0]:, -right.shape[1]:] = 1
+
+    return np.hstack([cleft, cright])
+
+
+def _cdot(left, right):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cp separable.py separable.py.backup
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -i '245s/ = 1$/ = right/' separable.py
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# head -n 250 separable.py | tail -n 10
+[?2004l    if isinstance(right, Model):
+        cright = _coord_matrix(right, 'right', noutp)
+    else:
+        cright = np.zeros((noutp, right.shape[1]))
+        cright[-right.shape[0]:, -right.shape[1]:] = right
+
+    return np.hstack([cleft, cright])
+
+
+def _cdot(left, right):
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python reproduce.py
+[?2004lTest 1: Linear1D & Linear1D
+[[ True False]
+ [False  True]]
+Expected diagonal
+
+Test 2: Pix2Sky_TAN & Linear1D & Linear1D
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+Expected block diagonal
+
+Test 3: Pix2Sky_TAN & cm
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+Expected same as test 2 but with extra nesting
+
+cm: Model: CompoundModel
+Inputs: ('x0', 'x1')
+Outputs: ('y0', 'y1')
+Model set size: 1
+Expression: [0] & [1]
+Components: 
+    [0]: <Linear1D(slope=10., intercept=0.)>
+
+    [1]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_0 intercept_0 slope_1 intercept_1
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+cm.n_submodels: 2
+cm.__class__: <class 'astropy.modeling.core.CompoundModel'>
+Name: CompoundModel
+N_inputs: <property object at 0x74229cc58270>
+N_outputs: <property object at 0x74229cc582c0>
+Fittable parameters: <property object at 0x74229cc58180>
+
+m3: Model: CompoundModel
+Inputs: ('x', 'y', 'x0', 'x1')
+Outputs: ('phi', 'theta', 'y0', 'y1')
+Model set size: 1
+Expression: [0] & [1] & [2]
+Components: 
+    [0]: <Pix2Sky_Gnomonic()>
+
+    [1]: <Linear1D(slope=10., intercept=0.)>
+
+    [2]: <Linear1D(slope=5., intercept=0.)>
+Parameters:
+    slope_1 intercept_1 slope_2 intercept_2
+    ------- ----------- ------- -----------
+       10.0         0.0     5.0         0.0
+m3.n_submodels: 3
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python -m pytest astropy/modeling/tests/test_separable.py -xvs 2>&1 | head -100
+[?2004l<frozen importlib._bootstrap>:228: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 80 from C header, got 96 from PyObject
+Internet access disabled
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.4.0, pluggy-1.3.0 -- /opt/miniconda3/envs/testbed/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True
+
+Running tests with Astropy version 5.1.dev623+gd16bfe05a.d20250910.
+Running tests in astropy/modeling/tests/test_separable.py.
+
+Date: 2026-04-12T00:14:35
+
+Platform: Linux-6.8.0-100-generic-x86_64-with-glibc2.35
+
+Executable: /opt/miniconda3/envs/testbed/bin/python
+
+Full Python Version: 
+3.9.20 (main, Oct  3 2024, 07:27:41) 
+[GCC 11.2.0]
+
+encodings: sys: utf-8, locale: UTF-8, filesystem: utf-8
+byteorder: little
+float info: dig: 15, mant_dig: 15
+
+Package versions: 
+Numpy: 1.25.2
+Scipy: not available
+Matplotlib: not available
+h5py: not available
+Pandas: not available
+PyERFA: 2.0.0.3
+Cython: not available
+Scikit-image: not available
+asdf: not available
+pyarrow: not available
+
+Using Astropy options: remote_data: none.
+
+ARCH_ON_CI: undefined
+IS_CRON: undefined
+
+rootdir: /testbed
+configfile: setup.cfg
+plugins: hypothesis-6.82.6, arraydiff-0.5.0, astropy-0.10.0, astropy-header-0.2.2, cov-4.1.0, doctestplus-1.0.0, filter-subpackage-0.1.2, mock-3.11.1, openfiles-0.5.0, remotedata-0.4.0, xdist-3.3.1
+collecting ... collected 11 items
+
+astropy/modeling/tests/test_separable.py::test_coord_matrix PASSED
+astropy/modeling/tests/test_separable.py::test_cdot PASSED
+astropy/modeling/tests/test_separable.py::test_cstack PASSED
+astropy/modeling/tests/test_separable.py::test_arith_oper PASSED
+astropy/modeling/tests/test_separable.py::test_separable[compound_model0-result0] PASSED
+astropy/modeling/tests/test_separable.py::test_separable[compound_model1-result1] PASSED
+astropy/modeling/tests/test_separable.py::test_separable[compound_model2-result2] PASSED
+astropy/modeling/tests/test_separable.py::test_separable[compound_model3-result3] PASSED
+astropy/modeling/tests/test_separable.py::test_separable[compound_model4-result4] PASSED
+astropy/modeling/tests/test_separable.py::test_separable[compound_model5-result5] PASSED
+astropy/modeling/tests/test_separable.py::test_custom_model_separable PASSED
+
+============================== 11 passed in 0.19s ==============================
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > test_nested_separable.py << 'EOF'
+[?2004l[?2004h> import sys
+[?2004l[?2004h> sys.path.insert(0, '.')
+[?2004l[?2004h> from astropy.modeling import models as m
+[?2004l[?2004h> from astropy.modeling.separable import separability_matrix
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> print('Testing various nested compound models...')
+[?2004l[?2004h> 
+[?2004l[?2004h> # 1. Simple nested & (the reported bug)
+[?2004l[?2004h> cm = m.Linear1D(10) & m.Linear1D(5)
+[?2004l[?2004h> m1 = m.Pix2Sky_TAN() & cm
+[?2004l[?2004h> print('Test 1: Pix2Sky_TAN & (Linear1D & Linear1D)')
+[?2004l[?2004h> print(separability_matrix(m1))
+[?2004l[?2004h> print('Expected: block diagonal with 2x2 ones for Pix2Sky_TAN and diagonal for Linear1Ds')
+[?2004l[?2004h> print()
+[?2004l[?2004h> 
+[?2004l[?2004h> # 2. Triple nesting
+[?2004l[?2004h> cm2 = m.Linear1D(2) & m.Linear1D(3)
+[?2004l[?2004h> cm3 = cm2 & m.Linear1D(4)
+[?2004l[?2004h> m2 = m.Pix2Sky_TAN() & cm3
+[?2004l[?2004h> print('Test 2: Pix2Sky_TAN & ((Linear1D & Linear1D) & Linear1D)')
+[?2004l[?2004h> print(separability_matrix(m2))
+[?2004l[?2004h> print('Expected: block for Pix2Sky_TAN and diagonal for three Linear1Ds')
+[?2004l[?2004h> print()
+[?2004l[?2004h> 
+[?2004l[?2004h> # 3. Nesting with | operator
+[?2004l[?2004h> # Create a chain of mappings? Let's use Shift and Scale
+[?2004l[?2004h> shift = m.Shift(1) & m.Shift(2)
+[?2004l[?2004h> scale = m.Scale(3) & m.Scale(4)
+[?2004l[?2004h> chain = shift | scale  # This is a CompoundModel with '|'
+[?2004l[?2004h> m3 = m.Pix2Sky_TAN() & chain
+[?2004l[?2004h> print('Test 3: Pix2Sky_TAN & (Shift&Shift | Scale&Scale)')
+[?2004l[?2004h> print(separability_matrix(m3))
+[?2004l[?2004h> print('Expected: Pix2Sky_TAN block and then the chain separability matrix')
+[?2004l[?2004h> print()
+[?2004l[?2004h> 
+[?2004l[?2004h> # 4. Right side is a nested compound with non-separable components? Use Rotation2D which is not separable.
+[?2004l[?2004h> rot = m.Rotation2D(45)
+[?2004l[?2004h> m4 = m.Pix2Sky_TAN() & rot
+[?2004l[?2004h> print('Test 4: Pix2Sky_TAN & Rotation2D')
+[?2004l[?2004h> print(separability_matrix(m4))
+[?2004l[?2004h> print('Expected: Pix2Sky_TAN block (2x2 ones) and Rotation2D block (2x2 ones)')
+[?2004l[?2004h> print()
+[?2004l[?2004h> 
+[?2004l[?2004h> # 5. Left side is nested compound
+[?2004l[?2004h> cm_left = m.Linear1D(1) & m.Linear1D(2)
+[?2004l[?2004h> m5 = cm_left & m.Pix2Sky_TAN()
+[?2004l[?2004h> print('Test 5: (Linear1D & Linear1D) & Pix2Sky_TAN')
+[?2004l[?2004h> print(separability_matrix(m5))
+[?2004l[?2004h> print('Expected: diagonal for Linear1Ds and block for Pix2Sky_TAN')
+[?2004l[?2004h> print()
+[?2004l[?2004h> 
+[?2004l[?2004h> # 6. Check that simple non-nested & still works
+[?2004l[?2004h> m6 = m.Linear1D(1) & m.Linear1D(2)
+[?2004l[?2004h> print('Test 6: Linear1D & Linear1D')
+[?2004l[?2004h> print(separability_matrix(m6))
+[?2004l[?2004h> print('Expected: diagonal')
+[?2004l[?2004h> print()
+[?2004l[?2004h> 
+[?2004l[?2004h> # 7. Check that separability_matrix for a simple model returns correct shape
+[?2004l[?2004h> print('Test 7: Linear1D')
+[?2004l[?2004h> print(separability_matrix(m.Linear1D(1)))
+[?2004l[?2004h> print('Expected: [[True]]')
+[?2004l[?2004h> print()
+[?2004l[?2004h> 
+[?2004l[?2004h> print('All tests completed.')
+[?2004l[?2004h> EOF
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python test_nested_separable.py 2>&1
+[?2004lTesting various nested compound models...
+Test 1: Pix2Sky_TAN & (Linear1D & Linear1D)
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+Expected: block diagonal with 2x2 ones for Pix2Sky_TAN and diagonal for Linear1Ds
+
+Test 2: Pix2Sky_TAN & ((Linear1D & Linear1D) & Linear1D)
+[[ True  True False False False]
+ [ True  True False False False]
+ [False False  True False False]
+ [False False False  True False]
+ [False False False False  True]]
+Expected: block for Pix2Sky_TAN and diagonal for three Linear1Ds
+
+Test 3: Pix2Sky_TAN & (Shift&Shift | Scale&Scale)
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+Expected: Pix2Sky_TAN block and then the chain separability matrix
+
+Test 4: Pix2Sky_TAN & Rotation2D
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True  True]
+ [False False  True  True]]
+Expected: Pix2Sky_TAN block (2x2 ones) and Rotation2D block (2x2 ones)
+
+Test 5: (Linear1D & Linear1D) & Pix2Sky_TAN
+[[ True False False False]
+ [False  True False False]
+ [False False  True  True]
+ [False False  True  True]]
+Expected: diagonal for Linear1Ds and block for Pix2Sky_TAN
+
+Test 6: Linear1D & Linear1D
+[[ True False]
+ [False  True]]
+Expected: diagonal
+
+Test 7: Linear1D
+[[ True]]
+Expected: [[True]]
+
+All tests completed.
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python -m pytest astropy/modeling/tests/test_compound.py -xvs 2>&1 | head -200
+[?2004l<frozen importlib._bootstrap>:228: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 80 from C header, got 96 from PyObject
+Internet access disabled
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.4.0, pluggy-1.3.0 -- /opt/miniconda3/envs/testbed/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True
+
+Running tests with Astropy version 5.1.dev623+gd16bfe05a.d20250910.
+Running tests in astropy/modeling/tests/test_compound.py.
+
+Date: 2026-04-12T00:16:18
+
+Platform: Linux-6.8.0-100-generic-x86_64-with-glibc2.35
+
+Executable: /opt/miniconda3/envs/testbed/bin/python
+
+Full Python Version: 
+3.9.20 (main, Oct  3 2024, 07:27:41) 
+[GCC 11.2.0]
+
+encodings: sys: utf-8, locale: UTF-8, filesystem: utf-8
+byteorder: little
+float info: dig: 15, mant_dig: 15
+
+Package versions: 
+Numpy: 1.25.2
+Scipy: not available
+Matplotlib: not available
+h5py: not available
+Pandas: not available
+PyERFA: 2.0.0.3
+Cython: not available
+Scikit-image: not available
+asdf: not available
+pyarrow: not available
+
+Using Astropy options: remote_data: none.
+
+ARCH_ON_CI: undefined
+IS_CRON: undefined
+
+rootdir: /testbed
+configfile: setup.cfg
+plugins: hypothesis-6.82.6, arraydiff-0.5.0, astropy-0.10.0, astropy-header-0.2.2, cov-4.1.0, doctestplus-1.0.0, filter-subpackage-0.1.2, mock-3.11.1, openfiles-0.5.0, remotedata-0.4.0, xdist-3.3.1
+collecting ... collected 69 items
+
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result0] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result1] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result2] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result3] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set[<lambda>-result4] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result0] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result1] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result2] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result3] PASSED
+astropy/modeling/tests/test_compound.py::test_model_set_raises_value_error[<lambda>-result4] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-5.0] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>--1.0] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-6.0] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-0.6666666666666666] PASSED
+astropy/modeling/tests/test_compound.py::test_two_model_instance_arithmetic_1d[<lambda>-8.0] PASSED
+astropy/modeling/tests/test_compound.py::test_simple_two_model_compose_1d PASSED
+astropy/modeling/tests/test_compound.py::test_simple_two_model_compose_2d FAILED
+
+=================================== FAILURES ===================================
+_______________________ test_simple_two_model_compose_2d _______________________
+
+    def test_simple_two_model_compose_2d():
+        """
+        A simple example consisting of two rotations.
+        """
+    
+        r1 = Rotation2D(45) | Rotation2D(45)
+    
+        assert isinstance(r1, CompoundModel)
+        assert r1.n_inputs == 2
+        assert r1.n_outputs == 2
+>       assert_allclose(r1(0, 1), (-1, 0), atol=1e-10)
+
+astropy/modeling/tests/test_compound.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+astropy/modeling/core.py:1080: in __call__
+    outputs = self._generic_evaluate(evaluate, inputs,
+astropy/modeling/core.py:1044: in _generic_evaluate
+    outputs = evaluate(_inputs)
+astropy/modeling/core.py:3200: in evaluate
+    return self._evaluate(*_inputs, **kwargs)
+astropy/modeling/core.py:3226: in _evaluate
+    leftval = self.left(*args, **kw)
+astropy/modeling/core.py:398: in __call__
+    new_call = make_function_with_signature(
+astropy/modeling/core.py:377: in __call__
+    return super(cls, self).__call__(*inputs, **kwargs)
+astropy/modeling/core.py:1080: in __call__
+    outputs = self._generic_evaluate(evaluate, inputs,
+astropy/modeling/core.py:1044: in _generic_evaluate
+    outputs = evaluate(_inputs)
+astropy/modeling/core.py:940: in evaluate
+    return self.evaluate(*chain(_inputs, parameters))
+astropy/modeling/rotations.py:504: in evaluate
+    result = np.dot(cls._compute_matrix(angle), inarr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+angle = array([0.78539816])
+
+    @staticmethod
+    def _compute_matrix(angle):
+>       return np.array([[math.cos(angle), -math.sin(angle)],
+                         [math.sin(angle), math.cos(angle)]],
+                        dtype=np.float64)
+E       DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+
+astropy/modeling/rotations.py:513: DeprecationWarning
+=========================== short test summary info ============================
+FAILED astropy/modeling/tests/test_compound.py::test_simple_two_model_compose_2d
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+========================= 1 failed, 16 passed in 0.46s =========================
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed/astropy/modeling
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# sed -n '/^def _cdot/,/^def _separable/p' separable.py | head -40
+[?2004ldef _cdot(left, right):
+    """
+    Function corresponding to "|" operation.
+
+    Parameters
+    ----------
+    left, right : `astropy.modeling.Model` or ndarray
+        If input is of an array, it is the output of `coord_matrix`.
+
+    Returns
+    -------
+    result : ndarray
+        Result from this operation.
+    """
+
+    left, right = right, left
+
+    def _n_inputs_outputs(input, position):
+        """
+        Return ``n_inputs``, ``n_outputs`` for a model or coord_matrix.
+        """
+        if isinstance(input, Model):
+            coords = _coord_matrix(input, position, input.n_outputs)
+        else:
+            coords = input
+        return coords
+
+    cleft = _n_inputs_outputs(left, 'left')
+    cright = _n_inputs_outputs(right, 'right')
+
+    try:
+        result = np.dot(cleft, cright)
+    except ValueError:
+        raise ModelDefinitionError(
+            'Models cannot be combined with the "|" operator; '
+            'left coord_matrix is {}, right coord_matrix is {}'.format(
+                cright, cleft))
+    return result
+
+
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed/astropy/modeling# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > test_cdot_nested.py << 'EOF'
+[?2004l[?2004h> import sys
+[?2004l[?2004h> sys.path.insert(0, '.')
+[?2004l[?2004h> from astropy.modeling import models as m
+[?2004l[?2004h> from astropy.modeling.separable import separability_matrix
+[?2004l[?2004h> 
+[?2004l[?2004h> # Create a nested composition: (Linear1D & Linear1D) | (Scale & Scale)
+[?2004l[?2004h> left = m.Linear1D(1) & m.Linear1D(2)
+[?2004l[?2004h> right = m.Scale(3) & m.Scale(4)
+[?2004l[?2004h> comp = left | right
+[?2004l[?2004h> print('Nested composition (Linear1D & Linear1D) | (Scale & Scale):')
+[?2004l[?2004h> print(separability_matrix(comp))
+[?2004l[?2004h> # Expected? Since both are separable and composition is just per-coordinate mapping,
+[?2004l[?2004h> # the matrix should be diagonal.
+[?2004l[?2004h> # Let's also test with non-separable component.
+[?2004l[?2004h> rot = m.Rotation2D(45)
+[?2004l[?2004h> comp2 = rot | rot
+[?2004l[?2004h> print('Rotation2D | Rotation2D:')
+[?2004l[?2004h> print(separability_matrix(comp2))
+[?2004l[?2004h> # Should be all True because rotation is not separable.
+[?2004l[?2004h> # Now test nested within larger model
+[?2004l[?2004h> cm = m.Linear1D(1) & m.Linear1D(2)
+[?2004l[?2004h> m3 = m.Pix2Sky_TAN() | cm  # Note: n_outputs of Pix2Sky_TAN is 2, n_inputs of cm is 2? Wait Pix2Sky_TAN outputs 2, cm inputs 2. Yes.
+[?2004l[?2004h> print('Pix2Sky_TAN | (Linear1D & Linear1D):')
+[?2004l[?2004h> print(separability_matrix(m3))
+[?2004l[?2004h> EOF
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python test_cdot_nested.py 2>&1
+[?2004lNested composition (Linear1D & Linear1D) | (Scale & Scale):
+[[ True False]
+ [False  True]]
+Rotation2D | Rotation2D:
+[[ True  True]
+ [ True  True]]
+Pix2Sky_TAN | (Linear1D & Linear1D):
+[[ True  True]
+ [ True  True]]
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python -m pytest astropy/modeling/tests/test_compound.py -xvs -k 'not test_simple_two_model_compose_2d' 2>&1 | tail -30
+[?2004lastropy/modeling/core.py:3241: in _evaluate
+    return self.right(*leftval, **kw)
+astropy/modeling/core.py:398: in __call__
+    new_call = make_function_with_signature(
+astropy/modeling/core.py:377: in __call__
+    return super(cls, self).__call__(*inputs, **kwargs)
+astropy/modeling/core.py:1080: in __call__
+    outputs = self._generic_evaluate(evaluate, inputs,
+astropy/modeling/core.py:1044: in _generic_evaluate
+    outputs = evaluate(_inputs)
+astropy/modeling/core.py:940: in evaluate
+    return self.evaluate(*chain(_inputs, parameters))
+astropy/modeling/rotations.py:504: in evaluate
+    result = np.dot(cls._compute_matrix(angle), inarr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+angle = array([1.57079633])
+
+    @staticmethod
+    def _compute_matrix(angle):
+>       return np.array([[math.cos(angle), -math.sin(angle)],
+                         [math.sin(angle), math.cos(angle)]],
+                        dtype=np.float64)
+E       DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+
+astropy/modeling/rotations.py:513: DeprecationWarning
+=========================== short test summary info ============================
+FAILED astropy/modeling/tests/test_compound.py::test_basic_compound_inverse
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+================== 1 failed, 18 passed, 1 deselected in 0.37s ==================
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cd /testbed
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python -m pytest astropy/modeling/tests/test_separable.py -q 2>&1
+[?2004l<frozen importlib._bootstrap>:228: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 80 from C header, got 96 from PyObject
+Internet access disabled
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                                                                                                                              [100%][0m
+[32m[32m[1m11 passed[0m[32m in 0.15s[0m[0m
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# cat > final_verification.py << 'EOF'
+[?2004l[?2004h> import sys
+[?2004l[?2004h> sys.path.insert(0, '.')
+[?2004l[?2004h> from astropy.modeling import models as m
+[?2004l[?2004h> from astropy.modeling.separable import separability_matrix
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> cm = m.Linear1D(10) & m.Linear1D(5)
+[?2004l[?2004h> print('Test 1: separability_matrix(cm)')
+[?2004l[?2004h> print(separability_matrix(cm))
+[?2004l[?2004h> assert np.array_equal(separability_matrix(cm), [[True, False], [False, True]])
+[?2004l[?2004h> 
+[?2004l[?2004h> m2 = m.Pix2Sky_TAN() & m.Linear1D(10) & m.Linear1D(5)
+[?2004l[?2004h> print('\nTest 2: separability_matrix(Pix2Sky_TAN & Linear1D & Linear1D)')
+[?2004l[?2004h> print(separability_matrix(m2))
+[?2004l[?2004h> expected2 = np.array([[True, True, False, False],
+[?2004l[?2004h>                        [True, True, False, False],
+[?2004l[?2004h>                        [False, False, True, False],
+[?2004l[?2004h>                        [False, False, False, True]])
+[?2004l[?2004h> assert np.array_equal(separability_matrix(m2), expected2)
+[?2004l[?2004h> 
+[?2004l[?2004h> m3 = m.Pix2Sky_TAN() & cm
+[?2004l[?2004h> print('\nTest 3: separability_matrix(Pix2Sky_TAN & cm)')
+[?2004l[?2004h> print(separability_matrix(m3))
+[?2004l[?2004h> # Should be same as test 2
+[?2004l[?2004h> assert np.array_equal(separability_matrix(m3), expected2)
+[?2004l[?2004h> 
+[?2004l[?2004h> print('\nAll tests passed!')
+[?2004l[?2004h> EOF
+[?2004l[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# python final_verification.py 2>&1
+[?2004lTest 1: separability_matrix(cm)
+[[ True False]
+ [False  True]]
+
+Test 2: separability_matrix(Pix2Sky_TAN & Linear1D & Linear1D)
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+
+Test 3: separability_matrix(Pix2Sky_TAN & cm)
+[[ True  True False False]
+ [ True  True False False]
+ [False False  True False]
+ [False False False  True]]
+
+All tests passed!
+[?2004h(testbed) root@7d5f52fb-1f3c-4541-a136-6831f931e5fa:/testbed# 

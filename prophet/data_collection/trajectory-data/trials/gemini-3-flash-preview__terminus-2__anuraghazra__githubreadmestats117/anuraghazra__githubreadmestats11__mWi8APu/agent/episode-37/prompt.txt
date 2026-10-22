@@ -1,0 +1,41 @@
+Current Terminal Screen:
+ PASS  tests/pin.test.js
+  Test /api/pin
+    ✓ should test the request (14 ms)
+    ✓ should get the query options (2 ms)
+    ✓ should render error card if user repo not found (1 ms)
+    ✓ should render error card if org repo not found (1 ms)
+  Test /api/pin cache control
+    ✓ should set the correct cache-control header (1 ms)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+  console.log
+    Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.686 s
+Ran all test suites matching /tests\/pin.test.js/i.
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

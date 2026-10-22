@@ -1,0 +1,26 @@
+New Terminal Output:
+
+Header: Cache-Control = public, max-age=1800
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# cat <<EOF >> repro.js
+> async function testInvalid() {
+>   const res = {
+>     setHeader: (key, value) => console.log("Header: " + key + " = " + value),
+>     send: (data) => {}
+>   };
+>   console.log("\\nTesting /api/index with invalid cache_seconds");
+>   await api({ query: { username: "anuraghazra", cache_seconds: "invalid" } }, res);
+> }
+> testInvalid();
+> EOF
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats# node repro.js | grep Header
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=3600
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=1800
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=1800
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=3600
+Header: Content-Type = image/svg+xml
+Header: Cache-Control = public, max-age=1800
+root@6bc2d872-a76c-4066-be47-2611b053b906:/workspace/github-readme-stats#

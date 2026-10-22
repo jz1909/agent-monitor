@@ -1,0 +1,53 @@
+{
+    "task": {
+        "path": "datasets/swebench-verified/astropy__astropy-12907",
+        "git_url": "https://github.com/laude-institute/harbor-datasets.git",
+        "git_commit_id": "86723674f04e4209ac479d0fb75d9d9f44b4377e",
+        "overwrite": false,
+        "download_dir": null,
+        "source": "adapter-experiments-batch1-phase4"
+    },
+    "trial_name": "astropy__astropy-12907__XJuJcLR",
+    "trials_dir": "jobs/swebench-verified__qwen-coder__qwen3-max__batch1__phase4",
+    "timeout_multiplier": 1.0,
+    "agent_timeout_multiplier": null,
+    "verifier_timeout_multiplier": null,
+    "agent_setup_timeout_multiplier": null,
+    "environment_build_timeout_multiplier": null,
+    "agent": {
+        "name": "qwen-coder",
+        "import_path": null,
+        "model_name": "qwen3-max",
+        "override_timeout_sec": null,
+        "override_setup_timeout_sec": null,
+        "max_timeout_sec": null,
+        "kwargs": {
+            "version": "0.14.5"
+        },
+        "env": {
+            "OPENAI_API_KEY": "<REDACTED_SECRET>",
+            "OPENAI_BASE_URL": "http://pp-api-ec82a10d0c5d226c.elb.us-west-2.amazonaws.com:3000/v1"
+        }
+    },
+    "environment": {
+        "type": "daytona",
+        "import_path": null,
+        "force_build": false,
+        "delete": true,
+        "override_cpus": null,
+        "override_memory_mb": null,
+        "override_storage_mb": null,
+        "override_gpus": null,
+        "suppress_override_warnings": false,
+        "mounts_json": null,
+        "env": {},
+        "kwargs": {}
+    },
+    "verifier": {
+        "override_timeout_sec": null,
+        "max_timeout_sec": null,
+        "disable": false
+    },
+    "artifacts": [],
+    "job_id": "a5ffc32b-ae30-4bee-b428-62b64c5c87fd"
+}

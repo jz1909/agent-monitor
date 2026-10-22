@@ -1,0 +1,41 @@
+Current Terminal Screen:
+>
+>   await api(req, res);
+>
+>   // Check that Cache-Control is set with custom value
+>   const cacheCall = res.setHeader.mock.calls.find(call => call[0] === "Cache-Control");
+>   console.log("Custom cache test:", cacheCall);
+>   if (cacheCall && cacheCall[1] === "public, max-age=3600") {
+>     console.log("PASS: Custom cache is 3600 seconds");
+>   } else {
+>     console.log("FAIL: Custom cache should be 3600 seconds");
+>   }
+> }
+>
+> console.log("Testing cache implementation...");
+> testDefaultCache().then(() => testCustomCache());
+> EOF
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats# node /tmp/test_cache.js 2>&1
+node:internal/modules/cjs/loader:1215
+  throw err;
+  ^
+
+Error: Cannot find module 'axios'
+Require stack:
+- /tmp/test_cache.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1212:15)
+    at Module._load (node:internal/modules/cjs/loader:1043:27)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/tmp/test_cache.js:2:15)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/tmp/test_cache.js' ]
+}
+
+Node.js v20.19.0
+root@e4a816d5-5d62-4cd2-93c6-4880e30f6053:/workspace/github-readme-stats#

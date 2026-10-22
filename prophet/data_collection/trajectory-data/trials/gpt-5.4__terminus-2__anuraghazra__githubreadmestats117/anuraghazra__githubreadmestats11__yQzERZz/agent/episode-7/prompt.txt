@@ -1,0 +1,41 @@
+Current Terminal Screen:
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: User Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:63:13)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:25:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:97:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:27:13)
+
+    console.log
+      Trying PAT_1
+
+      at retryer (src/retryer.js:6:13)
+
+    console.log
+      Error: Organization Repository Not found
+          at fetchRepo (/home/<redacted>/src/fetchRepo.js:73:13)
+          at Object.<anonymous>.module.exports (/home/<redacted>/api/pin.js:25:16)
+          at Object.<anonymous> (/home/<redacted>/tests/pin.test.js:118:5)
+
+      at Object.<anonymous>.module.exports (api/pin.js:27:13)
+
+
+Test Suites: 2 passed, 2 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        0.736 s, estimated 1 s
+Ran all test suites matching /tests\/api.test.js|tests\/pin.test.js/i.
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats# git status --short
+ M api/index.js
+ M api/pin.js
+?? reproduce-cache.js
+root@f245928b-d7cc-43fa-a930-f61c29b941ee:/workspace/github-readme-stats#
