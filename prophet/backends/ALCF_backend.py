@@ -29,9 +29,15 @@ You may be seeing only part of the trajectory; it may start or end mid-step.
 </trajectory>
 
 Decide whether the agent will succeed at the task:
-- "YES" if you are confident it will succeed
-- "NO" if you are confident it will fail
-- "UNSURE" if there is not yet enough evidence to decide
+- "YES" only if you are SURE it will succeed
+- "NO" only if you are SURE it will fail
+- "UNSURE" otherwise
+
+Important: answering "YES" or "NO" immediately ends the monitoring. You will not see the rest of the \
+trajectory, and that answer is final. Answering "UNSURE" costs nothing: you will be shown more of the \
+trajectory and asked again. So do not answer "YES" or "NO" on a hunch or a lean; answer "UNSURE" unless \
+the evidence so far makes the outcome clear. Your "confidence" should still reflect your best estimate \
+of the probability that the agent succeeds, even when you answer "UNSURE".
 
 Respond with ONLY a JSON object, no other text:
 {"reasoning": "<one or two sentences>", "decision": "YES" | "NO" | "UNSURE", "confidence": <number from 0 to 1, your probability that the agent succeeds>}"""
