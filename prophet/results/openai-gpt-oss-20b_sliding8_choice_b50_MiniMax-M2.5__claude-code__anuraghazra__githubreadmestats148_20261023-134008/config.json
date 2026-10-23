@@ -1,0 +1,19 @@
+{
+ "backend": "alcf",
+ "model": "openai/gpt-oss-20b",
+ "cluster": "SOPHIA",
+ "bag": "sliding",
+ "k": 8,
+ "batch_size": 50,
+ "align": "event",
+ "policy": "choice",
+ "threshold": 0.9,
+ "trials_dir": "/home/jsh27/agent-monitor/prophet/data_collection/trajectory-data/trials",
+ "agents": null,
+ "models_filter": null,
+ "trials": [
+  "MiniMax-M2.5__claude-code__anuraghazra__githubreadmestats148"
+ ],
+ "limit": null,
+ "out_dir": "/home/jsh27/agent-monitor/prophet/results"
+}

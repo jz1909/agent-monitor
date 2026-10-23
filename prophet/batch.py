@@ -40,11 +40,15 @@ def _load_trajectory(path) -> Trajectory:
     )
 
 
-def load_trajectories(trials_dir=DEFAULT_TRIALS_DIR, require_label=True, skip_crashed=True,models=None, agents=None)-> List[Trajectory]:
+def load_trajectories(trials_dir=DEFAULT_TRIALS_DIR, require_label=True, skip_crashed=True,models=None, agents=None, trials=None)-> List[Trajectory]:
+    """trials: if given, only these trials, named by their folder
+    (e.g. 'claude-sonnet-4-6__claude-code__astropy__astropy-12907') or trial id ('astropy__astropy-12907__EWnwaYU')"""
 
     trajs = []
 
     for path in sorted(Path(trials_dir).glob("*/*/parsed_trajectory.json")):
+        if trials is not None and path.parent.parent.name not in trials and path.parent.name not in trials:
+            continue
         traj = _load_trajectory(path)
 
         if require_label and traj.success is None:

@@ -1,0 +1,19 @@
+{
+ "backend": "alcf",
+ "model": "openai/gpt-oss-120b",
+ "cluster": "SOPHIA",
+ "bag": "sliding",
+ "k": 5,
+ "batch_size": 25,
+ "align": "event",
+ "policy": "choice",
+ "threshold": 0.9,
+ "trials_dir": "/home/jsh27/agent-monitor/prophet/data_collection/trajectory-data/trials",
+ "agents": null,
+ "models_filter": null,
+ "trials": [
+  "gpt-5-nano__terminus-2__anuraghazra__githubreadmestats117"
+ ],
+ "limit": null,
+ "out_dir": "/home/jsh27/agent-monitor/prophet/results"
+}

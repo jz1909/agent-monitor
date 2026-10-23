@@ -1,0 +1,19 @@
+{
+ "backend": "jev",
+ "model": "jev-latest",
+ "cluster": "SOPHIA",
+ "bag": "sliding",
+ "k": 5,
+ "batch_size": 30,
+ "align": "event",
+ "policy": "threshold",
+ "threshold": 0.8,
+ "trials_dir": "/home/jsh27/agent-monitor/prophet/data_collection/trajectory-data/trials",
+ "agents": null,
+ "models_filter": null,
+ "trials": [
+  "gemini-3-flash-preview__terminus-2__anuraghazra__githubreadmestats117"
+ ],
+ "limit": null,
+ "out_dir": "/home/jsh27/agent-monitor/prophet/results"
+}

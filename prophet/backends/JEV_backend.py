@@ -53,7 +53,7 @@ class JEVBackend(BaseBackend):
                 },
             },
         }
-        resp = self.session.post(BASE_URL, json=request_body)
+        resp = self.session.post(BASE_URL, json=request_body, timeout=120)
         resp.raise_for_status()
         return resp.json()
 
